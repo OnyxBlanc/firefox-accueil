@@ -7,11 +7,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
@@ -27,9 +23,7 @@
     }
 
     /* ---- CLOCK ---- */
-    #clock-section {
-      text-align: center;
-    }
+    #clock-section { text-align: center; }
 
     #time {
       font-size: 5rem;
@@ -39,7 +33,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: none;
       line-height: 1;
     }
 
@@ -52,23 +45,94 @@
       text-transform: capitalize;
     }
 
-    /* ---- SEARCH ---- */
+    /* ---- SEARCH WRAPPER ---- */
+    #search-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    /* Engine tabs */
+    #engine-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(255,160,190,0.05);
+      border: 1px solid rgba(220,100,140,0.15);
+      border-radius: 50px;
+      padding: 0.3rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .engine-tab {
+      cursor: pointer;
+      padding: 0.3rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #a07080;
+      border: none;
+      background: transparent;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .engine-tab.active {
+      background: linear-gradient(90deg, #c94070, #e06080);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 12px rgba(220, 80, 120, 0.4);
+    }
+
+    .engine-tab:not(.active):hover {
+      color: #f4a0b5;
+      background: rgba(220,80,120,0.1);
+    }
+
+    /* Search bar */
     #search-form {
       display: flex;
       align-items: center;
-      background: rgba(255, 180, 200, 0.08);
-      border: 1px solid rgba(240, 120, 150, 0.25);
-      border-radius: 50px;
-      padding: 0.6rem 1.2rem;
       width: 100%;
-      max-width: 520px;
-      backdrop-filter: blur(10px);
-      transition: border-color 0.3s;
+      background: rgba(255, 180, 200, 0.07);
+      border: 1px solid rgba(240, 120, 150, 0.2);
+      border-radius: 50px;
+      padding: 0.65rem 1.2rem;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+      /* Animate in */
+      animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     #search-form:focus-within {
-      border-color: rgba(240, 100, 140, 0.7);
-      box-shadow: 0 0 18px rgba(220, 80, 120, 0.2);
+      border-color: rgba(240, 100, 140, 0.65);
+      box-shadow: 0 0 22px rgba(220, 80, 120, 0.25), 0 0 0 3px rgba(220,80,120,0.07);
+      transform: scale(1.015);
+    }
+
+    /* Animated engine icon inside bar */
+    #engine-icon {
+      font-size: 1.1rem;
+      margin-right: 0.7rem;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+      display: inline-block;
+    }
+
+    #engine-icon.spin {
+      animation: iconSpin 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes iconSpin {
+      0%   { transform: rotate(-30deg) scale(0.6); opacity: 0.3; }
+      100% { transform: rotate(0deg)   scale(1);   opacity: 1; }
     }
 
     #search-form input {
@@ -81,22 +145,59 @@
       font-family: 'Inter', sans-serif;
     }
 
-    #search-form input::placeholder {
-      color: #a06070;
-    }
+    #search-form input::placeholder { color: #a06070; }
 
-    #search-form button {
-      background: none;
+    #search-btn {
+      background: linear-gradient(90deg, #c94070, #e06080);
       border: none;
       cursor: pointer;
-      color: #e07090;
-      font-size: 1.1rem;
-      padding-left: 0.5rem;
-      transition: color 0.2s;
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
     }
 
-    #search-form button:hover {
-      color: #f4a0b5;
+    #search-btn:hover {
+      opacity: 0.88;
+      transform: scale(1.04);
+      box-shadow: 0 0 14px rgba(220,80,120,0.45);
+    }
+
+    /* Suggestion pills (animated) */
+    #suggestions {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      min-height: 1.6rem;
+    }
+
+    .suggestion {
+      cursor: pointer;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      background: rgba(220,80,120,0.1);
+      border: 1px solid rgba(220,100,140,0.2);
+      color: #c890a8;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      animation: fadeInPill 0.3s ease both;
+    }
+
+    @keyframes fadeInPill {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .suggestion:hover {
+      background: rgba(220,80,120,0.25);
+      color: #f4c0d0;
+      transform: translateY(-2px);
     }
 
     /* ---- LINKS GRID ---- */
@@ -105,7 +206,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       width: 100%;
-      max-width: 520px;
+      max-width: 540px;
     }
 
     .link-card {
@@ -132,14 +233,12 @@
       color: #f4c8d8;
     }
 
-    .link-card .icon {
-      font-size: 1.6rem;
-    }
+    .link-card .icon { font-size: 1.6rem; }
 
     /* ---- DIVIDER ---- */
     .divider {
       width: 100%;
-      max-width: 520px;
+      max-width: 540px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(220, 100, 140, 0.3), transparent);
     }
@@ -162,63 +261,113 @@
     <div id="date">lundi, 1 janvier</div>
   </section>
 
-  <form id="search-form" action="https://www.google.com/search" method="get" target="_blank">
-    <input type="text" name="q" placeholder="Rechercher sur Google…" autocomplete="off" />
-    <button type="submit">🔍</button>
-  </form>
+  <!-- ANIMATED SEARCH -->
+  <div id="search-wrapper">
+
+    <!-- Engine switcher -->
+    <div id="engine-tabs">
+      <button class="engine-tab active" data-engine="google" data-icon="🔍" data-url="https://www.google.com/search?q=" data-ph="Rechercher sur Google…">Google</button>
+      <button class="engine-tab" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
+      <button class="engine-tab" data-engine="yt" data-icon="▶️" data-url="https://www.youtube.com/results?search_query=" data-ph="Rechercher sur YouTube…">YouTube</button>
+      <button class="engine-tab" data-engine="gh" data-icon="🐙" data-url="https://github.com/search?q=" data-ph="Rechercher sur GitHub…">GitHub</button>
+    </div>
+
+    <!-- Search bar -->
+    <form id="search-form">
+      <span id="engine-icon">🔍</span>
+      <input id="search-input" type="text" placeholder="Rechercher sur Google…" autocomplete="off" />
+      <button id="search-btn" type="submit">Chercher</button>
+    </form>
+
+    <!-- Suggestion pills -->
+    <div id="suggestions"></div>
+
+  </div>
 
   <div id="links">
-    <a class="link-card" href="https://github.com" target="_blank">
-      <span class="icon">🐙</span>
-      GitHub
-    </a>
-    <a class="link-card" href="https://youtube.com" target="_blank">
-      <span class="icon">▶️</span>
-      YouTube
-    </a>
-    <a class="link-card" href="https://discord.com/app" target="_blank">
-      <span class="icon">💬</span>
-      Discord
-    </a>
-    <a class="link-card" href="https://www.netflix.com" target="_blank">
-      <span class="icon">🎬</span>
-      Netflix
-    </a>
-    <a class="link-card" href="https://open.spotify.com" target="_blank">
-      <span class="icon">🎵</span>
-      Spotify
-    </a>
-    <a class="link-card" href="https://mail.google.com" target="_blank">
-      <span class="icon">📧</span>
-      Gmail
-    </a>
-    <a class="link-card" href="https://www.twitch.tv" target="_blank">
-      <span class="icon">🎮</span>
-      Twitch
-    </a>
-    <a class="link-card" href="https://chatgpt.com" target="_blank">
-      <span class="icon">🤖</span>
-      ChatGPT
-    </a>
+    <a class="link-card" href="https://github.com" target="_blank"><span class="icon">🐙</span>GitHub</a>
+    <a class="link-card" href="https://youtube.com" target="_blank"><span class="icon">▶️</span>YouTube</a>
+    <a class="link-card" href="https://discord.com/app" target="_blank"><span class="icon">💬</span>Discord</a>
+    <a class="link-card" href="https://www.netflix.com" target="_blank"><span class="icon">🎬</span>Netflix</a>
+    <a class="link-card" href="https://open.spotify.com" target="_blank"><span class="icon">🎵</span>Spotify</a>
+    <a class="link-card" href="https://mail.google.com" target="_blank"><span class="icon">📧</span>Gmail</a>
+    <a class="link-card" href="https://www.twitch.tv" target="_blank"><span class="icon">🎮</span>Twitch</a>
+    <a class="link-card" href="https://chatgpt.com" target="_blank"><span class="icon">🤖</span>ChatGPT</a>
   </div>
 
   <div class="divider"></div>
-
-  <p id="quote">"The only way to do great work is to love what you do."</p>
+  <p id="quote">« Le seul moyen de faire du bon travail, c'est d'aimer ce qu'on fait. »</p>
 
   <script>
+    /* ---- CLOCK ---- */
     function updateClock() {
       const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
-      document.getElementById('time').textContent = `${h}:${m}:${s}`;
-
-      const opts = { weekday: 'long', day: 'numeric', month: 'long' };
-      document.getElementById('date').textContent = now.toLocaleDateString('fr-FR', opts);
+      document.getElementById('time').textContent =
+        [now.getHours(), now.getMinutes(), now.getSeconds()]
+          .map(n => String(n).padStart(2,'0')).join(':');
+      document.getElementById('date').textContent =
+        now.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    /* ---- SEARCH ENGINE ---- */
+    const SUGGESTIONS = {
+      google: ['Je me sens chanceux', 'Actualités', 'Images', 'Traduction'],
+      ddg:    ['!g Google', '!w Wikipedia', '!yt YouTube', 'Privé'],
+      yt:     ['Musique', 'Gaming', 'Tutoriels', 'Live'],
+      gh:     ['Trending', 'Issues', 'Pull requests', 'Explore'],
+    };
+
+    let currentUrl = 'https://www.google.com/search?q=';
+
+    function setEngine(tab) {
+      document.querySelectorAll('.engine-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const icon   = tab.dataset.icon;
+      const url    = tab.dataset.url;
+      const ph     = tab.dataset.ph;
+      const engine = tab.dataset.engine;
+
+      currentUrl = url;
+      document.getElementById('search-input').placeholder = ph;
+
+      // Animate icon swap
+      const iconEl = document.getElementById('engine-icon');
+      iconEl.classList.remove('spin');
+      void iconEl.offsetWidth; // reflow
+      iconEl.textContent = icon;
+      iconEl.classList.add('spin');
+
+      // Rebuild suggestion pills with stagger
+      const sugBox = document.getElementById('suggestions');
+      sugBox.innerHTML = '';
+      SUGGESTIONS[engine].forEach((s, i) => {
+        const pill = document.createElement('span');
+        pill.className = 'suggestion';
+        pill.textContent = s;
+        pill.style.animationDelay = `${i * 60}ms`;
+        pill.addEventListener('click', () => {
+          document.getElementById('search-input').value = s;
+          document.getElementById('search-input').focus();
+        });
+        sugBox.appendChild(pill);
+      });
+    }
+
+    // Init tabs
+    document.querySelectorAll('.engine-tab').forEach(tab => {
+      tab.addEventListener('click', () => setEngine(tab));
+    });
+    setEngine(document.querySelector('.engine-tab.active'));
+
+    // Submit
+    document.getElementById('search-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const q = document.getElementById('search-input').value.trim();
+      if (q) window.open(currentUrl + encodeURIComponent(q), '_blank');
+    });
   </script>
 
 </body>
