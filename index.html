@@ -7,17 +7,12 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
     * { margin:0; padding:0; box-sizing:border-box; }
-
     body {
-      min-height:100vh;
-      font-family:'Inter',sans-serif;
+      min-height:100vh; font-family:'Inter',sans-serif;
       background:linear-gradient(135deg,#1a0a10 0%,#2d1020 30%,#1e0a1a 60%,#0d0510 100%);
-      color:#f0d6e0;
-      display:flex; flex-direction:column; align-items:center;
+      color:#f0d6e0; display:flex; flex-direction:column; align-items:center;
       justify-content:flex-start; gap:2rem; padding:2rem 1rem 3rem;
     }
-
-    /* CLOCK */
     #clock-section { text-align:center; }
     #time {
       font-size:4.5rem; font-weight:300; letter-spacing:0.08em;
@@ -28,25 +23,11 @@
 
     /* SEARCH */
     #search-wrapper { display:flex; flex-direction:column; align-items:center; gap:.75rem; width:100%; max-width:600px; }
-    #engine-tabs {
-      display:flex; gap:.5rem;
-      background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15);
-      border-radius:50px; padding:.3rem; backdrop-filter:blur(8px);
-    }
-    .engine-tab {
-      cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600;
-      letter-spacing:.06em; color:#a07080; border:none; background:transparent;
-      transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif;
-    }
+    #engine-tabs { display:flex; gap:.5rem; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:50px; padding:.3rem; backdrop-filter:blur(8px); }
+    .engine-tab { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
     .engine-tab.active { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
     .engine-tab:not(.active):hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
-    #search-form {
-      display:flex; align-items:center; width:100%;
-      background:rgba(255,180,200,.07); border:1px solid rgba(240,120,150,.2);
-      border-radius:50px; padding:.65rem 1.2rem; backdrop-filter:blur(12px);
-      transition:border-color .3s,box-shadow .3s,transform .3s;
-      animation:slideUp .5s cubic-bezier(.22,1,.36,1) both;
-    }
+    #search-form { display:flex; align-items:center; width:100%; background:rgba(255,180,200,.07); border:1px solid rgba(240,120,150,.2); border-radius:50px; padding:.65rem 1.2rem; backdrop-filter:blur(12px); transition:border-color .3s,box-shadow .3s,transform .3s; animation:slideUp .5s cubic-bezier(.22,1,.36,1) both; }
     @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
     #search-form:focus-within { border-color:rgba(240,100,140,.65); box-shadow:0 0 22px rgba(220,80,120,.25),0 0 0 3px rgba(220,80,120,.07); transform:scale(1.015); }
     #engine-icon { font-size:1.1rem; margin-right:.7rem; display:inline-block; }
@@ -54,21 +35,11 @@
     @keyframes iconSpin { 0%{transform:rotate(-30deg) scale(.6);opacity:.3} 100%{transform:rotate(0deg) scale(1);opacity:1} }
     #search-form input { background:transparent; border:none; outline:none; color:#f0d6e0; font-size:1rem; width:100%; font-family:'Inter',sans-serif; }
     #search-form input::placeholder { color:#a06070; }
-    #search-btn {
-      background:linear-gradient(90deg,#c94070,#e06080); border:none; cursor:pointer; color:#fff;
-      font-size:.85rem; padding:.45rem 1rem; border-radius:50px; font-family:'Inter',sans-serif;
-      font-weight:600; letter-spacing:.04em; transition:opacity .2s,transform .2s,box-shadow .2s; white-space:nowrap;
-    }
+    #search-btn { background:linear-gradient(90deg,#c94070,#e06080); border:none; cursor:pointer; color:#fff; font-size:.85rem; padding:.45rem 1rem; border-radius:50px; font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.04em; transition:opacity .2s,transform .2s,box-shadow .2s; white-space:nowrap; }
     #search-btn:hover { opacity:.88; transform:scale(1.04); box-shadow:0 0 14px rgba(220,80,120,.45); }
 
     /* WEATHER */
-    #weather-widget {
-      width:100%; max-width:600px;
-      background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18);
-      border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px);
-      animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both;
-      display:flex; flex-direction:column; gap:.75rem;
-    }
+    #weather-widget { width:100%; max-width:600px; background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18); border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px); animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both; display:flex; flex-direction:column; gap:.75rem; }
     #weather-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
     #weather-left { display:flex; align-items:center; gap:1rem; }
     #weather-icon { font-size:2.4rem; line-height:1; animation:floatIcon 3s ease-in-out infinite; }
@@ -80,62 +51,27 @@
     #weather-right { display:flex; flex-direction:column; align-items:flex-end; gap:.25rem; font-size:.73rem; color:#c890a8; }
     #weather-right span { display:flex; align-items:center; gap:.3rem; }
     #weather-error { font-size:.78rem; color:#c94070; display:none; margin-top:.3rem; }
-    /* City search row */
-    #weather-search-row {
-      display:flex; gap:.5rem; align-items:center;
-    }
-    #weather-city-input {
-      flex:1; background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2);
-      border-radius:50px; padding:.35rem .9rem; color:#f0d6e0;
-      font-size:.78rem; font-family:'Inter',sans-serif; outline:none;
-      transition:border-color .2s;
-    }
+    #weather-search-row { display:flex; gap:.5rem; align-items:center; }
+    #weather-city-input { flex:1; background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2); border-radius:50px; padding:.35rem .9rem; color:#f0d6e0; font-size:.78rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
     #weather-city-input:focus { border-color:rgba(240,100,140,.6); }
     #weather-city-input::placeholder { color:#a06070; }
-    #weather-city-btn {
-      background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff;
-      font-size:.75rem; padding:.35rem .9rem; border-radius:50px; cursor:pointer;
-      font-family:'Inter',sans-serif; font-weight:600; white-space:nowrap;
-      transition:opacity .2s,transform .2s;
-    }
+    #weather-city-btn { background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff; font-size:.75rem; padding:.35rem .9rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; white-space:nowrap; transition:opacity .2s,transform .2s; }
     #weather-city-btn:hover { opacity:.85; transform:scale(1.04); }
     #weather-city-status { font-size:.68rem; color:#9a6070; font-style:italic; min-height:.9rem; }
 
     /* MAIN PANEL */
     #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
-    /* CALENDAR — FIX: en-têtes séparés de la grille des jours */
-    #calendar-section {
-      flex:1 1 320px;
-      background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15);
-      border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px);
-      animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both;
-    }
+    /* CALENDAR */
+    #calendar-section { flex:1 1 320px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both; }
     #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     .cal-nav { background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem; padding:.2rem .5rem; border-radius:8px; transition:background .2s; }
     .cal-nav:hover { background:rgba(220,80,120,.15); }
-    /* Jours de la semaine : grille fixe, pas de gap vertical */
-    #cal-dow-row {
-      display:grid;
-      grid-template-columns:repeat(7,1fr);
-      margin-bottom:.35rem;
-    }
-    .cal-dow {
-      text-align:center; font-size:.65rem; color:#9a6070;
-      font-weight:600; padding:.2rem 0; letter-spacing:.06em;
-    }
-    /* Grille des jours uniquement */
-    #cal-grid {
-      display:grid;
-      grid-template-columns:repeat(7,1fr);
-      gap:.3rem;
-    }
-    .cal-day {
-      aspect-ratio:1; display:flex; align-items:center; justify-content:center;
-      font-size:.78rem; border-radius:8px; cursor:pointer; position:relative;
-      transition:background .2s,transform .15s; color:#c890a8;
-    }
+    #cal-dow-row { display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:.35rem; }
+    .cal-dow { text-align:center; font-size:.65rem; color:#9a6070; font-weight:600; padding:.2rem 0; letter-spacing:.06em; }
+    #cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.3rem; }
+    .cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:.78rem; border-radius:8px; cursor:pointer; position:relative; transition:background .2s,transform .15s; color:#c890a8; }
     .cal-day:hover { background:rgba(220,80,120,.18); color:#f4c8d8; transform:scale(1.1); }
     .cal-day.today { background:linear-gradient(135deg,#c94070,#e06080); color:#fff; font-weight:600; box-shadow:0 0 10px rgba(220,80,120,.4); }
     .cal-day.has-event::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:#f4a0b5; }
@@ -143,43 +79,24 @@
     .cal-day.past { opacity:.5; }
 
     /* TASKS */
-    #tasks-section {
-      flex:1 1 300px;
-      background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15);
-      border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px);
-      display:flex; flex-direction:column; gap:.8rem;
-      animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both;
-      max-height:420px;
-    }
+    #tasks-section { flex:1 1 300px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:.8rem; animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both; max-height:440px; }
     #tasks-header { display:flex; align-items:center; justify-content:space-between; }
     #tasks-title { font-size:.95rem; font-weight:600; color:#f0d6e0; }
-    #btn-add-event {
-      background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff;
-      font-size:.75rem; padding:.35rem .85rem; border-radius:50px; cursor:pointer;
-      font-family:'Inter',sans-serif; font-weight:600; transition:opacity .2s,transform .2s;
-    }
+    #tasks-actions { display:flex; gap:.4rem; }
+    #btn-add-event { background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff; font-size:.75rem; padding:.35rem .85rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:opacity .2s,transform .2s; }
     #btn-add-event:hover { opacity:.85; transform:scale(1.04); }
+    #btn-export-csv { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
+    #btn-export-csv:hover { background:rgba(220,80,120,.15); color:#f4a0b5; }
     #tasks-list { overflow-y:auto; display:flex; flex-direction:column; gap:.5rem; flex:1; }
     #tasks-list::-webkit-scrollbar { width:4px; }
     #tasks-list::-webkit-scrollbar-track { background:transparent; }
     #tasks-list::-webkit-scrollbar-thumb { background:rgba(220,80,120,.3); border-radius:4px; }
-    .task-item {
-      display:flex; align-items:center; gap:.6rem;
-      background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.12);
-      border-radius:12px; padding:.6rem .8rem;
-      transition:background .2s,border-color .2s;
-      animation:fadeInPill .3s ease both;
-    }
+    .task-item { display:flex; align-items:center; gap:.6rem; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.12); border-radius:12px; padding:.6rem .8rem; transition:background .2s,border-color .2s; animation:fadeInPill .3s ease both; }
     @keyframes fadeInPill { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
     .task-item.done { opacity:.55; }
     .task-item.done .task-name { text-decoration:line-through; color:#9a6070; }
     .task-item.overdue { border-color:rgba(220,60,80,.35); }
-    .task-check {
-      width:16px; height:16px; border-radius:50%;
-      border:2px solid rgba(220,100,140,.4); cursor:pointer; flex-shrink:0;
-      transition:background .2s,border-color .2s; background:transparent;
-      display:flex; align-items:center; justify-content:center; font-size:.6rem;
-    }
+    .task-check { width:16px; height:16px; border-radius:50%; border:2px solid rgba(220,100,140,.4); cursor:pointer; flex-shrink:0; transition:background .2s,border-color .2s; background:transparent; display:flex; align-items:center; justify-content:center; font-size:.6rem; }
     .task-check.checked { background:linear-gradient(135deg,#c94070,#e06080); border-color:#e06080; color:#fff; }
     .task-info { flex:1; min-width:0; }
     .task-name { font-size:.8rem; color:#e8c0d0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -187,34 +104,16 @@
     .task-del { background:none; border:none; color:#9a6070; cursor:pointer; font-size:.85rem; transition:color .2s; }
     .task-del:hover { color:#e06080; }
     #tasks-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:1rem 0; }
-    #log-status { font-size:.65rem; color:#9a6070; text-align:right; padding:.2rem .5rem; font-style:italic; min-height:1rem; }
-    #log-status.ok { color:#80c080; }
-    #log-status.err { color:#c94070; }
 
     /* MODAL */
-    #modal-overlay {
-      position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px);
-      display:flex; align-items:center; justify-content:center; z-index:100;
-      opacity:0; pointer-events:none; transition:opacity .25s;
-    }
+    #modal-overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s; }
     #modal-overlay.open { opacity:1; pointer-events:all; }
-    #modal {
-      background:linear-gradient(135deg,#2d1020,#1a0a10);
-      border:1px solid rgba(220,100,140,.3); border-radius:20px;
-      padding:1.6rem; width:90%; max-width:400px;
-      transform:translateY(20px) scale(.97); transition:transform .25s;
-      box-shadow:0 20px 60px rgba(0,0,0,.6);
-    }
+    #modal { background:linear-gradient(135deg,#2d1020,#1a0a10); border:1px solid rgba(220,100,140,.3); border-radius:20px; padding:1.6rem; width:90%; max-width:400px; transform:translateY(20px) scale(.97); transition:transform .25s; box-shadow:0 20px 60px rgba(0,0,0,.6); }
     #modal-overlay.open #modal { transform:translateY(0) scale(1); }
     #modal h3 { font-size:1rem; font-weight:600; color:#f4a0b5; margin-bottom:1.2rem; }
     .field { display:flex; flex-direction:column; gap:.35rem; margin-bottom:.9rem; }
     .field label { font-size:.75rem; color:#c890a8; font-weight:600; letter-spacing:.06em; }
-    .field input, .field select {
-      background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2);
-      border-radius:10px; padding:.55rem .9rem; color:#f0d6e0;
-      font-size:.85rem; font-family:'Inter',sans-serif; outline:none;
-      transition:border-color .2s;
-    }
+    .field input, .field select { background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2); border-radius:10px; padding:.55rem .9rem; color:#f0d6e0; font-size:.85rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
     .field input:focus, .field select:focus { border-color:rgba(240,100,140,.6); }
     .field select option { background:#2d1020; }
     #modal-row { display:flex; gap:.8rem; }
@@ -250,7 +149,6 @@
     </form>
   </div>
 
-  <!-- WEATHER -->
   <div id="weather-widget">
     <div id="weather-top">
       <div id="weather-left">
@@ -267,51 +165,41 @@
         <span id="weather-feels">🌡️ Ressenti --°C</span>
       </div>
     </div>
-    <!-- Champ de recherche de ville -->
     <div id="weather-search-row">
-      <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex: Paris, Lyon)" />
+      <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex : Paris, Toulouse)" />
       <button id="weather-city-btn">🔍 Mettre à jour</button>
     </div>
     <div id="weather-city-status"></div>
     <div id="weather-error">Impossible de charger la météo</div>
   </div>
 
-  <!-- MAIN PANEL -->
   <div id="main-panel">
-
-    <!-- CALENDAR -->
     <div id="calendar-section">
       <div id="cal-header">
         <button class="cal-nav" id="cal-prev">‹</button>
         <span id="cal-month-label"></span>
         <button class="cal-nav" id="cal-next">›</button>
       </div>
-      <!-- En-têtes jours séparés de la grille -->
       <div id="cal-dow-row">
-        <div class="cal-dow">Lu</div>
-        <div class="cal-dow">Ma</div>
-        <div class="cal-dow">Me</div>
-        <div class="cal-dow">Je</div>
-        <div class="cal-dow">Ve</div>
-        <div class="cal-dow">Sa</div>
-        <div class="cal-dow">Di</div>
+        <div class="cal-dow">Lu</div><div class="cal-dow">Ma</div><div class="cal-dow">Me</div>
+        <div class="cal-dow">Je</div><div class="cal-dow">Ve</div><div class="cal-dow">Sa</div><div class="cal-dow">Di</div>
       </div>
       <div id="cal-grid"></div>
     </div>
 
-    <!-- TASKS -->
     <div id="tasks-section">
       <div id="tasks-header">
         <span id="tasks-title">📅 Événements &amp; Tâches</span>
-        <button id="btn-add-event">+ Ajouter</button>
+        <div id="tasks-actions">
+          <button id="btn-export-csv">⬇️ CSV</button>
+          <button id="btn-add-event">+ Ajouter</button>
+        </div>
       </div>
       <div id="tasks-list"></div>
       <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
-      <div id="log-status"></div>
     </div>
   </div>
 
-  <!-- MODAL -->
   <div id="modal-overlay">
     <div id="modal">
       <h3>✨ Nouvel événement</h3>
@@ -371,12 +259,9 @@ document.getElementById('search-form').addEventListener('submit',e=>{
 /* WEATHER */
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const WD={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
-
-// Sauvegarde ville dans localStorage
-let weatherLat = parseFloat(localStorage.getItem('wx_lat')) || 43.2965;
-let weatherLon = parseFloat(localStorage.getItem('wx_lon')) || 5.3698;
-let weatherCityName = localStorage.getItem('wx_city') || 'Marseille, FR';
-
+let weatherLat=parseFloat(localStorage.getItem('wx_lat'))||43.2965;
+let weatherLon=parseFloat(localStorage.getItem('wx_lon'))||5.3698;
+let weatherCityName=localStorage.getItem('wx_city')||'Marseille, FR';
 async function loadWeather(){
   document.getElementById('weather-error').style.display='none';
   try{
@@ -389,12 +274,8 @@ async function loadWeather(){
     document.getElementById('weather-humidity').textContent=`💧 ${c.relative_humidity_2m}%`;
     document.getElementById('weather-wind').textContent=`💨 ${Math.round(c.wind_speed_10m)} km/h`;
     document.getElementById('weather-feels').textContent=`🌡️ Ressenti ${Math.round(c.apparent_temperature)}°C`;
-  }catch{
-    document.getElementById('weather-error').style.display='block';
-  }
+  }catch{ document.getElementById('weather-error').style.display='block'; }
 }
-
-// Recherche de ville via Open-Meteo Geocoding
 async function searchCity(){
   const input=document.getElementById('weather-city-input').value.trim();
   const status=document.getElementById('weather-city-status');
@@ -403,35 +284,44 @@ async function searchCity(){
   try{
     const r=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=1&language=fr&format=json`);
     const d=await r.json();
-    if(!d.results||d.results.length===0){ status.textContent='❌ Ville introuvable'; return; }
+    if(!d.results||!d.results.length){ status.textContent='❌ Ville introuvable'; return; }
     const city=d.results[0];
-    weatherLat=city.latitude;
-    weatherLon=city.longitude;
+    weatherLat=city.latitude; weatherLon=city.longitude;
     weatherCityName=`${city.name}${city.country_code?', '+city.country_code:''}`;
-    localStorage.setItem('wx_lat', weatherLat);
-    localStorage.setItem('wx_lon', weatherLon);
-    localStorage.setItem('wx_city', weatherCityName);
-    status.textContent=`✓ Ville mise à jour : ${weatherCityName}`;
+    localStorage.setItem('wx_lat',weatherLat); localStorage.setItem('wx_lon',weatherLon); localStorage.setItem('wx_city',weatherCityName);
+    status.textContent=`✓ ${weatherCityName}`;
     document.getElementById('weather-city-input').value='';
     setTimeout(()=>status.textContent='',3000);
     loadWeather();
-  }catch{
-    status.textContent='❌ Erreur de connexion';
-  }
+  }catch{ status.textContent='❌ Erreur de connexion'; }
 }
+document.getElementById('weather-city-btn').addEventListener('click',searchCity);
+document.getElementById('weather-city-input').addEventListener('keydown',e=>{ if(e.key==='Enter') searchCity(); });
+loadWeather(); setInterval(loadWeather,600_000);
 
-document.getElementById('weather-city-btn').addEventListener('click', searchCity);
-document.getElementById('weather-city-input').addEventListener('keydown', e=>{ if(e.key==='Enter') searchCity(); });
-
-loadWeather();
-setInterval(loadWeather, 600_000);
-
-/* EVENTS & TASKS */
+/* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
 const today=new Date();
 let calYear=today.getFullYear(), calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
 function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
+
+/* EXPORT CSV */
+document.getElementById('btn-export-csv').addEventListener('click',()=>{
+  if(!events.length){ alert('Aucun événement à exporter.'); return; }
+  const header='nom,date,duree_min,type,fait';
+  const rows=events.map(e=>[
+    `"${e.name.replace(/"/g,'""')}"`,
+    e.date, e.duration, e.type,
+    e.done?'oui':'non'
+  ].join(','));
+  const csv=[header,...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`evenements_${toYMD(today)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+});
 
 /* CALENDAR */
 function renderCalendar(){
@@ -446,15 +336,11 @@ function renderCalendar(){
   const startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
     const prev=new Date(calYear,calMonth,1-startDow+i);
-    const el=document.createElement('div');
-    el.className='cal-day other-month';
-    el.textContent=prev.getDate();
-    grid.appendChild(el);
+    const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=prev.getDate(); grid.appendChild(el);
   }
   for(let d=1;d<=last.getDate();d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const el=document.createElement('div');
-    el.className='cal-day';
+    const el=document.createElement('div'); el.className='cal-day';
     if(ds===todayStr) el.classList.add('today');
     if(ds<todayStr)   el.classList.add('past');
     if(eventDates.has(ds)) el.classList.add('has-event');
@@ -473,7 +359,7 @@ function renderTasks(){
   const empty=document.getElementById('tasks-empty');
   list.innerHTML='';
   const sorted=[...events].sort((a,b)=>{ if(a.done!==b.done) return a.done?1:-1; return a.date.localeCompare(b.date); });
-  if(sorted.length===0){ empty.style.display='block'; return; }
+  if(!sorted.length){ empty.style.display='block'; return; }
   empty.style.display='none';
   sorted.forEach(ev=>{
     const ri=events.indexOf(ev);
@@ -483,7 +369,7 @@ function renderTasks(){
     const check=document.createElement('div');
     check.className='task-check'+(ev.done?' checked':'');
     check.textContent=ev.done?'✓':'';
-    check.addEventListener('click',()=>{ events[ri].done=!events[ri].done; saveEvents(); renderTasks(); renderCalendar(); autoLogPastEvents(); });
+    check.addEventListener('click',()=>{ events[ri].done=!events[ri].done; saveEvents(); renderTasks(); renderCalendar(); });
     const info=document.createElement('div'); info.className='task-info';
     const name=document.createElement('div'); name.className='task-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
@@ -517,42 +403,12 @@ document.getElementById('btn-save').addEventListener('click',()=>{
   const duration=parseInt(document.getElementById('ev-duration').value)||60;
   const type=document.getElementById('ev-type').value;
   if(!name||!date){ alert('Merci de renseigner le nom et la date.'); return; }
-  events.push({name,date,duration,type,done:false,logged:false,loggedAt:null,created:new Date().toISOString()});
+  events.push({name,date,duration,type,done:false,created:new Date().toISOString()});
   saveEvents(); renderTasks(); renderCalendar(); closeModal();
-  autoLogPastEvents();
 });
-
-/* AUTO-LOG */
-const logStatus=document.getElementById('log-status');
-async function autoLogPastEvents(){
-  const todayStr=toYMD(today);
-  const toLog=events.filter(ev=>!ev.logged&&ev.date<todayStr);
-  if(toLog.length===0) return;
-  try{
-    const res=await fetch('http://127.0.0.1:5000/log',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({events:toLog})
-    });
-    const result=await res.json();
-    if(result.ok){
-      const now=new Date().toISOString();
-      events=events.map(ev=>(!ev.logged&&ev.date<todayStr)?{...ev,logged:true,loggedAt:now}:ev);
-      saveEvents(); renderTasks();
-      logStatus.className='log-status ok';
-      logStatus.textContent=`✓ ${result.logged} événement(s) logé(s) dans evenements.csv`;
-      setTimeout(()=>logStatus.textContent='',4000);
-    }
-  }catch{
-    logStatus.className='log-status err';
-    logStatus.textContent='⚠️ Serveur local non disponible — lance start_firefox_accueil.bat';
-  }
-}
 
 renderCalendar();
 renderTasks();
-autoLogPastEvents();
-setInterval(autoLogPastEvents,60_000);
 </script>
 </body>
 </html>
