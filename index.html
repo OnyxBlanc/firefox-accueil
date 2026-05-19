@@ -7,12 +7,15 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
     * { margin:0; padding:0; box-sizing:border-box; }
+    html { overflow:hidden; }
     body {
-      min-height:100vh; font-family:'Inter',sans-serif;
+      height:100vh; overflow-y:auto; scrollbar-width:none; -ms-overflow-style:none;
+      font-family:'Inter',sans-serif;
       background:linear-gradient(135deg,#1a0a10 0%,#2d1020 30%,#1e0a1a 60%,#0d0510 100%);
       color:#f0d6e0; display:flex; flex-direction:column; align-items:center;
       justify-content:flex-start; gap:2rem; padding:2rem 1rem 3rem;
     }
+    body::-webkit-scrollbar { display:none; }
 
     /* COLONNES FAVORIS FIXES */
     .side-col {
@@ -113,7 +116,7 @@
     /* PANEL CALENDRIER + TACHES */
     #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
-    /* CALENDRIER — taille originale */
+    /* CALENDRIER */
     #calendar-section { flex:1 1 320px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both; }
     #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
@@ -130,7 +133,7 @@
     .cal-day.other-month { color:#5a3040; }
     .cal-day.past { opacity:.5; }
 
-    /* TACHES — taille originale */
+    /* TACHES */
     #tasks-section { flex:1 1 300px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:.8rem; animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both; max-height:440px; }
     #tasks-header { display:flex; align-items:center; justify-content:space-between; }
     #tasks-title { font-size:.95rem; font-weight:600; color:#f0d6e0; }
@@ -181,10 +184,7 @@
     .btn-danger { background:rgba(180,40,60,.2); border:1px solid rgba(220,60,80,.3); color:#e07080; font-size:.82rem; padding:.45rem 1rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s; }
     .btn-danger:hover { background:rgba(180,40,60,.4); }
 
-    /* MODAL FAVORI */
     #fav-modal { max-width:340px; }
-
-    /* MODAL FMHY */
     #fmhy-modal { max-width:640px; max-height:85vh; display:flex; flex-direction:column; }
     #fmhy-modal-body { overflow-y:auto; flex:1; }
     #fmhy-modal-body::-webkit-scrollbar { width:4px; }
@@ -196,7 +196,6 @@
     .fmhy-link span { font-size:.9rem; flex-shrink:0; }
     .fmhy-divider { height:1px; background:rgba(220,100,140,.15); margin:.4rem 0; }
 
-    /* MODAL HISTORIQUE */
     #history-modal { max-width:520px; max-height:80vh; display:flex; flex-direction:column; }
     #history-modal-actions { display:flex; gap:.5rem; }
     #btn-history-export,#btn-history-clear { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
@@ -220,7 +219,6 @@
 </head>
 <body>
 
-  <!-- COLONNES FAVORIS FIXES -->
   <div class="side-col left"  id="col-left"></div>
   <div class="side-col right" id="col-right"></div>
 
@@ -396,7 +394,6 @@
   </div>
 
 <script>
-/* CLOCK */
 function updateClock(){
   const n=new Date();
   document.getElementById('time').textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
@@ -404,7 +401,6 @@ function updateClock(){
 }
 updateClock(); setInterval(updateClock,1000);
 
-/* SEARCH */
 let currentUrl='https://duckduckgo.com/?q=';
 function setEngine(tab){
   document.querySelectorAll('.engine-tab').forEach(t=>t.classList.remove('active'));
@@ -422,14 +418,12 @@ document.getElementById('search-form').addEventListener('submit',e=>{
   if(q) window.open(currentUrl+encodeURIComponent(q),'_blank');
 });
 
-/* FMHY */
 const fmhyBtn=document.getElementById('fmhy-btn');
 const fmhyOverlay=document.getElementById('fmhy-overlay');
 fmhyBtn.addEventListener('click',()=>{ fmhyOverlay.classList.add('open'); fmhyBtn.classList.add('open'); });
 document.getElementById('btn-fmhy-close').addEventListener('click',()=>{ fmhyOverlay.classList.remove('open'); fmhyBtn.classList.remove('open'); });
 fmhyOverlay.addEventListener('click',e=>{ if(e.target===fmhyOverlay){ fmhyOverlay.classList.remove('open'); fmhyBtn.classList.remove('open'); } });
 
-/* WEATHER */
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const WD={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
 let weatherLat=parseFloat(localStorage.getItem('wx_lat'))||43.2965;
@@ -470,54 +464,29 @@ document.getElementById('weather-city-btn').addEventListener('click',searchCity)
 document.getElementById('weather-city-input').addEventListener('keydown',e=>{ if(e.key==='Enter') searchCity(); });
 loadWeather(); setInterval(loadWeather,600_000);
 
-/* FAVORIS */
 const FAV_COUNT=8;
 let favs=JSON.parse(localStorage.getItem('nx_favs')||'null');
 if(!favs||!favs.left){ favs={ left:Array(FAV_COUNT).fill(null), right:Array(FAV_COUNT).fill(null) }; }
-
 let favEditSide=null,favEditIndex=null;
 function saveFavs(){ localStorage.setItem('nx_favs',JSON.stringify(favs)); }
-
-function faviconUrl(url){
-  try{
-    const domain=new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-  }catch{ return null; }
-}
-
+function faviconUrl(url){ try{ const domain=new URL(url).hostname; return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`; }catch{ return null; } }
 function renderFavCol(side){
-  const col=document.getElementById(`col-${side}`);
-  col.innerHTML='';
+  const col=document.getElementById(`col-${side}`); col.innerHTML='';
   favs[side].forEach((f,i)=>{
     const slot=document.createElement(f&&f.url?'a':'div');
     slot.className='fav-slot'+(f?'':' empty');
     if(f&&f.url){ slot.href=f.url; slot.target='_blank'; slot.rel='noopener noreferrer'; }
-    if(f&&f.url){
-      const img=document.createElement('img');
-      img.className='fav-favicon';
-      img.src=faviconUrl(f.url);
-      img.alt=f.name||'';
-      img.onerror=()=>{ img.style.display='none'; slot.insertAdjacentText('beforeend',f.name?f.name.slice(0,2):'?'); };
-      slot.appendChild(img);
-    } else {
-      const plus=document.createElement('span'); plus.className='fav-plus'; plus.textContent='＋';
-      slot.appendChild(plus);
-    }
-    if(f&&f.name){
-      const lbl=document.createElement('span'); lbl.className='fav-label'; lbl.textContent=f.name;
-      slot.appendChild(lbl);
-    }
+    if(f&&f.url){ const img=document.createElement('img'); img.className='fav-favicon'; img.src=faviconUrl(f.url); img.alt=f.name||''; img.onerror=()=>{ img.style.display='none'; slot.insertAdjacentText('beforeend',f.name?f.name.slice(0,2):'?'); }; slot.appendChild(img); }
+    else{ const plus=document.createElement('span'); plus.className='fav-plus'; plus.textContent='＋'; slot.appendChild(plus); }
+    if(f&&f.name){ const lbl=document.createElement('span'); lbl.className='fav-label'; lbl.textContent=f.name; slot.appendChild(lbl); }
     const editBtn=document.createElement('button'); editBtn.className='fav-edit-btn'; editBtn.textContent='✏';
-    editBtn.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); openFavModal(side,i); });
-    slot.appendChild(editBtn);
+    editBtn.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); openFavModal(side,i); }); slot.appendChild(editBtn);
     if(!f) slot.addEventListener('click',ev=>{ ev.preventDefault(); openFavModal(side,i); });
     col.appendChild(slot);
   });
 }
-
 function openFavModal(side,index){
-  favEditSide=side; favEditIndex=index;
-  const f=favs[side][index];
+  favEditSide=side; favEditIndex=index; const f=favs[side][index];
   document.getElementById('fav-modal-title').textContent=`★ Favori — ${side==='left'?'Gauche':'Droite'} #${index+1}`;
   document.getElementById('fav-name-input').value=f?f.name:'';
   document.getElementById('fav-url-input').value=f?f.url:'';
@@ -533,18 +502,13 @@ document.getElementById('btn-fav-save').addEventListener('click',()=>{
   const name=document.getElementById('fav-name-input').value.trim();
   const url=document.getElementById('fav-url-input').value.trim();
   if(!url){ alert('Merci de saisir une URL.'); return; }
-  let finalUrl=url;
-  if(!/^https?:\/\//i.test(finalUrl)) finalUrl='https://'+finalUrl;
+  let finalUrl=url; if(!/^https?:\/\//i.test(finalUrl)) finalUrl='https://'+finalUrl;
   favs[favEditSide][favEditIndex]={name,url:finalUrl};
   saveFavs(); renderFavCol(favEditSide); closeFavModal();
 });
-document.getElementById('btn-fav-delete').addEventListener('click',()=>{
-  favs[favEditSide][favEditIndex]=null;
-  saveFavs(); renderFavCol(favEditSide); closeFavModal();
-});
+document.getElementById('btn-fav-delete').addEventListener('click',()=>{ favs[favEditSide][favEditIndex]=null; saveFavs(); renderFavCol(favEditSide); closeFavModal(); });
 renderFavCol('left'); renderFavCol('right');
 
-/* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
 let history=JSON.parse(localStorage.getItem('nx_history')||'[]');
 events=events.map(ev=>{ if(ev.date&&!ev.start){ const s=ev.date+'T00:00'; return {...ev,start:s,end:new Date(new Date(s).getTime()+(ev.duration||60)*60000).toISOString().slice(0,16)}; } return ev; });
@@ -556,13 +520,11 @@ function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history
 function archiveEvent(ev,r){ history.push({...ev,raison:r,archive_le:new Date().toISOString()}); saveHistory(); }
 function formatDuration(s,e){ const diff=new Date(e)-new Date(s); if(diff<=0) return '—'; const m=Math.floor(diff/60000),d=Math.floor(m/1440),h=Math.floor((m%1440)/60),mn=m%60; return [d&&`${d}j`,h&&`${h}h`,mn&&`${mn}min`].filter(Boolean).join(' '); }
 function eventDays(ev){ const days=[],s=new Date(ev.start),e=new Date(ev.end); s.setHours(0,0,0,0); e.setHours(0,0,0,0); for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)) days.push(toYMD(new Date(d))); return days; }
-
 document.getElementById('btn-export-csv').addEventListener('click',()=>{
   if(!events.length){ alert('Aucun événement à exporter.'); return; }
   const csv=['nom,debut,fin,duree,type,fait',...events.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.done?'oui':'non'].join(','))].join('\n');
   Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`evenements_${toYMD(today)}.csv`}).click();
 });
-
 function renderCalendar(){
   const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
@@ -583,7 +545,6 @@ function renderCalendar(){
 }
 document.getElementById('cal-prev').addEventListener('click',()=>{ if(--calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
 document.getElementById('cal-next').addEventListener('click',()=>{ if(++calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
-
 const TYPE_ICON={task:'✅',event:'📅',reminder:'🔔'};
 function renderTasks(){
   const list=document.getElementById('tasks-list'),empty=document.getElementById('tasks-empty');
@@ -606,7 +567,6 @@ function renderTasks(){
     item.appendChild(check); item.appendChild(info); item.appendChild(del); list.appendChild(item);
   });
 }
-
 function renderHistory(){
   const list=document.getElementById('history-list'),empty=document.getElementById('history-empty');
   list.innerHTML='';
@@ -631,7 +591,6 @@ document.getElementById('btn-history-export').addEventListener('click',()=>{
   const csv=['nom,debut,fin,duree,type,raison,archive_le',...history.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.raison,e.archive_le].join(','))].join('\n');
   Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`historique_${toYMD(today)}.csv`}).click();
 });
-
 function toLocal(date){ const p=n=>String(n).padStart(2,'0'); return `${date.getFullYear()}-${p(date.getMonth()+1)}-${p(date.getDate())}T${p(date.getHours())}:${p(date.getMinutes())}`; }
 function openModal(pre=''){
   document.getElementById('ev-name').value='';
@@ -656,7 +615,6 @@ document.getElementById('btn-save').addEventListener('click',()=>{
   events.push({name,start,end,type,done:false,created:new Date().toISOString()});
   saveEvents(); renderTasks(); renderCalendar(); closeModal();
 });
-
 renderCalendar();
 renderTasks();
 </script>
