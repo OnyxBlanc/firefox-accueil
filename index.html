@@ -38,29 +38,33 @@
     #search-btn { background:linear-gradient(90deg,#c94070,#e06080); border:none; cursor:pointer; color:#fff; font-size:.85rem; padding:.45rem 1rem; border-radius:50px; font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.04em; transition:opacity .2s,transform .2s,box-shadow .2s; white-space:nowrap; }
     #search-btn:hover { opacity:.88; transform:scale(1.04); box-shadow:0 0 14px rgba(220,80,120,.45); }
 
-    /* FMHY BUTTON + POPUP */
-    #fmhy-wrapper { position:relative; }
+    /* FMHY BUTTON */
     #fmhy-btn { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
     #fmhy-btn:hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
     #fmhy-btn.open { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
-    #fmhy-popup {
-      display:none; position:absolute; top:calc(100% + .6rem); right:0;
-      background:linear-gradient(135deg,#2d1020,#1e0a1a);
-      border:1px solid rgba(220,100,140,.3); border-radius:16px;
-      padding:.8rem; width:220px; z-index:200;
-      box-shadow:0 12px 40px rgba(0,0,0,.6); backdrop-filter:blur(12px);
-      animation:popIn .2s cubic-bezier(.22,1,.36,1);
-    }
-    @keyframes popIn { from{opacity:0;transform:translateY(-8px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
-    #fmhy-popup.visible { display:block; }
-    .fmhy-section-title { font-size:.65rem; font-weight:600; color:#9a6070; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .4rem .2rem; }
+
+    /* FMHY MODAL */
+    #fmhy-overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:300; opacity:0; pointer-events:none; transition:opacity .25s; }
+    #fmhy-overlay.open { opacity:1; pointer-events:all; }
+    #fmhy-modal { background:linear-gradient(135deg,#2d1020,#1a0a10); border:1px solid rgba(220,100,140,.3); border-radius:20px; padding:1.6rem; width:90%; max-width:640px; max-height:85vh; display:flex; flex-direction:column; transform:translateY(20px) scale(.97); transition:transform .25s; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+    #fmhy-overlay.open #fmhy-modal { transform:translateY(0) scale(1); }
+    #fmhy-modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; }
+    #fmhy-modal-header h3 { font-size:1rem; font-weight:600; color:#f4a0b5; }
+    #btn-fmhy-close { background:none; border:none; color:#9a6070; cursor:pointer; font-size:1.1rem; transition:color .2s; }
+    #btn-fmhy-close:hover { color:#e06080; }
+    #fmhy-modal-body { overflow-y:auto; flex:1; }
+    #fmhy-modal-body::-webkit-scrollbar { width:4px; }
+    #fmhy-modal-body::-webkit-scrollbar-track { background:transparent; }
+    #fmhy-modal-body::-webkit-scrollbar-thumb { background:rgba(220,80,120,.3); border-radius:4px; }
+    .fmhy-section-title { font-size:.65rem; font-weight:600; color:#9a6070; letter-spacing:.1em; text-transform:uppercase; padding:.5rem 0 .4rem; }
+    .fmhy-grid { display:grid; grid-template-columns:1fr 1fr; gap:.3rem; margin-bottom:.6rem; }
     .fmhy-link {
       display:flex; align-items:center; gap:.5rem;
-      padding:.38rem .6rem; border-radius:8px; text-decoration:none;
+      padding:.45rem .7rem; border-radius:10px; text-decoration:none;
       color:#e0b8c8; font-size:.78rem; transition:background .18s,color .18s;
     }
     .fmhy-link:hover { background:rgba(220,80,120,.18); color:#fff; }
-    .fmhy-link span { font-size:.9rem; }
+    .fmhy-link span { font-size:.9rem; flex-shrink:0; }
     .fmhy-divider { height:1px; background:rgba(220,100,140,.15); margin:.4rem 0; }
 
     /* WEATHER */
@@ -138,7 +142,7 @@
     .task-del:hover { color:#e06080; }
     #tasks-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:1rem 0; }
 
-    /* MODAL */
+    /* MODAL AJOUT */
     #modal-overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s; }
     #modal-overlay.open { opacity:1; pointer-events:all; }
     #modal { background:linear-gradient(135deg,#2d1020,#1a0a10); border:1px solid rgba(220,100,140,.3); border-radius:20px; padding:1.6rem; width:90%; max-width:400px; transform:translateY(20px) scale(.97); transition:transform .25s; box-shadow:0 20px 60px rgba(0,0,0,.6); }
@@ -201,10 +205,25 @@
       <button class="engine-tab active" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
       <button class="engine-tab" data-engine="yt" data-icon="▶️" data-url="https://www.youtube.com/results?search_query=" data-ph="Rechercher sur YouTube…">YouTube</button>
       <button class="engine-tab" data-engine="gh" data-icon="🐙" data-url="https://github.com/search?q=" data-ph="Rechercher sur GitHub…">GitHub</button>
-      <div id="fmhy-wrapper">
-        <button id="fmhy-btn">📚 FMHY ▾</button>
-        <div id="fmhy-popup">
-          <div class="fmhy-section-title">Wiki</div>
+      <button id="fmhy-btn">📚 FMHY ▾</button>
+    </div>
+    <form id="search-form">
+      <span id="engine-icon">🦆</span>
+      <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
+      <button id="search-btn" type="submit">Chercher</button>
+    </form>
+  </div>
+
+  <!-- MODAL FMHY -->
+  <div id="fmhy-overlay">
+    <div id="fmhy-modal">
+      <div id="fmhy-modal-header">
+        <h3>📚 FMHY — Free Media Heck Yeah</h3>
+        <button id="btn-fmhy-close">✕</button>
+      </div>
+      <div id="fmhy-modal-body">
+        <div class="fmhy-section-title">Wiki</div>
+        <div class="fmhy-grid">
           <a class="fmhy-link" href="https://fmhy.net/privacy" target="_blank"><span>🛡️</span> Adblocking / Privacy</a>
           <a class="fmhy-link" href="https://fmhy.net/ai" target="_blank"><span>🤖</span> Artificial Intelligence</a>
           <a class="fmhy-link" href="https://fmhy.net/videopiracyguide" target="_blank"><span>📺</span> Movies / TV / Anime</a>
@@ -218,8 +237,10 @@
           <a class="fmhy-link" href="https://fmhy.net/linuxguide" target="_blank"><span>🐧</span> Linux / macOS</a>
           <a class="fmhy-link" href="https://fmhy.net/non-english" target="_blank"><span>🌍</span> Non-English</a>
           <a class="fmhy-link" href="https://fmhy.net/misc" target="_blank"><span>📁</span> Miscellaneous</a>
-          <div class="fmhy-divider"></div>
-          <div class="fmhy-section-title">Tools</div>
+        </div>
+        <div class="fmhy-divider"></div>
+        <div class="fmhy-section-title">Tools</div>
+        <div class="fmhy-grid">
           <a class="fmhy-link" href="https://fmhy.net/system-tools" target="_blank"><span>💻</span> System Tools</a>
           <a class="fmhy-link" href="https://fmhy.net/file-tools" target="_blank"><span>🗂️</span> File Tools</a>
           <a class="fmhy-link" href="https://fmhy.net/internet-tools" target="_blank"><span>🌐</span> Internet Tools</a>
@@ -234,11 +255,6 @@
         </div>
       </div>
     </div>
-    <form id="search-form">
-      <span id="engine-icon">🦆</span>
-      <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
-      <button id="search-btn" type="submit">Chercher</button>
-    </form>
   </div>
 
   <div id="weather-widget">
@@ -293,7 +309,7 @@
     </div>
   </div>
 
-  <!-- MODAL AJOUT -->
+  <!-- MODAL AJOUT EVENEMENT -->
   <div id="modal-overlay">
     <div id="modal">
       <h3>✨ Nouvel événement</h3>
@@ -364,19 +380,23 @@ document.getElementById('search-form').addEventListener('submit',e=>{
   if(q) window.open(currentUrl+encodeURIComponent(q),'_blank');
 });
 
-/* FMHY POPUP */
+/* FMHY MODAL */
 const fmhyBtn=document.getElementById('fmhy-btn');
-const fmhyPopup=document.getElementById('fmhy-popup');
-fmhyBtn.addEventListener('click',e=>{
-  e.stopPropagation();
-  const open=fmhyPopup.classList.toggle('visible');
-  fmhyBtn.classList.toggle('open', open);
+const fmhyOverlay=document.getElementById('fmhy-overlay');
+fmhyBtn.addEventListener('click',()=>{
+  fmhyOverlay.classList.add('open');
+  fmhyBtn.classList.add('open');
 });
-document.addEventListener('click',()=>{
-  fmhyPopup.classList.remove('visible');
+document.getElementById('btn-fmhy-close').addEventListener('click',()=>{
+  fmhyOverlay.classList.remove('open');
   fmhyBtn.classList.remove('open');
 });
-fmhyPopup.addEventListener('click',e=>e.stopPropagation());
+fmhyOverlay.addEventListener('click',e=>{
+  if(e.target===fmhyOverlay){
+    fmhyOverlay.classList.remove('open');
+    fmhyBtn.classList.remove('open');
+  }
+});
 
 /* WEATHER */
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
@@ -424,7 +444,6 @@ loadWeather(); setInterval(loadWeather,600_000);
 /* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
 let history=JSON.parse(localStorage.getItem('nx_history')||'[]');
-
 events=events.map(ev=>{
   if(ev.date && !ev.start){
     const start=ev.date+'T00:00';
@@ -434,39 +453,28 @@ events=events.map(ev=>{
   }
   return ev;
 });
-
 const today=new Date();
 let calYear=today.getFullYear(), calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
 function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
 function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history)); }
-
-function archiveEvent(ev, reason){
-  history.push({ ...ev, raison: reason, archive_le: new Date().toISOString() });
-  saveHistory();
-}
-
-function formatDuration(startStr, endStr){
+function archiveEvent(ev,reason){ history.push({...ev,raison:reason,archive_le:new Date().toISOString()}); saveHistory(); }
+function formatDuration(startStr,endStr){
   const diff=new Date(endStr)-new Date(startStr);
   if(diff<=0) return '—';
   const totalMin=Math.floor(diff/60000);
-  const days=Math.floor(totalMin/1440);
-  const hours=Math.floor((totalMin%1440)/60);
-  const mins=totalMin%60;
+  const days=Math.floor(totalMin/1440),hours=Math.floor((totalMin%1440)/60),mins=totalMin%60;
   const parts=[];
-  if(days)  parts.push(`${days}j`);
+  if(days) parts.push(`${days}j`);
   if(hours) parts.push(`${hours}h`);
-  if(mins)  parts.push(`${mins}min`);
+  if(mins) parts.push(`${mins}min`);
   return parts.join(' ');
 }
-
 function eventDays(ev){
   const days=[];
   const start=new Date(ev.start); start.setHours(0,0,0,0);
-  const end=new Date(ev.end);     end.setHours(0,0,0,0);
-  for(let d=new Date(start); d<=end; d.setDate(d.getDate()+1)){
-    days.push(toYMD(new Date(d)));
-  }
+  const end=new Date(ev.end); end.setHours(0,0,0,0);
+  for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)) days.push(toYMD(new Date(d)));
   return days;
 }
 
@@ -474,47 +482,34 @@ function eventDays(ev){
 document.getElementById('btn-export-csv').addEventListener('click',()=>{
   if(!events.length){ alert('Aucun événement à exporter.'); return; }
   const header='nom,debut,fin,duree,type,fait';
-  const rows=events.map(e=>[
-    `"${e.name.replace(/"/g,'""')}"`,
-    e.start, e.end, formatDuration(e.start,e.end), e.type, e.done?'oui':'non'
-  ].join(','));
+  const rows=events.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.done?'oui':'non'].join(','));
   const csv=[header,...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`evenements_${toYMD(today)}.csv`;
-  a.click(); URL.revokeObjectURL(url);
+  const a=document.createElement('a'); a.href=url; a.download=`evenements_${toYMD(today)}.csv`; a.click(); URL.revokeObjectURL(url);
 });
 
 /* CALENDRIER */
 function renderCalendar(){
   const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
-  const grid=document.getElementById('cal-grid');
-  grid.innerHTML='';
-  const first=new Date(calYear,calMonth,1);
-  const last=new Date(calYear,calMonth+1,0);
+  const grid=document.getElementById('cal-grid'); grid.innerHTML='';
+  const first=new Date(calYear,calMonth,1), last=new Date(calYear,calMonth+1,0);
   const todayStr=toYMD(today);
   const eventDates=new Set(events.flatMap(ev=>eventDays(ev)));
   const startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
     const prev=new Date(calYear,calMonth,1-startDow+i);
-    const el=document.createElement('div'); el.className='cal-day other-month';
-    el.textContent=prev.getDate(); grid.appendChild(el);
+    const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=prev.getDate(); grid.appendChild(el);
   }
   for(let d=1;d<=last.getDate();d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const el=document.createElement('div'); el.className='cal-day';
     if(ds===todayStr) el.classList.add('today');
-    if(ds<todayStr)   el.classList.add('past');
-    const numSpan=document.createElement('span'); numSpan.textContent=d;
-    el.appendChild(numSpan);
-    if(eventDates.has(ds)){
-      el.classList.add('has-event');
-      const dot=document.createElement('span'); dot.className='cal-day-dot';
-      el.appendChild(dot);
-    }
-    el.addEventListener('click',()=>openModal(ds));
-    grid.appendChild(el);
+    if(ds<todayStr) el.classList.add('past');
+    const numSpan=document.createElement('span'); numSpan.textContent=d; el.appendChild(numSpan);
+    if(eventDates.has(ds)){ el.classList.add('has-event'); const dot=document.createElement('span'); dot.className='cal-day-dot'; el.appendChild(dot); }
+    el.addEventListener('click',()=>openModal(ds)); grid.appendChild(el);
   }
 }
 document.getElementById('cal-prev').addEventListener('click',()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
@@ -523,8 +518,7 @@ document.getElementById('cal-next').addEventListener('click',()=>{ calMonth++; i
 /* TACHES */
 const TYPE_ICON={task:'✅',event:'📅',reminder:'🔔'};
 function renderTasks(){
-  const list=document.getElementById('tasks-list');
-  const empty=document.getElementById('tasks-empty');
+  const list=document.getElementById('tasks-list'), empty=document.getElementById('tasks-empty');
   list.innerHTML='';
   const sorted=[...events].sort((a,b)=>{ if(a.done!==b.done) return a.done?1:-1; return a.start.localeCompare(b.start); });
   if(!sorted.length){ empty.style.display='block'; return; }
@@ -538,34 +532,26 @@ function renderTasks(){
     check.className='task-check'+(ev.done?' checked':'');
     check.textContent=ev.done?'✓':'';
     check.addEventListener('click',()=>{
-      const wasDone=events[ri].done;
-      events[ri].done=!wasDone;
-      if(!wasDone) archiveEvent(events[ri], 'terminée');
+      const wasDone=events[ri].done; events[ri].done=!wasDone;
+      if(!wasDone) archiveEvent(events[ri],'terminée');
       saveEvents(); renderTasks(); renderCalendar();
     });
     const info=document.createElement('div'); info.className='task-info';
     const name=document.createElement('div'); name.className='task-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='task-meta';
-    const startDate=new Date(ev.start); const endDate=new Date(ev.end);
-    const dur=formatDuration(ev.start,ev.end);
+    const startDate=new Date(ev.start),endDate=new Date(ev.end),dur=formatDuration(ev.start,ev.end);
     meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} ${startDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} → ${endDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} ${endDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} · ${dur}${isOverdue?' · ⏰ Passé':''}`;
     info.appendChild(name); info.appendChild(meta);
     const del=document.createElement('button'); del.className='task-del'; del.textContent='×';
-    del.addEventListener('click',()=>{
-      archiveEvent(events[ri], 'supprimée');
-      events.splice(ri,1);
-      saveEvents(); renderTasks(); renderCalendar();
-    });
-    item.appendChild(check); item.appendChild(info); item.appendChild(del);
-    list.appendChild(item);
+    del.addEventListener('click',()=>{ archiveEvent(events[ri],'supprimée'); events.splice(ri,1); saveEvents(); renderTasks(); renderCalendar(); });
+    item.appendChild(check); item.appendChild(info); item.appendChild(del); list.appendChild(item);
   });
 }
 
 /* HISTORIQUE POPUP */
 function renderHistory(){
-  const list=document.getElementById('history-list');
-  const empty=document.getElementById('history-empty');
+  const list=document.getElementById('history-list'),empty=document.getElementById('history-empty');
   list.innerHTML='';
   if(!history.length){ empty.style.display='block'; return; }
   empty.style.display='none';
@@ -578,14 +564,11 @@ function renderHistory(){
     const name=document.createElement('div'); name.className='history-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='history-meta';
-    const archiveDate=new Date(ev.archive_le); const startDate=new Date(ev.start);
+    const archiveDate=new Date(ev.archive_le),startDate=new Date(ev.start);
     meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · Archivé le ${archiveDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} à ${archiveDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
-    info.appendChild(name); info.appendChild(meta);
-    item.appendChild(badge); item.appendChild(info);
-    list.appendChild(item);
+    info.appendChild(name); info.appendChild(meta); item.appendChild(badge); item.appendChild(info); list.appendChild(item);
   });
 }
-
 document.getElementById('btn-history').addEventListener('click',()=>{ renderHistory(); document.getElementById('history-overlay').classList.add('open'); });
 document.getElementById('btn-history-close').addEventListener('click',()=>{ document.getElementById('history-overlay').classList.remove('open'); });
 document.getElementById('history-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open'); });
@@ -596,17 +579,14 @@ document.getElementById('btn-history-clear').addEventListener('click',()=>{
 document.getElementById('btn-history-export').addEventListener('click',()=>{
   if(!history.length){ alert('Aucune entrée dans l\'historique.'); return; }
   const header='nom,debut,fin,duree,type,raison,archive_le';
-  const rows=history.map(e=>[
-    `"${e.name.replace(/"/g,'""')}"`, e.start, e.end, formatDuration(e.start,e.end), e.type, e.raison, e.archive_le
-  ].join(','));
+  const rows=history.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.raison,e.archive_le].join(','));
   const csv=[header,...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download=`historique_${toYMD(today)}.csv`;
-  a.click(); URL.revokeObjectURL(url);
+  const a=document.createElement('a'); a.href=url; a.download=`historique_${toYMD(today)}.csv`; a.click(); URL.revokeObjectURL(url);
 });
 
-/* MODAL */
+/* MODAL AJOUT */
 function toLocalDatetimeValue(date){
   const pad=n=>String(n).padStart(2,'0');
   return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
