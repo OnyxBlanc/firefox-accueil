@@ -67,35 +67,70 @@
       background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18);
       border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px);
       animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both;
-      display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+      display:flex; flex-direction:column; gap:.75rem;
     }
+    #weather-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
     #weather-left { display:flex; align-items:center; gap:1rem; }
     #weather-icon { font-size:2.4rem; line-height:1; animation:floatIcon 3s ease-in-out infinite; }
     @keyframes floatIcon { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
     #weather-main { display:flex; flex-direction:column; gap:.1rem; }
     #weather-temp { font-size:1.8rem; font-weight:300; background:linear-gradient(90deg,#f4a0b5,#e06080); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1; }
     #weather-desc { font-size:.78rem; color:#c890a8; text-transform:capitalize; }
-    #weather-city { font-size:.7rem; color:#9a6070; letter-spacing:.08em; }
+    #weather-city-label { font-size:.7rem; color:#9a6070; letter-spacing:.06em; }
     #weather-right { display:flex; flex-direction:column; align-items:flex-end; gap:.25rem; font-size:.73rem; color:#c890a8; }
     #weather-right span { display:flex; align-items:center; gap:.3rem; }
-    #weather-error { font-size:.8rem; color:#c94070; display:none; }
+    #weather-error { font-size:.78rem; color:#c94070; display:none; margin-top:.3rem; }
+    /* City search row */
+    #weather-search-row {
+      display:flex; gap:.5rem; align-items:center;
+    }
+    #weather-city-input {
+      flex:1; background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2);
+      border-radius:50px; padding:.35rem .9rem; color:#f0d6e0;
+      font-size:.78rem; font-family:'Inter',sans-serif; outline:none;
+      transition:border-color .2s;
+    }
+    #weather-city-input:focus { border-color:rgba(240,100,140,.6); }
+    #weather-city-input::placeholder { color:#a06070; }
+    #weather-city-btn {
+      background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff;
+      font-size:.75rem; padding:.35rem .9rem; border-radius:50px; cursor:pointer;
+      font-family:'Inter',sans-serif; font-weight:600; white-space:nowrap;
+      transition:opacity .2s,transform .2s;
+    }
+    #weather-city-btn:hover { opacity:.85; transform:scale(1.04); }
+    #weather-city-status { font-size:.68rem; color:#9a6070; font-style:italic; min-height:.9rem; }
 
     /* MAIN PANEL */
     #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
-    /* CALENDAR */
+    /* CALENDAR — FIX: en-têtes séparés de la grille des jours */
     #calendar-section {
       flex:1 1 320px;
       background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15);
       border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px);
       animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both;
     }
-    #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     .cal-nav { background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem; padding:.2rem .5rem; border-radius:8px; transition:background .2s; }
     .cal-nav:hover { background:rgba(220,80,120,.15); }
-    #cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.25rem; }
-    .cal-dow { text-align:center; font-size:.65rem; color:#9a6070; font-weight:600; padding-bottom:.3rem; letter-spacing:.06em; }
+    /* Jours de la semaine : grille fixe, pas de gap vertical */
+    #cal-dow-row {
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      margin-bottom:.35rem;
+    }
+    .cal-dow {
+      text-align:center; font-size:.65rem; color:#9a6070;
+      font-weight:600; padding:.2rem 0; letter-spacing:.06em;
+    }
+    /* Grille des jours uniquement */
+    #cal-grid {
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:.3rem;
+    }
     .cal-day {
       aspect-ratio:1; display:flex; align-items:center; justify-content:center;
       font-size:.78rem; border-radius:8px; cursor:pointer; position:relative;
@@ -152,14 +187,8 @@
     .task-del { background:none; border:none; color:#9a6070; cursor:pointer; font-size:.85rem; transition:color .2s; }
     .task-del:hover { color:#e06080; }
     #tasks-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:1rem 0; }
-
-    /* LOG STATUS */
-    #log-status {
-      font-size:.65rem; color:#9a6070; text-align:right;
-      padding:.2rem .5rem; font-style:italic;
-      min-height:1rem;
-    }
-    #log-status.ok  { color:#80c080; }
+    #log-status { font-size:.65rem; color:#9a6070; text-align:right; padding:.2rem .5rem; font-style:italic; min-height:1rem; }
+    #log-status.ok { color:#80c080; }
     #log-status.err { color:#c94070; }
 
     /* MODAL */
@@ -221,48 +250,72 @@
     </form>
   </div>
 
+  <!-- WEATHER -->
   <div id="weather-widget">
-    <div id="weather-left">
-      <div id="weather-icon">⏳</div>
-      <div id="weather-main">
-        <div id="weather-temp">--°C</div>
-        <div id="weather-desc">Chargement…</div>
-        <div id="weather-city">📍 Marseille, FR</div>
+    <div id="weather-top">
+      <div id="weather-left">
+        <div id="weather-icon">⏳</div>
+        <div id="weather-main">
+          <div id="weather-temp">--°C</div>
+          <div id="weather-desc">Chargement…</div>
+          <div id="weather-city-label">📍 Marseille, FR</div>
+        </div>
+      </div>
+      <div id="weather-right">
+        <span id="weather-humidity">💧 --%</span>
+        <span id="weather-wind">💨 -- km/h</span>
+        <span id="weather-feels">🌡️ Ressenti --°C</span>
       </div>
     </div>
-    <div id="weather-right">
-      <span id="weather-humidity">💧 --%</span>
-      <span id="weather-wind">💨 -- km/h</span>
-      <span id="weather-feels">🌡️ Ressenti --°C</span>
+    <!-- Champ de recherche de ville -->
+    <div id="weather-search-row">
+      <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex: Paris, Lyon)" />
+      <button id="weather-city-btn">🔍 Mettre à jour</button>
     </div>
+    <div id="weather-city-status"></div>
     <div id="weather-error">Impossible de charger la météo</div>
   </div>
 
+  <!-- MAIN PANEL -->
   <div id="main-panel">
+
+    <!-- CALENDAR -->
     <div id="calendar-section">
       <div id="cal-header">
         <button class="cal-nav" id="cal-prev">‹</button>
         <span id="cal-month-label"></span>
         <button class="cal-nav" id="cal-next">›</button>
       </div>
+      <!-- En-têtes jours séparés de la grille -->
+      <div id="cal-dow-row">
+        <div class="cal-dow">Lu</div>
+        <div class="cal-dow">Ma</div>
+        <div class="cal-dow">Me</div>
+        <div class="cal-dow">Je</div>
+        <div class="cal-dow">Ve</div>
+        <div class="cal-dow">Sa</div>
+        <div class="cal-dow">Di</div>
+      </div>
       <div id="cal-grid"></div>
     </div>
 
+    <!-- TASKS -->
     <div id="tasks-section">
       <div id="tasks-header">
         <span id="tasks-title">📅 Événements &amp; Tâches</span>
         <button id="btn-add-event">+ Ajouter</button>
       </div>
       <div id="tasks-list"></div>
-      <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
+      <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
       <div id="log-status"></div>
     </div>
   </div>
 
+  <!-- MODAL -->
   <div id="modal-overlay">
     <div id="modal">
       <h3>✨ Nouvel événement</h3>
-      <div class="field"><label>NOM</label><input id="ev-name" type="text" placeholder="Ex: Cours réseaux, RDV médecin…" /></div>
+      <div class="field"><label>NOM</label><input id="ev-name" type="text" placeholder="Ex : Cours réseaux, RDV médecin…" /></div>
       <div id="modal-row">
         <div class="field"><label>DATE DÉBUT</label><input id="ev-date" type="date" /></div>
         <div class="field"><label>DURÉE (min)</label><input id="ev-duration" type="number" placeholder="60" min="1" /></div>
@@ -318,19 +371,60 @@ document.getElementById('search-form').addEventListener('submit',e=>{
 /* WEATHER */
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const WD={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
+
+// Sauvegarde ville dans localStorage
+let weatherLat = parseFloat(localStorage.getItem('wx_lat')) || 43.2965;
+let weatherLon = parseFloat(localStorage.getItem('wx_lon')) || 5.3698;
+let weatherCityName = localStorage.getItem('wx_city') || 'Marseille, FR';
+
 async function loadWeather(){
+  document.getElementById('weather-error').style.display='none';
   try{
-    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.2965&longitude=5.3698&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Europe%2FParis');
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${weatherLat}&longitude=${weatherLon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=auto`);
     const d=await r.json(); const c=d.current;
     document.getElementById('weather-icon').textContent=WI[c.weather_code]??'🌡️';
     document.getElementById('weather-temp').textContent=`${Math.round(c.temperature_2m)}°C`;
     document.getElementById('weather-desc').textContent=WD[c.weather_code]??'Inconnu';
+    document.getElementById('weather-city-label').textContent=`📍 ${weatherCityName}`;
     document.getElementById('weather-humidity').textContent=`💧 ${c.relative_humidity_2m}%`;
     document.getElementById('weather-wind').textContent=`💨 ${Math.round(c.wind_speed_10m)} km/h`;
     document.getElementById('weather-feels').textContent=`🌡️ Ressenti ${Math.round(c.apparent_temperature)}°C`;
-  }catch{ document.getElementById('weather-error').style.display='block'; }
+  }catch{
+    document.getElementById('weather-error').style.display='block';
+  }
 }
-loadWeather(); setInterval(loadWeather,600_000);
+
+// Recherche de ville via Open-Meteo Geocoding
+async function searchCity(){
+  const input=document.getElementById('weather-city-input').value.trim();
+  const status=document.getElementById('weather-city-status');
+  if(!input) return;
+  status.textContent='🔍 Recherche…';
+  try{
+    const r=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(input)}&count=1&language=fr&format=json`);
+    const d=await r.json();
+    if(!d.results||d.results.length===0){ status.textContent='❌ Ville introuvable'; return; }
+    const city=d.results[0];
+    weatherLat=city.latitude;
+    weatherLon=city.longitude;
+    weatherCityName=`${city.name}${city.country_code?', '+city.country_code:''}`;
+    localStorage.setItem('wx_lat', weatherLat);
+    localStorage.setItem('wx_lon', weatherLon);
+    localStorage.setItem('wx_city', weatherCityName);
+    status.textContent=`✓ Ville mise à jour : ${weatherCityName}`;
+    document.getElementById('weather-city-input').value='';
+    setTimeout(()=>status.textContent='',3000);
+    loadWeather();
+  }catch{
+    status.textContent='❌ Erreur de connexion';
+  }
+}
+
+document.getElementById('weather-city-btn').addEventListener('click', searchCity);
+document.getElementById('weather-city-input').addEventListener('keydown', e=>{ if(e.key==='Enter') searchCity(); });
+
+loadWeather();
+setInterval(loadWeather, 600_000);
 
 /* EVENTS & TASKS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
@@ -345,22 +439,22 @@ function renderCalendar(){
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
   const grid=document.getElementById('cal-grid');
   grid.innerHTML='';
-  ['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach(d=>{
-    const el=document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el);
-  });
   const first=new Date(calYear,calMonth,1);
   const last=new Date(calYear,calMonth+1,0);
   const todayStr=toYMD(today);
   const eventDates=new Set(events.map(e=>e.date.slice(0,10)));
-  let startDow=(first.getDay()+6)%7;
+  const startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
     const prev=new Date(calYear,calMonth,1-startDow+i);
-    const el=document.createElement('div'); el.className='cal-day other-month';
-    el.textContent=prev.getDate(); grid.appendChild(el);
+    const el=document.createElement('div');
+    el.className='cal-day other-month';
+    el.textContent=prev.getDate();
+    grid.appendChild(el);
   }
   for(let d=1;d<=last.getDate();d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const el=document.createElement('div'); el.className='cal-day';
+    const el=document.createElement('div');
+    el.className='cal-day';
     if(ds===todayStr) el.classList.add('today');
     if(ds<todayStr)   el.classList.add('past');
     if(eventDates.has(ds)) el.classList.add('has-event');
@@ -428,7 +522,7 @@ document.getElementById('btn-save').addEventListener('click',()=>{
   autoLogPastEvents();
 });
 
-/* AUTO-LOG vers server.py */
+/* AUTO-LOG */
 const logStatus=document.getElementById('log-status');
 async function autoLogPastEvents(){
   const todayStr=toYMD(today);
@@ -455,11 +549,10 @@ async function autoLogPastEvents(){
   }
 }
 
-/* Init */
 renderCalendar();
 renderTasks();
 autoLogPastEvents();
-setInterval(autoLogPastEvents, 60_000);
+setInterval(autoLogPastEvents,60_000);
 </script>
 </body>
 </html>
