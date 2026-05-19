@@ -18,42 +18,54 @@
     }
     body::-webkit-scrollbar { display:none; }
 
-    /* ── ORBES DE FOND CSS ONLY ── */
+    /* ── ORBES DE FOND ── */
     .bg-orb {
       position:fixed; border-radius:50%;
       pointer-events:none; z-index:0;
       filter:blur(90px); opacity:.10;
+      /* ne prend AUCUNE place dans le flex */
+      height:0; width:0; overflow:visible;
     }
-    .bg-orb-1 {
-      width:500px; height:500px;
+    .bg-orb-1::after {
+      content:''; position:fixed;
+      width:500px; height:500px; border-radius:50%;
       background:radial-gradient(circle,#c94070,transparent 70%);
       top:-120px; left:-140px;
+      filter:blur(90px); opacity:.10;
+      pointer-events:none;
       animation:orbDrift 22s ease-in-out infinite alternate;
     }
-    .bg-orb-2 {
-      width:380px; height:380px;
+    .bg-orb-2::after {
+      content:''; position:fixed;
+      width:380px; height:380px; border-radius:50%;
       background:radial-gradient(circle,#8b1a4a,transparent 70%);
       bottom:-80px; right:-100px;
+      filter:blur(90px); opacity:.10;
+      pointer-events:none;
       animation:orbDrift 28s ease-in-out infinite alternate-reverse;
     }
-    .bg-orb-3 {
-      width:280px; height:280px;
+    .bg-orb-3::after {
+      content:''; position:fixed;
+      width:280px; height:280px; border-radius:50%;
       background:radial-gradient(circle,#e06080,transparent 70%);
       top:45%; left:55%;
+      filter:blur(90px); opacity:.07;
+      pointer-events:none;
       animation:orbDrift 18s ease-in-out infinite alternate;
-      opacity:.07;
     }
     @keyframes orbDrift {
       from { transform:translate(0,0) scale(1); }
       to   { transform:translate(35px,25px) scale(1.08); }
     }
 
-    /* tout le contenu passe au-dessus des orbes */
-    body > *:not(.bg-orb) { position:relative; z-index:1; }
+    /* tout le contenu réel passe au-dessus */
+    body > *:not(.bg-orb):not(.side-col) { position:relative; z-index:1; }
 
     /* ── COLONNES FAVORIS FIXES ── */
     .side-col {
+      /* position:fixed MAIS height:0 width:0 → zéro impact sur le flex */
       position:fixed; top:50%; transform:translateY(-50%);
+      height:0; width:0; overflow:visible;
       display:flex; flex-direction:column; align-items:center; gap:.5rem;
       z-index:50;
     }
@@ -309,11 +321,12 @@
 </head>
 <body>
 
-  <!-- ORBES DE FOND CSS ONLY -->
+  <!-- ORBES DE FOND (height:0 width:0 → aucun impact flex) -->
   <div class="bg-orb bg-orb-1"></div>
   <div class="bg-orb bg-orb-2"></div>
   <div class="bg-orb bg-orb-3"></div>
 
+  <!-- COLONNES FAVORIS FIXES (height:0 width:0 → aucun impact flex) -->
   <div class="side-col left"  id="col-left"></div>
   <div class="side-col right" id="col-right"></div>
 
