@@ -112,6 +112,8 @@
     #btn-add-event:hover { opacity:.85; transform:scale(1.04); }
     #btn-export-csv { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
     #btn-export-csv:hover { background:rgba(220,80,120,.15); color:#f4a0b5; }
+    #btn-history { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
+    #btn-history:hover { background:rgba(220,80,120,.15); color:#f4a0b5; }
     #tasks-list { overflow-y:auto; display:flex; flex-direction:column; gap:.5rem; flex:1; }
     #tasks-list::-webkit-scrollbar { width:4px; }
     #tasks-list::-webkit-scrollbar-track { background:transparent; }
@@ -149,6 +151,33 @@
     .btn-cancel:hover { background:rgba(220,80,120,.15); }
     .btn-save { background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff; font-size:.82rem; padding:.45rem 1.2rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:opacity .2s; }
     .btn-save:hover { opacity:.85; }
+
+    /* HISTORY POPUP */
+    #history-overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .25s; }
+    #history-overlay.open { opacity:1; pointer-events:all; }
+    #history-modal { background:linear-gradient(135deg,#2d1020,#1a0a10); border:1px solid rgba(220,100,140,.3); border-radius:20px; padding:1.6rem; width:90%; max-width:520px; max-height:80vh; display:flex; flex-direction:column; transform:translateY(20px) scale(.97); transition:transform .25s; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+    #history-overlay.open #history-modal { transform:translateY(0) scale(1); }
+    #history-modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    #history-modal-header h3 { font-size:1rem; font-weight:600; color:#f4a0b5; }
+    #history-modal-actions { display:flex; gap:.5rem; }
+    #btn-history-export { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
+    #btn-history-export:hover { background:rgba(220,80,120,.15); color:#f4a0b5; }
+    #btn-history-clear { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
+    #btn-history-clear:hover { background:rgba(180,40,60,.25); color:#f4a0b5; }
+    #btn-history-close { background:none; border:none; color:#9a6070; cursor:pointer; font-size:1.1rem; transition:color .2s; }
+    #btn-history-close:hover { color:#e06080; }
+    #history-list { overflow-y:auto; display:flex; flex-direction:column; gap:.5rem; flex:1; }
+    #history-list::-webkit-scrollbar { width:4px; }
+    #history-list::-webkit-scrollbar-track { background:transparent; }
+    #history-list::-webkit-scrollbar-thumb { background:rgba(220,80,120,.3); border-radius:4px; }
+    .history-item { display:flex; align-items:flex-start; gap:.7rem; background:rgba(255,160,190,.04); border:1px solid rgba(220,100,140,.1); border-radius:12px; padding:.6rem .8rem; }
+    .history-badge { font-size:.65rem; font-weight:600; padding:.2rem .55rem; border-radius:50px; white-space:nowrap; flex-shrink:0; }
+    .history-badge.done { background:rgba(80,180,100,.15); color:#80d890; border:1px solid rgba(80,180,100,.25); }
+    .history-badge.deleted { background:rgba(220,60,80,.15); color:#e07080; border:1px solid rgba(220,60,80,.25); }
+    .history-info { flex:1; min-width:0; }
+    .history-name { font-size:.8rem; color:#e8c0d0; }
+    .history-meta { font-size:.67rem; color:#9a6070; margin-top:.1rem; }
+    #history-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:2rem 0; }
 
     .divider { width:100%; max-width:900px; height:1px; background:linear-gradient(90deg,transparent,rgba(220,100,140,.3),transparent); }
     #quote { text-align:center; max-width:420px; font-size:.82rem; color:#9a6070; font-style:italic; line-height:1.6; }
@@ -248,6 +277,7 @@
       <div id="tasks-header">
         <span id="tasks-title">📅 Événements &amp; Tâches</span>
         <div id="tasks-actions">
+          <button id="btn-history">🕘 Historique</button>
           <button id="btn-export-csv">⬇️ CSV</button>
           <button id="btn-add-event">+ Ajouter</button>
         </div>
@@ -257,6 +287,7 @@
     </div>
   </div>
 
+  <!-- MODAL AJOUT -->
   <div id="modal-overlay">
     <div id="modal">
       <h3>✨ Nouvel événement</h3>
@@ -275,6 +306,22 @@
         <button class="btn-cancel" id="btn-cancel">Annuler</button>
         <button class="btn-save" id="btn-save">Enregistrer</button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL HISTORIQUE -->
+  <div id="history-overlay">
+    <div id="history-modal">
+      <div id="history-modal-header">
+        <h3>🕘 Historique</h3>
+        <div id="history-modal-actions">
+          <button id="btn-history-export">⬇️ CSV</button>
+          <button id="btn-history-clear">🗑️ Vider</button>
+          <button id="btn-history-close">✕</button>
+        </div>
+      </div>
+      <div id="history-list"></div>
+      <p id="history-empty" style="display:none">Aucune tâche dans l'historique.</p>
     </div>
   </div>
 
@@ -370,6 +417,7 @@ loadWeather(); setInterval(loadWeather,600_000);
 
 /* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
+let history=JSON.parse(localStorage.getItem('nx_history')||'[]');
 
 events=events.map(ev=>{
   if(ev.date && !ev.start){
@@ -385,6 +433,16 @@ const today=new Date();
 let calYear=today.getFullYear(), calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
 function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
+function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history)); }
+
+function archiveEvent(ev, reason){
+  history.push({
+    ...ev,
+    raison: reason,
+    archive_le: new Date().toISOString()
+  });
+  saveHistory();
+}
 
 function formatDuration(startStr, endStr){
   const diff=new Date(endStr)-new Date(startStr);
@@ -410,7 +468,7 @@ function eventDays(ev){
   return days;
 }
 
-/* EXPORT CSV */
+/* EXPORT CSV ACTIFS */
 document.getElementById('btn-export-csv').addEventListener('click',()=>{
   if(!events.length){ alert('Aucun événement à exporter.'); return; }
   const header='nom,debut,fin,duree,type,fait';
@@ -429,7 +487,7 @@ document.getElementById('btn-export-csv').addEventListener('click',()=>{
   a.click(); URL.revokeObjectURL(url);
 });
 
-/* CALENDAR */
+/* CALENDRIER */
 function renderCalendar(){
   const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
@@ -458,7 +516,7 @@ function renderCalendar(){
 document.getElementById('cal-prev').addEventListener('click',()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
 document.getElementById('cal-next').addEventListener('click',()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
 
-/* TASKS */
+/* TACHES */
 const TYPE_ICON={task:'✅',event:'📅',reminder:'🔔'};
 function renderTasks(){
   const list=document.getElementById('tasks-list');
@@ -475,7 +533,14 @@ function renderTasks(){
     const check=document.createElement('div');
     check.className='task-check'+(ev.done?' checked':'');
     check.textContent=ev.done?'✓':'';
-    check.addEventListener('click',()=>{ events[ri].done=!events[ri].done; saveEvents(); renderTasks(); renderCalendar(); });
+    check.addEventListener('click',()=>{
+      const wasDone=events[ri].done;
+      events[ri].done=!wasDone;
+      if(!wasDone){
+        archiveEvent(events[ri], 'terminée');
+      }
+      saveEvents(); renderTasks(); renderCalendar();
+    });
     const info=document.createElement('div'); info.className='task-info';
     const name=document.createElement('div'); name.className='task-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
@@ -486,11 +551,75 @@ function renderTasks(){
     meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} ${startDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} → ${endDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} ${endDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} · ${dur}${isOverdue?' · ⏰ Passé':''}`;
     info.appendChild(name); info.appendChild(meta);
     const del=document.createElement('button'); del.className='task-del'; del.textContent='×';
-    del.addEventListener('click',()=>{ events.splice(ri,1); saveEvents(); renderTasks(); renderCalendar(); });
+    del.addEventListener('click',()=>{
+      archiveEvent(events[ri], 'supprimée');
+      events.splice(ri,1);
+      saveEvents(); renderTasks(); renderCalendar();
+    });
     item.appendChild(check); item.appendChild(info); item.appendChild(del);
     list.appendChild(item);
   });
 }
+
+/* HISTORIQUE POPUP */
+function renderHistory(){
+  const list=document.getElementById('history-list');
+  const empty=document.getElementById('history-empty');
+  list.innerHTML='';
+  if(!history.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+  [...history].reverse().forEach(ev=>{
+    const item=document.createElement('div'); item.className='history-item';
+    const badge=document.createElement('span');
+    badge.className=`history-badge ${ev.raison==='terminée'?'done':'deleted'}`;
+    badge.textContent=ev.raison==='terminée'?'✓ Terminée':'✕ Supprimée';
+    const info=document.createElement('div'); info.className='history-info';
+    const name=document.createElement('div'); name.className='history-name';
+    name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
+    const meta=document.createElement('div'); meta.className='history-meta';
+    const archiveDate=new Date(ev.archive_le);
+    const startDate=new Date(ev.start);
+    meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · Archivé le ${archiveDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} à ${archiveDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
+    info.appendChild(name); info.appendChild(meta);
+    item.appendChild(badge); item.appendChild(info);
+    list.appendChild(item);
+  });
+}
+
+document.getElementById('btn-history').addEventListener('click',()=>{
+  renderHistory();
+  document.getElementById('history-overlay').classList.add('open');
+});
+document.getElementById('btn-history-close').addEventListener('click',()=>{
+  document.getElementById('history-overlay').classList.remove('open');
+});
+document.getElementById('history-overlay').addEventListener('click',e=>{
+  if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open');
+});
+document.getElementById('btn-history-clear').addEventListener('click',()=>{
+  if(!history.length){ alert('L\'historique est déjà vide.'); return; }
+  if(confirm('Vider tout l\'historique ? Cette action est irréversible.')){
+    history=[]; saveHistory(); renderHistory();
+  }
+});
+document.getElementById('btn-history-export').addEventListener('click',()=>{
+  if(!history.length){ alert('Aucune entrée dans l\'historique.'); return; }
+  const header='nom,debut,fin,duree,type,raison,archive_le';
+  const rows=history.map(e=>[
+    `"${e.name.replace(/"/g,'""')}"`,
+    e.start, e.end,
+    formatDuration(e.start,e.end),
+    e.type,
+    e.raison,
+    e.archive_le
+  ].join(','));
+  const csv=[header,...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`historique_${toYMD(today)}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+});
 
 /* MODAL */
 function toLocalDatetimeValue(date){
