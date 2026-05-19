@@ -96,10 +96,16 @@
     #cal-dow-row { display:grid; grid-template-columns:repeat(7,1fr); margin-bottom:.35rem; }
     .cal-dow { text-align:center; font-size:.65rem; color:#9a6070; font-weight:600; padding:.2rem 0; letter-spacing:.06em; }
     #cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.3rem; }
-    .cal-day { aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:.78rem; border-radius:8px; cursor:pointer; position:relative; transition:background .2s,transform .15s; color:#c890a8; }
+    .cal-day {
+      aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      font-size:.78rem; border-radius:8px; cursor:pointer;
+      transition:background .2s,transform .15s; color:#c890a8;
+      gap:2px;
+    }
     .cal-day:hover { background:rgba(220,80,120,.18); color:#f4c8d8; transform:scale(1.1); }
     .cal-day.today { background:linear-gradient(135deg,#c94070,#e06080); color:#fff; font-weight:600; box-shadow:0 0 10px rgba(220,80,120,.4); }
-    .cal-day.has-event::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:#f4a0b5; }
+    .cal-day-dot { width:4px; height:4px; border-radius:50%; background:#f4a0b5; flex-shrink:0; }
+    .cal-day.today .cal-day-dot { background:#fff; }
     .cal-day.other-month { color:#5a3040; }
     .cal-day.past { opacity:.5; }
 
@@ -436,11 +442,7 @@ function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events));
 function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history)); }
 
 function archiveEvent(ev, reason){
-  history.push({
-    ...ev,
-    raison: reason,
-    archive_le: new Date().toISOString()
-  });
+  history.push({ ...ev, raison: reason, archive_le: new Date().toISOString() });
   saveHistory();
 }
 
@@ -474,16 +476,12 @@ document.getElementById('btn-export-csv').addEventListener('click',()=>{
   const header='nom,debut,fin,duree,type,fait';
   const rows=events.map(e=>[
     `"${e.name.replace(/"/g,'""')}"`,
-    e.start, e.end,
-    formatDuration(e.start,e.end),
-    e.type,
-    e.done?'oui':'non'
+    e.start, e.end, formatDuration(e.start,e.end), e.type, e.done?'oui':'non'
   ].join(','));
   const csv=[header,...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=`evenements_${toYMD(today)}.csv`;
+  const a=document.createElement('a'); a.href=url; a.download=`evenements_${toYMD(today)}.csv`;
   a.click(); URL.revokeObjectURL(url);
 });
 
@@ -500,15 +498,21 @@ function renderCalendar(){
   const startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
     const prev=new Date(calYear,calMonth,1-startDow+i);
-    const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=prev.getDate(); grid.appendChild(el);
+    const el=document.createElement('div'); el.className='cal-day other-month';
+    el.textContent=prev.getDate(); grid.appendChild(el);
   }
   for(let d=1;d<=last.getDate();d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const el=document.createElement('div'); el.className='cal-day';
     if(ds===todayStr) el.classList.add('today');
     if(ds<todayStr)   el.classList.add('past');
-    if(eventDates.has(ds)) el.classList.add('has-event');
-    el.textContent=d;
+    const numSpan=document.createElement('span'); numSpan.textContent=d;
+    el.appendChild(numSpan);
+    if(eventDates.has(ds)){
+      el.classList.add('has-event');
+      const dot=document.createElement('span'); dot.className='cal-day-dot';
+      el.appendChild(dot);
+    }
     el.addEventListener('click',()=>openModal(ds));
     grid.appendChild(el);
   }
@@ -536,17 +540,14 @@ function renderTasks(){
     check.addEventListener('click',()=>{
       const wasDone=events[ri].done;
       events[ri].done=!wasDone;
-      if(!wasDone){
-        archiveEvent(events[ri], 'terminée');
-      }
+      if(!wasDone) archiveEvent(events[ri], 'terminée');
       saveEvents(); renderTasks(); renderCalendar();
     });
     const info=document.createElement('div'); info.className='task-info';
     const name=document.createElement('div'); name.className='task-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='task-meta';
-    const startDate=new Date(ev.start);
-    const endDate=new Date(ev.end);
+    const startDate=new Date(ev.start); const endDate=new Date(ev.end);
     const dur=formatDuration(ev.start,ev.end);
     meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} ${startDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} → ${endDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} ${endDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} · ${dur}${isOverdue?' · ⏰ Passé':''}`;
     info.appendChild(name); info.appendChild(meta);
@@ -577,8 +578,7 @@ function renderHistory(){
     const name=document.createElement('div'); name.className='history-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='history-meta';
-    const archiveDate=new Date(ev.archive_le);
-    const startDate=new Date(ev.start);
+    const archiveDate=new Date(ev.archive_le); const startDate=new Date(ev.start);
     meta.textContent=`${startDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · Archivé le ${archiveDate.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} à ${archiveDate.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
     info.appendChild(name); info.appendChild(meta);
     item.appendChild(badge); item.appendChild(info);
@@ -586,38 +586,23 @@ function renderHistory(){
   });
 }
 
-document.getElementById('btn-history').addEventListener('click',()=>{
-  renderHistory();
-  document.getElementById('history-overlay').classList.add('open');
-});
-document.getElementById('btn-history-close').addEventListener('click',()=>{
-  document.getElementById('history-overlay').classList.remove('open');
-});
-document.getElementById('history-overlay').addEventListener('click',e=>{
-  if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open');
-});
+document.getElementById('btn-history').addEventListener('click',()=>{ renderHistory(); document.getElementById('history-overlay').classList.add('open'); });
+document.getElementById('btn-history-close').addEventListener('click',()=>{ document.getElementById('history-overlay').classList.remove('open'); });
+document.getElementById('history-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open'); });
 document.getElementById('btn-history-clear').addEventListener('click',()=>{
   if(!history.length){ alert('L\'historique est déjà vide.'); return; }
-  if(confirm('Vider tout l\'historique ? Cette action est irréversible.')){
-    history=[]; saveHistory(); renderHistory();
-  }
+  if(confirm('Vider tout l\'historique ? Cette action est irréversible.')){ history=[]; saveHistory(); renderHistory(); }
 });
 document.getElementById('btn-history-export').addEventListener('click',()=>{
   if(!history.length){ alert('Aucune entrée dans l\'historique.'); return; }
   const header='nom,debut,fin,duree,type,raison,archive_le';
   const rows=history.map(e=>[
-    `"${e.name.replace(/"/g,'""')}"`,
-    e.start, e.end,
-    formatDuration(e.start,e.end),
-    e.type,
-    e.raison,
-    e.archive_le
+    `"${e.name.replace(/"/g,'""')}"`, e.start, e.end, formatDuration(e.start,e.end), e.type, e.raison, e.archive_le
   ].join(','));
   const csv=[header,...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=`historique_${toYMD(today)}.csv`;
+  const a=document.createElement('a'); a.href=url; a.download=`historique_${toYMD(today)}.csv`;
   a.click(); URL.revokeObjectURL(url);
 });
 
