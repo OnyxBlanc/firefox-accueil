@@ -7,10 +7,11 @@ Page d'accueil personnalisée pour Firefox avec thème rosé et dégradé sombre
 ## ✨ Fonctionnalités
 
 - **Horloge en temps réel** avec date en français
-- **Barre de recherche animée** avec switcher de moteurs (Google, DuckDuckGo, YouTube, GitHub)
+- **Barre de recherche animée** avec switcher de moteurs (DuckDuckGo par défaut, YouTube, GitHub)
+- **Menu FMHY** — bouton dédié avec popup de catégories (Wiki & Tools) qui s'ouvre au clic
 - **Météo de Marseille** via [Open-Meteo](https://open-meteo.com/) (sans clé API)
-- **Calendrier dynamique** — navigation mois par mois, jours avec événements marqués
-- **Gestionnaire d'événements & tâches** — ajout, suppression, marquage comme fait
+- **Calendrier dynamique** — navigation mois par mois, jours avec événements marqués, support des événements multi-jours
+- **Gestionnaire d'événements & tâches** — ajout avec date/heure de début et fin, suppression, marquage comme fait
 - **Log automatique en arrière-plan** — les événements passés sont automatiquement écrits dans `evenements.csv` via un serveur Flask local
 
 ---
@@ -64,10 +65,32 @@ python server.py
 ## 📅 Calendrier & Tâches
 
 - Clique sur **+ Ajouter** ou directement sur un jour du calendrier pour créer un événement
-- Chaque événement a : un **nom**, une **date**, une **durée (min)** et un **type** (Tâche / Événement / Rappel)
+- Chaque événement a : un **nom**, une **date/heure de début**, une **date/heure de fin** et un **type** (Tâche / Événement / Rappel)
+- La durée est calculée automatiquement et affichée (ex : `2j 3h 30min`)
+- Les événements multi-jours sont marqués sur **chaque jour** du calendrier
 - Les événements sont sauvegardés dans le `localStorage` du navigateur
 - Coche la case ronde pour marquer un événement comme **fait**
 - Les événements passés non faits sont signalés ⏰ *Passé*
+- Export CSV disponible via le bouton **⬇️ CSV**
+
+---
+
+## 🔍 Moteurs de recherche
+
+La barre de recherche supporte plusieurs moteurs switchables :
+
+| Moteur | Icône | Description |
+|--------|-------|-------------|
+| DuckDuckGo | 🦆 | Moteur par défaut, respect de la vie privée |
+| YouTube | ▶️ | Recherche de vidéos |
+| GitHub | 🐙 | Recherche de dépôts et code |
+| FMHY | 📚 | Menu popup avec toutes les catégories du site |
+
+### Menu FMHY
+
+Le bouton FMHY ouvre un panneau popup avec les catégories de [fmhy.net](https://fmhy.net) :
+- **Wiki** : Privacy, AI, Films/Séries, Musique, Gaming, Livres, Téléchargement, Torrents, Éducation, Android/iOS, Linux/macOS, Non-English, Misc
+- **Tools** : Système, Fichiers, Internet, Réseaux sociaux, Texte, Gaming, Image, Vidéo, Audio, Éducation, Développeur
 
 ---
 
@@ -77,9 +100,9 @@ Les événements dont la date est **passée** sont automatiquement envoyés au s
 
 Le fichier `evenements.csv` est créé dans le dossier du projet avec les colonnes :
 
-| nom | date | duree_min | type | fait | logged_at |
-|-----|------|-----------|------|------|-----------|
-| Cours réseaux | 2026-05-18 | 90 | task | non | 2026-05-19T12:00:00 |
+| nom | debut | fin | duree | type | fait | logged_at |
+|-----|-------|-----|-------|------|------|-----------|
+| Cours réseaux | 2026-05-18T08:00 | 2026-05-18T09:30 | 1h 30min | task | non | 2026-05-19T12:00:00 |
 
 Un fichier `events_log.jsonl` est également généré pour un log brut plus complet.
 
