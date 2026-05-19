@@ -10,71 +10,74 @@
     body {
       min-height:100vh; font-family:'Inter',sans-serif;
       background:linear-gradient(135deg,#1a0a10 0%,#2d1020 30%,#1e0a1a 60%,#0d0510 100%);
-      color:#f0d6e0; display:flex; flex-direction:row; align-items:flex-start;
-      justify-content:center; padding:2rem 0 3rem;
+      color:#f0d6e0; display:flex; flex-direction:column; align-items:center;
+      justify-content:flex-start; gap:2rem; padding:2rem 1rem 3rem;
     }
 
-    /* SIDE COLUMNS */
+    /* COLONNES FAVORIS FIXES */
     .side-col {
-      width:56px; flex-shrink:0; display:flex; flex-direction:column;
-      align-items:center; gap:.5rem; padding-top:2rem;
-      position:sticky; top:2rem; height:fit-content;
+      position:fixed; top:50%; transform:translateY(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:.5rem;
+      z-index:50;
     }
+    .side-col.left  { left:8px; }
+    .side-col.right { right:8px; }
+
     .fav-slot {
       width:44px; height:44px; border-radius:12px;
       display:flex; align-items:center; justify-content:center;
       cursor:pointer; position:relative;
-      transition:background .2s, transform .15s, box-shadow .2s;
+      transition:background .2s,transform .15s,box-shadow .2s;
       background:rgba(255,160,190,.04);
       border:1px solid rgba(220,100,140,.1);
-      font-size:1.2rem; text-decoration:none; color:#f0d6e0;
-      flex-shrink:0;
+      text-decoration:none; color:#f0d6e0; flex-shrink:0;
+      overflow:visible;
     }
-    .fav-slot:hover { background:rgba(220,80,120,.15); transform:scale(1.1); box-shadow:0 0 12px rgba(220,80,120,.25); border-color:rgba(220,100,140,.3); }
-    .fav-slot.empty { opacity:.35; }
-    .fav-slot.empty:hover { opacity:.7; }
-    .fav-slot .fav-label {
-      position:absolute; left:calc(100% + 8px); top:50%; transform:translateY(-50%);
+    .fav-slot:hover { background:rgba(220,80,120,.15); transform:scale(1.12); box-shadow:0 0 14px rgba(220,80,120,.3); border-color:rgba(220,100,140,.35); }
+    .fav-slot.empty { opacity:.3; font-size:1rem; }
+    .fav-slot.empty:hover { opacity:.65; }
+    .fav-slot img.fav-favicon { width:24px; height:24px; border-radius:5px; object-fit:contain; }
+    .fav-slot .fav-plus { font-size:1rem; }
+
+    .fav-label {
+      position:absolute; top:50%; transform:translateY(-50%);
       background:linear-gradient(135deg,#2d1020,#1a0a10);
       border:1px solid rgba(220,100,140,.25); border-radius:8px;
       padding:.25rem .6rem; font-size:.68rem; color:#e0b8c8;
       white-space:nowrap; pointer-events:none; opacity:0;
-      transition:opacity .15s; z-index:10;
+      transition:opacity .15s; z-index:100;
     }
-    .side-col.right .fav-slot .fav-label {
-      left:auto; right:calc(100% + 8px);
-    }
+    .side-col.left  .fav-label { left:calc(100% + 8px); }
+    .side-col.right .fav-label { right:calc(100% + 8px); }
     .fav-slot:hover .fav-label { opacity:1; }
+
     .fav-edit-btn {
       position:absolute; top:-5px; right:-5px;
-      width:14px; height:14px; border-radius:50%;
+      width:15px; height:15px; border-radius:50%;
       background:#c94070; border:none; cursor:pointer;
-      font-size:.55rem; color:#fff; display:none;
-      align-items:center; justify-content:center;
-      line-height:1; z-index:5;
+      font-size:.5rem; color:#fff; display:none;
+      align-items:center; justify-content:center; z-index:5;
     }
     .fav-slot:hover .fav-edit-btn { display:flex; }
 
-    /* MAIN CONTENT */
-    #main-content {
-      flex:1; max-width:700px; display:flex; flex-direction:column;
-      align-items:center; gap:2rem; padding:0 .5rem;
-    }
-
+    /* HORLOGE */
     #clock-section { text-align:center; }
     #time {
-      font-size:4.5rem; font-weight:300; letter-spacing:0.08em;
+      font-size:4.5rem; font-weight:300; letter-spacing:.08em;
       background:linear-gradient(90deg,#f4a0b5,#e06080,#c94070);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
     }
     #date { font-size:.95rem; font-weight:300; color:#c890a8; margin-top:.35rem; letter-spacing:.15em; text-transform:capitalize; }
 
-    /* SEARCH */
+    /* RECHERCHE */
     #search-wrapper { display:flex; flex-direction:column; align-items:center; gap:.75rem; width:100%; max-width:600px; }
-    #engine-tabs { display:flex; gap:.5rem; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:50px; padding:.3rem; backdrop-filter:blur(8px); flex-wrap:wrap; justify-content:center; }
+    #engine-tabs { display:flex; gap:.5rem; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:50px; padding:.3rem; backdrop-filter:blur(8px); }
     .engine-tab { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
     .engine-tab.active { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
     .engine-tab:not(.active):hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
+    #fmhy-btn { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
+    #fmhy-btn:hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
+    #fmhy-btn.open { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
     #search-form { display:flex; align-items:center; width:100%; background:rgba(255,180,200,.07); border:1px solid rgba(240,120,150,.2); border-radius:50px; padding:.65rem 1.2rem; backdrop-filter:blur(12px); transition:border-color .3s,box-shadow .3s,transform .3s; animation:slideUp .5s cubic-bezier(.22,1,.36,1) both; }
     @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
     #search-form:focus-within { border-color:rgba(240,100,140,.65); box-shadow:0 0 22px rgba(220,80,120,.25),0 0 0 3px rgba(220,80,120,.07); transform:scale(1.015); }
@@ -86,13 +89,8 @@
     #search-btn { background:linear-gradient(90deg,#c94070,#e06080); border:none; cursor:pointer; color:#fff; font-size:.85rem; padding:.45rem 1rem; border-radius:50px; font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.04em; transition:opacity .2s,transform .2s,box-shadow .2s; white-space:nowrap; }
     #search-btn:hover { opacity:.88; transform:scale(1.04); box-shadow:0 0 14px rgba(220,80,120,.45); }
 
-    /* FMHY BUTTON */
-    #fmhy-btn { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
-    #fmhy-btn:hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
-    #fmhy-btn.open { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
-
-    /* WEATHER */
-    #weather-widget { width:100%; background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18); border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px); animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both; display:flex; flex-direction:column; gap:.75rem; }
+    /* METEO */
+    #weather-widget { width:100%; max-width:600px; background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18); border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px); animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both; display:flex; flex-direction:column; gap:.75rem; }
     #weather-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
     #weather-left { display:flex; align-items:center; gap:1rem; }
     #weather-icon { font-size:2.4rem; line-height:1; animation:floatIcon 3s ease-in-out infinite; }
@@ -112,11 +110,11 @@
     #weather-city-btn:hover { opacity:.85; transform:scale(1.04); }
     #weather-city-status { font-size:.68rem; color:#9a6070; font-style:italic; min-height:.9rem; }
 
-    /* MAIN PANEL */
-    #main-panel { display:flex; gap:1.5rem; width:100%; flex-wrap:wrap; }
+    /* PANEL CALENDRIER + TACHES */
+    #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
-    /* CALENDAR */
-    #calendar-section { flex:1 1 300px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both; }
+    /* CALENDRIER — taille originale */
+    #calendar-section { flex:1 1 320px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both; }
     #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     .cal-nav { background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem; padding:.2rem .5rem; border-radius:8px; transition:background .2s; }
@@ -132,8 +130,8 @@
     .cal-day.other-month { color:#5a3040; }
     .cal-day.past { opacity:.5; }
 
-    /* TASKS */
-    #tasks-section { flex:1 1 260px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:.8rem; animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both; max-height:440px; }
+    /* TACHES — taille originale */
+    #tasks-section { flex:1 1 300px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:.8rem; animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both; max-height:440px; }
     #tasks-header { display:flex; align-items:center; justify-content:space-between; }
     #tasks-title { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     #tasks-actions { display:flex; gap:.4rem; }
@@ -159,8 +157,8 @@
     .task-del:hover { color:#e06080; }
     #tasks-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:1rem 0; }
 
-    /* MODALS COMMUNS */
-    .overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:200; opacity:0; pointer-events:none; transition:opacity .25s; }
+    /* MODALS */
+    .overlay { position:fixed; inset:0; background:rgba(10,0,8,.75); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:300; opacity:0; pointer-events:none; transition:opacity .25s; }
     .overlay.open { opacity:1; pointer-events:all; }
     .modal-box { background:linear-gradient(135deg,#2d1020,#1a0a10); border:1px solid rgba(220,100,140,.3); border-radius:20px; padding:1.6rem; width:90%; transform:translateY(20px) scale(.97); transition:transform .25s; box-shadow:0 20px 60px rgba(0,0,0,.6); }
     .overlay.open .modal-box { transform:translateY(0) scale(1); }
@@ -171,8 +169,8 @@
     .btn-close-modal:hover { color:#e06080; }
     .field { display:flex; flex-direction:column; gap:.35rem; margin-bottom:.9rem; }
     .field label { font-size:.75rem; color:#c890a8; font-weight:600; letter-spacing:.06em; }
-    .field input, .field select { background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2); border-radius:10px; padding:.55rem .9rem; color:#f0d6e0; font-size:.85rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
-    .field input:focus, .field select:focus { border-color:rgba(240,100,140,.6); }
+    .field input,.field select { background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2); border-radius:10px; padding:.55rem .9rem; color:#f0d6e0; font-size:.85rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
+    .field input:focus,.field select:focus { border-color:rgba(240,100,140,.6); }
     .field select option { background:#2d1020; }
     .field input[type="datetime-local"] { color-scheme:dark; }
     .modal-actions { display:flex; gap:.7rem; justify-content:flex-end; margin-top:1.2rem; }
@@ -183,13 +181,10 @@
     .btn-danger { background:rgba(180,40,60,.2); border:1px solid rgba(220,60,80,.3); color:#e07080; font-size:.82rem; padding:.45rem 1rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s; }
     .btn-danger:hover { background:rgba(180,40,60,.4); }
 
-    /* FAV EDIT MODAL */
-    #fav-modal { max-width:320px; }
-    #fav-emoji-row { display:flex; gap:.5rem; align-items:center; }
-    #fav-emoji-input { width:60px; font-size:1.4rem; text-align:center; }
-    #fav-name-input { flex:1; }
+    /* MODAL FAVORI */
+    #fav-modal { max-width:340px; }
 
-    /* FMHY MODAL */
+    /* MODAL FMHY */
     #fmhy-modal { max-width:640px; max-height:85vh; display:flex; flex-direction:column; }
     #fmhy-modal-body { overflow-y:auto; flex:1; }
     #fmhy-modal-body::-webkit-scrollbar { width:4px; }
@@ -201,7 +196,7 @@
     .fmhy-link span { font-size:.9rem; flex-shrink:0; }
     .fmhy-divider { height:1px; background:rgba(220,100,140,.15); margin:.4rem 0; }
 
-    /* HISTORY MODAL */
+    /* MODAL HISTORIQUE */
     #history-modal { max-width:520px; max-height:80vh; display:flex; flex-direction:column; }
     #history-modal-actions { display:flex; gap:.5rem; }
     #btn-history-export,#btn-history-clear { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.25); color:#c890a8; font-size:.72rem; padding:.32rem .75rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:background .2s,color .2s; white-space:nowrap; }
@@ -219,95 +214,88 @@
     .history-meta { font-size:.67rem; color:#9a6070; margin-top:.1rem; }
     #history-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:2rem 0; }
 
-    .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(220,100,140,.3),transparent); }
+    .divider { width:100%; max-width:900px; height:1px; background:linear-gradient(90deg,transparent,rgba(220,100,140,.3),transparent); }
     #quote { text-align:center; max-width:420px; font-size:.82rem; color:#9a6070; font-style:italic; line-height:1.6; }
   </style>
 </head>
 <body>
 
-  <!-- COLONNE GAUCHE -->
-  <div class="side-col left" id="col-left"></div>
+  <!-- COLONNES FAVORIS FIXES -->
+  <div class="side-col left"  id="col-left"></div>
+  <div class="side-col right" id="col-right"></div>
 
-  <!-- CONTENU PRINCIPAL -->
-  <div id="main-content">
+  <section id="clock-section">
+    <div id="time">00:00:00</div>
+    <div id="date">lundi, 1 janvier</div>
+  </section>
 
-    <section id="clock-section">
-      <div id="time">00:00:00</div>
-      <div id="date">lundi, 1 janvier</div>
-    </section>
-
-    <div id="search-wrapper">
-      <div id="engine-tabs">
-        <button class="engine-tab active" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
-        <button class="engine-tab" data-engine="yt" data-icon="▶️" data-url="https://www.youtube.com/results?search_query=" data-ph="Rechercher sur YouTube…">YouTube</button>
-        <button class="engine-tab" data-engine="gh" data-icon="🐙" data-url="https://github.com/search?q=" data-ph="Rechercher sur GitHub…">GitHub</button>
-        <button id="fmhy-btn">📚 FMHY ▾</button>
-      </div>
-      <form id="search-form">
-        <span id="engine-icon">🦆</span>
-        <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
-        <button id="search-btn" type="submit">Chercher</button>
-      </form>
+  <div id="search-wrapper">
+    <div id="engine-tabs">
+      <button class="engine-tab active" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
+      <button class="engine-tab" data-engine="yt" data-icon="▶️" data-url="https://www.youtube.com/results?search_query=" data-ph="Rechercher sur YouTube…">YouTube</button>
+      <button class="engine-tab" data-engine="gh" data-icon="🐙" data-url="https://github.com/search?q=" data-ph="Rechercher sur GitHub…">GitHub</button>
+      <button id="fmhy-btn">📚 FMHY ▾</button>
     </div>
-
-    <div id="weather-widget">
-      <div id="weather-top">
-        <div id="weather-left">
-          <div id="weather-icon">⏳</div>
-          <div id="weather-main">
-            <div id="weather-temp">--°C</div>
-            <div id="weather-desc">Chargement…</div>
-            <div id="weather-city-label">📍 Marseille, FR</div>
-          </div>
-        </div>
-        <div id="weather-right">
-          <span id="weather-humidity">💧 --%</span>
-          <span id="weather-wind">💨 -- km/h</span>
-          <span id="weather-feels">🌡️ Ressenti --°C</span>
-        </div>
-      </div>
-      <div id="weather-search-row">
-        <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex : Paris, Toulouse)" />
-        <button id="weather-city-btn">🔍 Mettre à jour</button>
-      </div>
-      <div id="weather-city-status"></div>
-      <div id="weather-error">Impossible de charger la météo</div>
-    </div>
-
-    <div id="main-panel">
-      <div id="calendar-section">
-        <div id="cal-header">
-          <button class="cal-nav" id="cal-prev">‹</button>
-          <span id="cal-month-label"></span>
-          <button class="cal-nav" id="cal-next">›</button>
-        </div>
-        <div id="cal-dow-row">
-          <div class="cal-dow">Lu</div><div class="cal-dow">Ma</div><div class="cal-dow">Me</div>
-          <div class="cal-dow">Je</div><div class="cal-dow">Ve</div><div class="cal-dow">Sa</div><div class="cal-dow">Di</div>
-        </div>
-        <div id="cal-grid"></div>
-      </div>
-      <div id="tasks-section">
-        <div id="tasks-header">
-          <span id="tasks-title">📅 Événements &amp; Tâches</span>
-          <div id="tasks-actions">
-            <button id="btn-history">🕘 Historique</button>
-            <button id="btn-export-csv">⬇️ CSV</button>
-            <button id="btn-add-event">+ Ajouter</button>
-          </div>
-        </div>
-        <div id="tasks-list"></div>
-        <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-    <p id="quote">« Le seul moyen de faire du bon travail, c'est d'aimer ce qu'on fait. »</p>
-
+    <form id="search-form">
+      <span id="engine-icon">🦆</span>
+      <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
+      <button id="search-btn" type="submit">Chercher</button>
+    </form>
   </div>
 
-  <!-- COLONNE DROITE -->
-  <div class="side-col right" id="col-right"></div>
+  <div id="weather-widget">
+    <div id="weather-top">
+      <div id="weather-left">
+        <div id="weather-icon">⏳</div>
+        <div id="weather-main">
+          <div id="weather-temp">--°C</div>
+          <div id="weather-desc">Chargement…</div>
+          <div id="weather-city-label">📍 Marseille, FR</div>
+        </div>
+      </div>
+      <div id="weather-right">
+        <span id="weather-humidity">💧 --%</span>
+        <span id="weather-wind">💨 -- km/h</span>
+        <span id="weather-feels">🌡️ Ressenti --°C</span>
+      </div>
+    </div>
+    <div id="weather-search-row">
+      <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex : Paris, Toulouse)" />
+      <button id="weather-city-btn">🔍 Mettre à jour</button>
+    </div>
+    <div id="weather-city-status"></div>
+    <div id="weather-error">Impossible de charger la météo</div>
+  </div>
+
+  <div id="main-panel">
+    <div id="calendar-section">
+      <div id="cal-header">
+        <button class="cal-nav" id="cal-prev">‹</button>
+        <span id="cal-month-label"></span>
+        <button class="cal-nav" id="cal-next">›</button>
+      </div>
+      <div id="cal-dow-row">
+        <div class="cal-dow">Lu</div><div class="cal-dow">Ma</div><div class="cal-dow">Me</div>
+        <div class="cal-dow">Je</div><div class="cal-dow">Ve</div><div class="cal-dow">Sa</div><div class="cal-dow">Di</div>
+      </div>
+      <div id="cal-grid"></div>
+    </div>
+    <div id="tasks-section">
+      <div id="tasks-header">
+        <span id="tasks-title">📅 Événements &amp; Tâches</span>
+        <div id="tasks-actions">
+          <button id="btn-history">🕘 Historique</button>
+          <button id="btn-export-csv">⬇️ CSV</button>
+          <button id="btn-add-event">+ Ajouter</button>
+        </div>
+      </div>
+      <div id="tasks-list"></div>
+      <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <p id="quote">« Le seul moyen de faire du bon travail, c'est d'aimer ce qu'on fait. »</p>
 
   <!-- MODAL FMHY -->
   <div class="overlay" id="fmhy-overlay">
@@ -396,16 +384,11 @@
         <h3 id="fav-modal-title">★ Favori</h3>
         <button class="btn-close-modal" id="btn-fav-close">✕</button>
       </div>
-      <div class="field">
-        <label>ICONE + NOM</label>
-        <div id="fav-emoji-row">
-          <input id="fav-emoji-input" class="field" type="text" placeholder="🌐" maxlength="2" />
-          <input id="fav-name-input" type="text" placeholder="Nom du site…" />
-        </div>
-      </div>
+      <div class="field"><label>NOM</label><input id="fav-name-input" type="text" placeholder="Nom du site…" /></div>
       <div class="field"><label>URL</label><input id="fav-url-input" type="url" placeholder="https://exemple.com" /></div>
+      <p style="font-size:.7rem;color:#9a6070;margin-top:-.4rem;margin-bottom:.8rem">Le favicon du site sera affiché automatiquement.</p>
       <div class="modal-actions">
-        <button class="btn-danger" id="btn-fav-delete">🗑️ Supprimer</button>
+        <button class="btn-danger" id="btn-fav-delete" style="display:none">🗑️ Supprimer</button>
         <button class="btn-cancel" id="btn-fav-cancel">Annuler</button>
         <button class="btn-save" id="btn-fav-save">Enregistrer</button>
       </div>
@@ -439,7 +422,7 @@ document.getElementById('search-form').addEventListener('submit',e=>{
   if(q) window.open(currentUrl+encodeURIComponent(q),'_blank');
 });
 
-/* FMHY MODAL */
+/* FMHY */
 const fmhyBtn=document.getElementById('fmhy-btn');
 const fmhyOverlay=document.getElementById('fmhy-overlay');
 fmhyBtn.addEventListener('click',()=>{ fmhyOverlay.classList.add('open'); fmhyBtn.classList.add('open'); });
@@ -489,41 +472,53 @@ loadWeather(); setInterval(loadWeather,600_000);
 
 /* FAVORIS */
 const FAV_COUNT=8;
-let favs=JSON.parse(localStorage.getItem('nx_favs')||JSON.stringify({ left:Array(FAV_COUNT).fill(null), right:Array(FAV_COUNT).fill(null) }));
-if(!favs.left) favs.left=Array(FAV_COUNT).fill(null);
-if(!favs.right) favs.right=Array(FAV_COUNT).fill(null);
+let favs=JSON.parse(localStorage.getItem('nx_favs')||'null');
+if(!favs||!favs.left){ favs={ left:Array(FAV_COUNT).fill(null), right:Array(FAV_COUNT).fill(null) }; }
 
-let favEditSide=null, favEditIndex=null;
-
+let favEditSide=null,favEditIndex=null;
 function saveFavs(){ localStorage.setItem('nx_favs',JSON.stringify(favs)); }
+
+function faviconUrl(url){
+  try{
+    const domain=new URL(url).hostname;
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+  }catch{ return null; }
+}
 
 function renderFavCol(side){
   const col=document.getElementById(`col-${side}`);
   col.innerHTML='';
-  const arr=favs[side];
-  for(let i=0;i<FAV_COUNT;i++){
-    const f=arr[i];
+  favs[side].forEach((f,i)=>{
     const slot=document.createElement(f&&f.url?'a':'div');
     slot.className='fav-slot'+(f?'':' empty');
-    if(f&&f.url){ slot.href=f.url; slot.target='_blank'; slot.rel='noopener'; }
-    slot.textContent=f?f.icon:'➕';
+    if(f&&f.url){ slot.href=f.url; slot.target='_blank'; slot.rel='noopener noreferrer'; }
+    if(f&&f.url){
+      const img=document.createElement('img');
+      img.className='fav-favicon';
+      img.src=faviconUrl(f.url);
+      img.alt=f.name||'';
+      img.onerror=()=>{ img.style.display='none'; slot.insertAdjacentText('beforeend',f.name?f.name.slice(0,2):'?'); };
+      slot.appendChild(img);
+    } else {
+      const plus=document.createElement('span'); plus.className='fav-plus'; plus.textContent='＋';
+      slot.appendChild(plus);
+    }
     if(f&&f.name){
       const lbl=document.createElement('span'); lbl.className='fav-label'; lbl.textContent=f.name;
       slot.appendChild(lbl);
     }
-    const editBtn=document.createElement('button'); editBtn.className='fav-edit-btn'; editBtn.textContent='✏️';
-    editBtn.title='Modifier'; editBtn.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); openFavModal(side,i); });
+    const editBtn=document.createElement('button'); editBtn.className='fav-edit-btn'; editBtn.textContent='✏';
+    editBtn.addEventListener('click',ev=>{ ev.preventDefault(); ev.stopPropagation(); openFavModal(side,i); });
     slot.appendChild(editBtn);
-    if(!f){ slot.addEventListener('click',e=>{ e.preventDefault(); openFavModal(side,i); }); }
+    if(!f) slot.addEventListener('click',ev=>{ ev.preventDefault(); openFavModal(side,i); });
     col.appendChild(slot);
-  }
+  });
 }
 
 function openFavModal(side,index){
   favEditSide=side; favEditIndex=index;
   const f=favs[side][index];
   document.getElementById('fav-modal-title').textContent=`★ Favori — ${side==='left'?'Gauche':'Droite'} #${index+1}`;
-  document.getElementById('fav-emoji-input').value=f?f.icon:'🌐';
   document.getElementById('fav-name-input').value=f?f.name:'';
   document.getElementById('fav-url-input').value=f?f.url:'';
   document.getElementById('btn-fav-delete').style.display=f?'block':'none';
@@ -531,62 +526,41 @@ function openFavModal(side,index){
   document.getElementById('fav-name-input').focus();
 }
 function closeFavModal(){ document.getElementById('fav-overlay').classList.remove('open'); }
-
 document.getElementById('btn-fav-close').addEventListener('click',closeFavModal);
 document.getElementById('btn-fav-cancel').addEventListener('click',closeFavModal);
 document.getElementById('fav-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeFavModal(); });
-
 document.getElementById('btn-fav-save').addEventListener('click',()=>{
-  const icon=document.getElementById('fav-emoji-input').value.trim()||'🌐';
   const name=document.getElementById('fav-name-input').value.trim();
   const url=document.getElementById('fav-url-input').value.trim();
   if(!url){ alert('Merci de saisir une URL.'); return; }
-  favs[favEditSide][favEditIndex]={icon,name,url};
+  let finalUrl=url;
+  if(!/^https?:\/\//i.test(finalUrl)) finalUrl='https://'+finalUrl;
+  favs[favEditSide][favEditIndex]={name,url:finalUrl};
   saveFavs(); renderFavCol(favEditSide); closeFavModal();
 });
-
 document.getElementById('btn-fav-delete').addEventListener('click',()=>{
   favs[favEditSide][favEditIndex]=null;
   saveFavs(); renderFavCol(favEditSide); closeFavModal();
 });
-
-renderFavCol('left');
-renderFavCol('right');
+renderFavCol('left'); renderFavCol('right');
 
 /* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
 let history=JSON.parse(localStorage.getItem('nx_history')||'[]');
-events=events.map(ev=>{
-  if(ev.date&&!ev.start){
-    const start=ev.date+'T00:00';
-    const end=new Date(new Date(start).getTime()+(ev.duration||60)*60000).toISOString().slice(0,16);
-    return {...ev,start,end};
-  }
-  return ev;
-});
+events=events.map(ev=>{ if(ev.date&&!ev.start){ const s=ev.date+'T00:00'; return {...ev,start:s,end:new Date(new Date(s).getTime()+(ev.duration||60)*60000).toISOString().slice(0,16)}; } return ev; });
 const today=new Date();
 let calYear=today.getFullYear(),calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
 function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
 function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history)); }
-function archiveEvent(ev,reason){ history.push({...ev,raison:reason,archive_le:new Date().toISOString()}); saveHistory(); }
-function formatDuration(s,e){
-  const diff=new Date(e)-new Date(s); if(diff<=0) return '—';
-  const m=Math.floor(diff/60000),d=Math.floor(m/1440),h=Math.floor((m%1440)/60),mn=m%60;
-  return [d&&`${d}j`,h&&`${h}h`,mn&&`${mn}min`].filter(Boolean).join(' ');
-}
-function eventDays(ev){
-  const days=[],s=new Date(ev.start),e=new Date(ev.end);
-  s.setHours(0,0,0,0); e.setHours(0,0,0,0);
-  for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)) days.push(toYMD(new Date(d)));
-  return days;
-}
+function archiveEvent(ev,r){ history.push({...ev,raison:r,archive_le:new Date().toISOString()}); saveHistory(); }
+function formatDuration(s,e){ const diff=new Date(e)-new Date(s); if(diff<=0) return '—'; const m=Math.floor(diff/60000),d=Math.floor(m/1440),h=Math.floor((m%1440)/60),mn=m%60; return [d&&`${d}j`,h&&`${h}h`,mn&&`${mn}min`].filter(Boolean).join(' '); }
+function eventDays(ev){ const days=[],s=new Date(ev.start),e=new Date(ev.end); s.setHours(0,0,0,0); e.setHours(0,0,0,0); for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)) days.push(toYMD(new Date(d))); return days; }
 
 document.getElementById('btn-export-csv').addEventListener('click',()=>{
   if(!events.length){ alert('Aucun événement à exporter.'); return; }
   const csv=['nom,debut,fin,duree,type,fait',...events.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.done?'oui':'non'].join(','))].join('\n');
-  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`evenements_${toYMD(today)}.csv`});
-  a.click();
+  Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`evenements_${toYMD(today)}.csv`}).click();
 });
 
 function renderCalendar(){
@@ -596,17 +570,14 @@ function renderCalendar(){
   const first=new Date(calYear,calMonth,1),last=new Date(calYear,calMonth+1,0);
   const todayStr=toYMD(today),eventDates=new Set(events.flatMap(ev=>eventDays(ev)));
   const startDow=(first.getDay()+6)%7;
-  for(let i=0;i<startDow;i++){
-    const el=document.createElement('div'); el.className='cal-day other-month';
-    el.textContent=new Date(calYear,calMonth,1-startDow+i).getDate(); grid.appendChild(el);
-  }
+  for(let i=0;i<startDow;i++){ const el=document.createElement('div'); el.className='cal-day other-month'; el.textContent=new Date(calYear,calMonth,1-startDow+i).getDate(); grid.appendChild(el); }
   for(let d=1;d<=last.getDate();d++){
     const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const el=document.createElement('div'); el.className='cal-day';
     if(ds===todayStr) el.classList.add('today');
     if(ds<todayStr) el.classList.add('past');
     const sp=document.createElement('span'); sp.textContent=d; el.appendChild(sp);
-    if(eventDates.has(ds)){ el.classList.add('has-event'); const dot=document.createElement('span'); dot.className='cal-day-dot'; el.appendChild(dot); }
+    if(eventDates.has(ds)){ const dot=document.createElement('span'); dot.className='cal-day-dot'; el.appendChild(dot); }
     el.addEventListener('click',()=>openModal(ds)); grid.appendChild(el);
   }
 }
@@ -618,22 +589,14 @@ function renderTasks(){
   const list=document.getElementById('tasks-list'),empty=document.getElementById('tasks-empty');
   list.innerHTML='';
   const sorted=[...events].sort((a,b)=>a.done!==b.done?a.done?1:-1:a.start.localeCompare(b.start));
-  if(!sorted.length){ empty.style.display='block'; return; }
-  empty.style.display='none';
+  if(!sorted.length){ empty.style.display='block'; return; } empty.style.display='none';
   sorted.forEach(ev=>{
     const ri=events.indexOf(ev),isOverdue=!ev.done&&ev.end<new Date().toISOString().slice(0,16);
-    const item=document.createElement('div');
-    item.className='task-item'+(ev.done?' done':'')+(isOverdue?' overdue':'');
-    const check=document.createElement('div');
-    check.className='task-check'+(ev.done?' checked':''); check.textContent=ev.done?'✓':'';
-    check.addEventListener('click',()=>{
-      const was=events[ri].done; events[ri].done=!was;
-      if(!was) archiveEvent(events[ri],'terminée');
-      saveEvents(); renderTasks(); renderCalendar();
-    });
+    const item=document.createElement('div'); item.className='task-item'+(ev.done?' done':'')+(isOverdue?' overdue':'');
+    const check=document.createElement('div'); check.className='task-check'+(ev.done?' checked':''); check.textContent=ev.done?'✓':'';
+    check.addEventListener('click',()=>{ const was=events[ri].done; events[ri].done=!was; if(!was) archiveEvent(events[ri],'terminée'); saveEvents(); renderTasks(); renderCalendar(); });
     const info=document.createElement('div'); info.className='task-info';
-    const name=document.createElement('div'); name.className='task-name';
-    name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
+    const name=document.createElement('div'); name.className='task-name'; name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='task-meta';
     const sd=new Date(ev.start),ed=new Date(ev.end);
     meta.textContent=`${sd.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} ${sd.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} → ${ed.toLocaleDateString('fr-FR',{day:'numeric',month:'short'})} ${ed.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})} · ${formatDuration(ev.start,ev.end)}${isOverdue?' · ⏰ Passé':''}`;
@@ -647,35 +610,26 @@ function renderTasks(){
 function renderHistory(){
   const list=document.getElementById('history-list'),empty=document.getElementById('history-empty');
   list.innerHTML='';
-  if(!history.length){ empty.style.display='block'; return; }
-  empty.style.display='none';
+  if(!history.length){ empty.style.display='block'; return; } empty.style.display='none';
   [...history].reverse().forEach(ev=>{
     const item=document.createElement('div'); item.className='history-item';
-    const badge=document.createElement('span');
-    badge.className=`history-badge ${ev.raison==='terminée'?'done':'deleted'}`;
-    badge.textContent=ev.raison==='terminée'?'✓ Terminée':'✕ Supprimée';
+    const badge=document.createElement('span'); badge.className=`history-badge ${ev.raison==='terminée'?'done':'deleted'}`; badge.textContent=ev.raison==='terminée'?'✓ Terminée':'✕ Supprimée';
     const info=document.createElement('div'); info.className='history-info';
-    const name=document.createElement('div'); name.className='history-name';
-    name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
+    const name=document.createElement('div'); name.className='history-name'; name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='history-meta';
     const ad=new Date(ev.archive_le),sd=new Date(ev.start);
     meta.textContent=`${sd.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · Archivé le ${ad.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} à ${ad.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
     info.appendChild(name); info.appendChild(meta); item.appendChild(badge); item.appendChild(info); list.appendChild(item);
   });
 }
-
 document.getElementById('btn-history').addEventListener('click',()=>{ renderHistory(); document.getElementById('history-overlay').classList.add('open'); });
 document.getElementById('btn-history-close').addEventListener('click',()=>{ document.getElementById('history-overlay').classList.remove('open'); });
 document.getElementById('history-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open'); });
-document.getElementById('btn-history-clear').addEventListener('click',()=>{
-  if(!history.length){ alert('L\'historique est déjà vide.'); return; }
-  if(confirm('Vider tout l\'historique ?')){ history=[]; saveHistory(); renderHistory(); }
-});
+document.getElementById('btn-history-clear').addEventListener('click',()=>{ if(!history.length){ alert('L\'historique est déjà vide.'); return; } if(confirm('Vider tout l\'historique ?')){ history=[]; saveHistory(); renderHistory(); } });
 document.getElementById('btn-history-export').addEventListener('click',()=>{
   if(!history.length){ alert('Aucune entrée dans l\'historique.'); return; }
   const csv=['nom,debut,fin,duree,type,raison,archive_le',...history.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.raison,e.archive_le].join(','))].join('\n');
-  const a=Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`historique_${toYMD(today)}.csv`});
-  a.click();
+  Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`historique_${toYMD(today)}.csv`}).click();
 });
 
 function toLocal(date){ const p=n=>String(n).padStart(2,'0'); return `${date.getFullYear()}-${p(date.getMonth()+1)}-${p(date.getDate())}T${p(date.getHours())}:${p(date.getMinutes())}`; }
