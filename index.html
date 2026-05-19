@@ -38,6 +38,31 @@
     #search-btn { background:linear-gradient(90deg,#c94070,#e06080); border:none; cursor:pointer; color:#fff; font-size:.85rem; padding:.45rem 1rem; border-radius:50px; font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.04em; transition:opacity .2s,transform .2s,box-shadow .2s; white-space:nowrap; }
     #search-btn:hover { opacity:.88; transform:scale(1.04); box-shadow:0 0 14px rgba(220,80,120,.45); }
 
+    /* FMHY BUTTON + POPUP */
+    #fmhy-wrapper { position:relative; }
+    #fmhy-btn { cursor:pointer; padding:.3rem .9rem; border-radius:50px; font-size:.75rem; font-weight:600; letter-spacing:.06em; color:#a07080; border:none; background:transparent; transition:background .25s,color .25s,transform .2s; font-family:'Inter',sans-serif; }
+    #fmhy-btn:hover { color:#f4a0b5; background:rgba(220,80,120,.1); }
+    #fmhy-btn.open { background:linear-gradient(90deg,#c94070,#e06080); color:#fff; transform:scale(1.05); box-shadow:0 0 12px rgba(220,80,120,.4); }
+    #fmhy-popup {
+      display:none; position:absolute; top:calc(100% + .6rem); right:0;
+      background:linear-gradient(135deg,#2d1020,#1e0a1a);
+      border:1px solid rgba(220,100,140,.3); border-radius:16px;
+      padding:.8rem; width:220px; z-index:200;
+      box-shadow:0 12px 40px rgba(0,0,0,.6); backdrop-filter:blur(12px);
+      animation:popIn .2s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes popIn { from{opacity:0;transform:translateY(-8px) scale(.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+    #fmhy-popup.visible { display:block; }
+    .fmhy-section-title { font-size:.65rem; font-weight:600; color:#9a6070; letter-spacing:.1em; text-transform:uppercase; padding:.3rem .4rem .2rem; }
+    .fmhy-link {
+      display:flex; align-items:center; gap:.5rem;
+      padding:.38rem .6rem; border-radius:8px; text-decoration:none;
+      color:#e0b8c8; font-size:.78rem; transition:background .18s,color .18s;
+    }
+    .fmhy-link:hover { background:rgba(220,80,120,.18); color:#fff; }
+    .fmhy-link span { font-size:.9rem; }
+    .fmhy-divider { height:1px; background:rgba(220,100,140,.15); margin:.4rem 0; }
+
     /* WEATHER */
     #weather-widget { width:100%; max-width:600px; background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18); border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px); animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both; display:flex; flex-direction:column; gap:.75rem; }
     #weather-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
@@ -116,7 +141,6 @@
     .field input, .field select { background:rgba(255,160,190,.07); border:1px solid rgba(220,100,140,.2); border-radius:10px; padding:.55rem .9rem; color:#f0d6e0; font-size:.85rem; font-family:'Inter',sans-serif; outline:none; transition:border-color .2s; }
     .field input:focus, .field select:focus { border-color:rgba(240,100,140,.6); }
     .field select option { background:#2d1020; }
-    /* Style spécifique pour datetime-local */
     .field input[type="datetime-local"] { color-scheme: dark; }
     #modal-row { display:flex; gap:.8rem; }
     #modal-row .field { flex:1; }
@@ -139,14 +163,45 @@
 
   <div id="search-wrapper">
     <div id="engine-tabs">
-      <button class="engine-tab active" data-engine="google" data-icon="🔍" data-url="https://www.google.com/search?q=" data-ph="Rechercher sur Google…">Google</button>
-      <button class="engine-tab" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
+      <button class="engine-tab active" data-engine="ddg" data-icon="🦆" data-url="https://duckduckgo.com/?q=" data-ph="Rechercher sur DuckDuckGo…">DuckDuckGo</button>
       <button class="engine-tab" data-engine="yt" data-icon="▶️" data-url="https://www.youtube.com/results?search_query=" data-ph="Rechercher sur YouTube…">YouTube</button>
       <button class="engine-tab" data-engine="gh" data-icon="🐙" data-url="https://github.com/search?q=" data-ph="Rechercher sur GitHub…">GitHub</button>
+      <div id="fmhy-wrapper">
+        <button id="fmhy-btn">📚 FMHY ▾</button>
+        <div id="fmhy-popup">
+          <div class="fmhy-section-title">Wiki</div>
+          <a class="fmhy-link" href="https://fmhy.net/privacy" target="_blank"><span>🛡️</span> Adblocking / Privacy</a>
+          <a class="fmhy-link" href="https://fmhy.net/ai" target="_blank"><span>🤖</span> Artificial Intelligence</a>
+          <a class="fmhy-link" href="https://fmhy.net/videopiracyguide" target="_blank"><span>📺</span> Movies / TV / Anime</a>
+          <a class="fmhy-link" href="https://fmhy.net/audiopiracyguide" target="_blank"><span>🎵</span> Music / Podcasts / Radio</a>
+          <a class="fmhy-link" href="https://fmhy.net/gamingpiracyguide" target="_blank"><span>🎮</span> Gaming / Emulation</a>
+          <a class="fmhy-link" href="https://fmhy.net/readingpiracyguide" target="_blank"><span>📗</span> Books / Comics / Manga</a>
+          <a class="fmhy-link" href="https://fmhy.net/downloadpiracyguide" target="_blank"><span>💾</span> Downloading</a>
+          <a class="fmhy-link" href="https://fmhy.net/torrentpiracyguide" target="_blank"><span>🔄</span> Torrenting</a>
+          <a class="fmhy-link" href="https://fmhy.net/educational" target="_blank"><span>🧠</span> Educational</a>
+          <a class="fmhy-link" href="https://fmhy.net/android-iosguide" target="_blank"><span>📱</span> Android / iOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/linuxguide" target="_blank"><span>🐧</span> Linux / macOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/non-english" target="_blank"><span>🌍</span> Non-English</a>
+          <a class="fmhy-link" href="https://fmhy.net/misc" target="_blank"><span>📁</span> Miscellaneous</a>
+          <div class="fmhy-divider"></div>
+          <div class="fmhy-section-title">Tools</div>
+          <a class="fmhy-link" href="https://fmhy.net/system-tools" target="_blank"><span>💻</span> System Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/file-tools" target="_blank"><span>🗂️</span> File Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/internet-tools" target="_blank"><span>🌐</span> Internet Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/social-media-tools" target="_blank"><span>💬</span> Social Media Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/text-tools" target="_blank"><span>✏️</span> Text Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/gaming-tools" target="_blank"><span>🕹️</span> Gaming Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/img-tools" target="_blank"><span>📷</span> Image Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/video-tools" target="_blank"><span>🎞️</span> Video Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/audio-tools" target="_blank"><span>🔊</span> Audio Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/edu-tools" target="_blank"><span>🍎</span> Educational Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/dev-tools" target="_blank"><span>👨‍💻</span> Developer Tools</a>
+        </div>
+      </div>
     </div>
     <form id="search-form">
-      <span id="engine-icon">🔍</span>
-      <input id="search-input" type="text" placeholder="Rechercher sur Google…" autocomplete="off" />
+      <span id="engine-icon">🦆</span>
+      <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
       <button id="search-btn" type="submit">Chercher</button>
     </form>
   </div>
@@ -238,7 +293,7 @@ function updateClock(){
 updateClock(); setInterval(updateClock,1000);
 
 /* SEARCH */
-let currentUrl='https://www.google.com/search?q=';
+let currentUrl='https://duckduckgo.com/?q=';
 function setEngine(tab){
   document.querySelectorAll('.engine-tab').forEach(t=>t.classList.remove('active'));
   tab.classList.add('active');
@@ -255,6 +310,20 @@ document.getElementById('search-form').addEventListener('submit',e=>{
   const q=document.getElementById('search-input').value.trim();
   if(q) window.open(currentUrl+encodeURIComponent(q),'_blank');
 });
+
+/* FMHY POPUP */
+const fmhyBtn=document.getElementById('fmhy-btn');
+const fmhyPopup=document.getElementById('fmhy-popup');
+fmhyBtn.addEventListener('click',e=>{
+  e.stopPropagation();
+  const open=fmhyPopup.classList.toggle('visible');
+  fmhyBtn.classList.toggle('open', open);
+});
+document.addEventListener('click',()=>{
+  fmhyPopup.classList.remove('visible');
+  fmhyBtn.classList.remove('open');
+});
+fmhyPopup.addEventListener('click',e=>e.stopPropagation());
 
 /* WEATHER */
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
@@ -302,7 +371,6 @@ loadWeather(); setInterval(loadWeather,600_000);
 /* EVENTS */
 let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
 
-/* Migration: anciens événements avec 'date' + 'duration' → start/end */
 events=events.map(ev=>{
   if(ev.date && !ev.start){
     const start=ev.date+'T00:00';
@@ -318,7 +386,6 @@ let calYear=today.getFullYear(), calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
 function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
 
-/* Calcule une durée lisible entre deux datetime strings */
 function formatDuration(startStr, endStr){
   const diff=new Date(endStr)-new Date(startStr);
   if(diff<=0) return '—';
@@ -333,7 +400,6 @@ function formatDuration(startStr, endStr){
   return parts.join(' ');
 }
 
-/* Retourne toutes les dates YYYY-MM-DD couvertes par un événement */
 function eventDays(ev){
   const days=[];
   const start=new Date(ev.start); start.setHours(0,0,0,0);
@@ -372,7 +438,6 @@ function renderCalendar(){
   const first=new Date(calYear,calMonth,1);
   const last=new Date(calYear,calMonth+1,0);
   const todayStr=toYMD(today);
-  /* Collecte toutes les dates couvertes par les événements */
   const eventDates=new Set(events.flatMap(ev=>eventDays(ev)));
   const startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
