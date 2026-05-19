@@ -13,12 +13,8 @@
       font-family:'Inter',sans-serif;
       background:linear-gradient(135deg,#1a0a10 0%,#2d1020 30%,#1e0a1a 60%,#0d0510 100%);
       color:#f0d6e0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      gap:2rem;
-      padding:2rem 1rem 3rem;
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:flex-start; gap:2rem; padding:2rem 1rem 3rem;
     }
 
     /* CLOCK */
@@ -26,8 +22,7 @@
     #time {
       font-size:4.5rem; font-weight:300; letter-spacing:0.08em;
       background:linear-gradient(90deg,#f4a0b5,#e06080,#c94070);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-      line-height:1;
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
     }
     #date { font-size:.95rem; font-weight:300; color:#c890a8; margin-top:.35rem; letter-spacing:.15em; text-transform:capitalize; }
 
@@ -85,7 +80,7 @@
     #weather-right span { display:flex; align-items:center; gap:.3rem; }
     #weather-error { font-size:.8rem; color:#c94070; display:none; }
 
-    /* MAIN LAYOUT */
+    /* MAIN PANEL */
     #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
     /* CALENDAR */
@@ -97,28 +92,22 @@
     }
     #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
-    .cal-nav {
-      background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem;
-      padding:.2rem .5rem; border-radius:8px; transition:background .2s;
-    }
+    .cal-nav { background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem; padding:.2rem .5rem; border-radius:8px; transition:background .2s; }
     .cal-nav:hover { background:rgba(220,80,120,.15); }
     #cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.25rem; }
     .cal-dow { text-align:center; font-size:.65rem; color:#9a6070; font-weight:600; padding-bottom:.3rem; letter-spacing:.06em; }
     .cal-day {
       aspect-ratio:1; display:flex; align-items:center; justify-content:center;
       font-size:.78rem; border-radius:8px; cursor:pointer; position:relative;
-      transition:background .2s, transform .15s; color:#c890a8;
+      transition:background .2s,transform .15s; color:#c890a8;
     }
     .cal-day:hover { background:rgba(220,80,120,.18); color:#f4c8d8; transform:scale(1.1); }
     .cal-day.today { background:linear-gradient(135deg,#c94070,#e06080); color:#fff; font-weight:600; box-shadow:0 0 10px rgba(220,80,120,.4); }
-    .cal-day.has-event::after {
-      content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%);
-      width:4px; height:4px; border-radius:50%; background:#f4a0b5;
-    }
+    .cal-day.has-event::after { content:''; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:4px; height:4px; border-radius:50%; background:#f4a0b5; }
     .cal-day.other-month { color:#5a3040; }
     .cal-day.past { opacity:.5; }
 
-    /* TASKS PANEL */
+    /* TASKS */
     #tasks-section {
       flex:1 1 300px;
       background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15);
@@ -139,12 +128,11 @@
     #tasks-list::-webkit-scrollbar { width:4px; }
     #tasks-list::-webkit-scrollbar-track { background:transparent; }
     #tasks-list::-webkit-scrollbar-thumb { background:rgba(220,80,120,.3); border-radius:4px; }
-
     .task-item {
       display:flex; align-items:center; gap:.6rem;
       background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.12);
       border-radius:12px; padding:.6rem .8rem;
-      transition:background .2s, border-color .2s;
+      transition:background .2s,border-color .2s;
       animation:fadeInPill .3s ease both;
     }
     @keyframes fadeInPill { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
@@ -154,7 +142,7 @@
     .task-check {
       width:16px; height:16px; border-radius:50%;
       border:2px solid rgba(220,100,140,.4); cursor:pointer; flex-shrink:0;
-      transition:background .2s, border-color .2s; background:transparent;
+      transition:background .2s,border-color .2s; background:transparent;
       display:flex; align-items:center; justify-content:center; font-size:.6rem;
     }
     .task-check.checked { background:linear-gradient(135deg,#c94070,#e06080); border-color:#e06080; color:#fff; }
@@ -164,6 +152,15 @@
     .task-del { background:none; border:none; color:#9a6070; cursor:pointer; font-size:.85rem; transition:color .2s; }
     .task-del:hover { color:#e06080; }
     #tasks-empty { font-size:.8rem; color:#9a6070; font-style:italic; text-align:center; padding:1rem 0; }
+
+    /* LOG STATUS */
+    #log-status {
+      font-size:.65rem; color:#9a6070; text-align:right;
+      padding:.2rem .5rem; font-style:italic;
+      min-height:1rem;
+    }
+    #log-status.ok  { color:#80c080; }
+    #log-status.err { color:#c94070; }
 
     /* MODAL */
     #modal-overlay {
@@ -194,29 +191,11 @@
     #modal-row { display:flex; gap:.8rem; }
     #modal-row .field { flex:1; }
     #modal-actions { display:flex; gap:.7rem; justify-content:flex-end; margin-top:1.2rem; }
-    .btn-cancel {
-      background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.2);
-      color:#c890a8; font-size:.82rem; padding:.45rem 1rem; border-radius:50px;
-      cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s;
-    }
+    .btn-cancel { background:rgba(255,160,190,.08); border:1px solid rgba(220,100,140,.2); color:#c890a8; font-size:.82rem; padding:.45rem 1rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s; }
     .btn-cancel:hover { background:rgba(220,80,120,.15); }
-    .btn-save {
-      background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff;
-      font-size:.82rem; padding:.45rem 1.2rem; border-radius:50px; cursor:pointer;
-      font-family:'Inter',sans-serif; font-weight:600; transition:opacity .2s;
-    }
+    .btn-save { background:linear-gradient(90deg,#c94070,#e06080); border:none; color:#fff; font-size:.82rem; padding:.45rem 1.2rem; border-radius:50px; cursor:pointer; font-family:'Inter',sans-serif; font-weight:600; transition:opacity .2s; }
     .btn-save:hover { opacity:.85; }
 
-    /* CSV EXPORT */
-    #export-btn {
-      background:rgba(220,80,120,.1); border:1px solid rgba(220,100,140,.2);
-      color:#c890a8; font-size:.72rem; padding:.3rem .8rem; border-radius:50px;
-      cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s,color .2s;
-      align-self:flex-end;
-    }
-    #export-btn:hover { background:rgba(220,80,120,.2); color:#f4c0d0; }
-
-    /* DIVIDER / QUOTE */
     .divider { width:100%; max-width:900px; height:1px; background:linear-gradient(90deg,transparent,rgba(220,100,140,.3),transparent); }
     #quote { text-align:center; max-width:420px; font-size:.82rem; color:#9a6070; font-style:italic; line-height:1.6; }
   </style>
@@ -228,7 +207,6 @@
     <div id="date">lundi, 1 janvier</div>
   </section>
 
-  <!-- SEARCH -->
   <div id="search-wrapper">
     <div id="engine-tabs">
       <button class="engine-tab active" data-engine="google" data-icon="🔍" data-url="https://www.google.com/search?q=" data-ph="Rechercher sur Google…">Google</button>
@@ -243,7 +221,6 @@
     </form>
   </div>
 
-  <!-- WEATHER -->
   <div id="weather-widget">
     <div id="weather-left">
       <div id="weather-icon">⏳</div>
@@ -261,10 +238,7 @@
     <div id="weather-error">Impossible de charger la météo</div>
   </div>
 
-  <!-- CALENDAR + TASKS -->
   <div id="main-panel">
-
-    <!-- Calendar -->
     <div id="calendar-section">
       <div id="cal-header">
         <button class="cal-nav" id="cal-prev">‹</button>
@@ -274,36 +248,24 @@
       <div id="cal-grid"></div>
     </div>
 
-    <!-- Tasks -->
     <div id="tasks-section">
       <div id="tasks-header">
         <span id="tasks-title">📅 Événements &amp; Tâches</span>
         <button id="btn-add-event">+ Ajouter</button>
       </div>
       <div id="tasks-list"></div>
-      <div id="tasks-empty" style="display:none">Aucun événement. Clique sur + Ajouter !</div>
-      <button id="export-btn">💾 Exporter CSV</button>
+      <p id="tasks-empty" style="display:none">Événements pas encore ajoutés. Clique sur + Ajouter !</p>
+      <div id="log-status"></div>
     </div>
-
   </div>
 
-  <!-- ADD EVENT MODAL -->
   <div id="modal-overlay">
     <div id="modal">
-      <h3 id="modal-title">✨ Nouvel événement</h3>
-      <div class="field">
-        <label>NOM</label>
-        <input id="ev-name" type="text" placeholder="Ex: Cours réseaux, RDV médecin…" />
-      </div>
+      <h3>✨ Nouvel événement</h3>
+      <div class="field"><label>NOM</label><input id="ev-name" type="text" placeholder="Ex: Cours réseaux, RDV médecin…" /></div>
       <div id="modal-row">
-        <div class="field">
-          <label>DATE DÉBUT</label>
-          <input id="ev-date" type="date" />
-        </div>
-        <div class="field">
-          <label>DURÉE (min)</label>
-          <input id="ev-duration" type="number" placeholder="60" min="1" />
-        </div>
+        <div class="field"><label>DATE DÉBUT</label><input id="ev-date" type="date" /></div>
+        <div class="field"><label>DURÉE (min)</label><input id="ev-duration" type="number" placeholder="60" min="1" /></div>
       </div>
       <div class="field">
         <label>TYPE</label>
@@ -324,17 +286,17 @@
   <p id="quote">« Le seul moyen de faire du bon travail, c'est d'aimer ce qu'on fait. »</p>
 
 <script>
-/* ---- CLOCK ---- */
-function updateClock() {
-  const now = new Date();
-  document.getElementById('time').textContent =
-    [now.getHours(),now.getMinutes(),now.getSeconds()].map(n=>String(n).padStart(2,'0')).join(':');
-  document.getElementById('date').textContent =
-    now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+/* CLOCK */
+function updateClock(){
+  const n=new Date();
+  document.getElementById('time').textContent=
+    [n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
+  document.getElementById('date').textContent=
+    n.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
 }
 updateClock(); setInterval(updateClock,1000);
 
-/* ---- SEARCH ---- */
+/* SEARCH */
 let currentUrl='https://www.google.com/search?q=';
 function setEngine(tab){
   document.querySelectorAll('.engine-tab').forEach(t=>t.classList.remove('active'));
@@ -353,16 +315,16 @@ document.getElementById('search-form').addEventListener('submit',e=>{
   if(q) window.open(currentUrl+encodeURIComponent(q),'_blank');
 });
 
-/* ---- WEATHER ---- */
-const W_ICONS={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
-const W_DESC={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
+/* WEATHER */
+const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+const WD={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
 async function loadWeather(){
   try{
     const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=43.2965&longitude=5.3698&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=Europe%2FParis');
     const d=await r.json(); const c=d.current;
-    document.getElementById('weather-icon').textContent=W_ICONS[c.weather_code]??'🌡️';
+    document.getElementById('weather-icon').textContent=WI[c.weather_code]??'🌡️';
     document.getElementById('weather-temp').textContent=`${Math.round(c.temperature_2m)}°C`;
-    document.getElementById('weather-desc').textContent=W_DESC[c.weather_code]??'Inconnu';
+    document.getElementById('weather-desc').textContent=WD[c.weather_code]??'Inconnu';
     document.getElementById('weather-humidity').textContent=`💧 ${c.relative_humidity_2m}%`;
     document.getElementById('weather-wind').textContent=`💨 ${Math.round(c.wind_speed_10m)} km/h`;
     document.getElementById('weather-feels').textContent=`🌡️ Ressenti ${Math.round(c.apparent_temperature)}°C`;
@@ -370,146 +332,134 @@ async function loadWeather(){
 }
 loadWeather(); setInterval(loadWeather,600_000);
 
-/* ======== CALENDAR & TASKS ======== */
-let events = JSON.parse(localStorage.getItem('nx_events')||'[]');
-let calYear, calMonth;
-const today = new Date();
-calYear  = today.getFullYear();
-calMonth = today.getMonth();
-
-function saveEvents(){ localStorage.setItem('nx_events', JSON.stringify(events)); }
-
+/* EVENTS & TASKS */
+let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
+const today=new Date();
+let calYear=today.getFullYear(), calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
+function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
 
-/* -- CALENDAR RENDER -- */
+/* CALENDAR */
 function renderCalendar(){
-  const months=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  document.getElementById('cal-month-label').textContent=`${months[calMonth]} ${calYear}`;
-
+  const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
   const grid=document.getElementById('cal-grid');
   grid.innerHTML='';
   ['Lu','Ma','Me','Je','Ve','Sa','Di'].forEach(d=>{
     const el=document.createElement('div'); el.className='cal-dow'; el.textContent=d; grid.appendChild(el);
   });
-
   const first=new Date(calYear,calMonth,1);
-  const last =new Date(calYear,calMonth+1,0);
+  const last=new Date(calYear,calMonth+1,0);
   const todayStr=toYMD(today);
   const eventDates=new Set(events.map(e=>e.date.slice(0,10)));
-
-  // blank cells before 1st (Mon=0)
   let startDow=(first.getDay()+6)%7;
   for(let i=0;i<startDow;i++){
     const prev=new Date(calYear,calMonth,1-startDow+i);
     const el=document.createElement('div'); el.className='cal-day other-month';
     el.textContent=prev.getDate(); grid.appendChild(el);
   }
-
   for(let d=1;d<=last.getDate();d++){
-    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const el=document.createElement('div'); el.className='cal-day';
-    if(dateStr===todayStr) el.classList.add('today');
-    if(dateStr<todayStr)   el.classList.add('past');
-    if(eventDates.has(dateStr)) el.classList.add('has-event');
+    if(ds===todayStr) el.classList.add('today');
+    if(ds<todayStr)   el.classList.add('past');
+    if(eventDates.has(ds)) el.classList.add('has-event');
     el.textContent=d;
-    el.addEventListener('click',()=>openModal(dateStr));
+    el.addEventListener('click',()=>openModal(ds));
     grid.appendChild(el);
   }
 }
+document.getElementById('cal-prev').addEventListener('click',()=>{ calMonth--; if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); });
+document.getElementById('cal-next').addEventListener('click',()=>{ calMonth++; if(calMonth>11){calMonth=0;calYear++;} renderCalendar(); });
 
-document.getElementById('cal-prev').addEventListener('click',()=>{
-  calMonth--; if(calMonth<0){calMonth=11;calYear--;}
-  renderCalendar();
-});
-document.getElementById('cal-next').addEventListener('click',()=>{
-  calMonth++; if(calMonth>11){calMonth=0;calYear++;}
-  renderCalendar();
-});
-
-/* -- TASKS RENDER -- */
+/* TASKS */
 const TYPE_ICON={task:'✅',event:'📅',reminder:'🔔'};
 function renderTasks(){
   const list=document.getElementById('tasks-list');
   const empty=document.getElementById('tasks-empty');
   list.innerHTML='';
-
-  // Sort: upcoming first, then done
-  const sorted=[...events].sort((a,b)=>{
-    if(a.done!==b.done) return a.done?1:-1;
-    return a.date.localeCompare(b.date);
-  });
-
+  const sorted=[...events].sort((a,b)=>{ if(a.done!==b.done) return a.done?1:-1; return a.date.localeCompare(b.date); });
   if(sorted.length===0){ empty.style.display='block'; return; }
   empty.style.display='none';
-
-  sorted.forEach((ev,idx)=>{
-    const realIdx=events.indexOf(ev);
-    const isOverdue=!ev.done && ev.date<toYMD(today);
+  sorted.forEach(ev=>{
+    const ri=events.indexOf(ev);
+    const isOverdue=!ev.done&&ev.date<toYMD(today);
     const item=document.createElement('div');
     item.className='task-item'+(ev.done?' done':'')+(isOverdue?' overdue':'');
-
     const check=document.createElement('div');
     check.className='task-check'+(ev.done?' checked':'');
     check.textContent=ev.done?'✓':'';
-    check.addEventListener('click',()=>{ events[realIdx].done=!events[realIdx].done; saveEvents(); renderTasks(); renderCalendar(); });
-
+    check.addEventListener('click',()=>{ events[ri].done=!events[ri].done; saveEvents(); renderTasks(); renderCalendar(); autoLogPastEvents(); });
     const info=document.createElement('div'); info.className='task-info';
     const name=document.createElement('div'); name.className='task-name';
     name.textContent=`${TYPE_ICON[ev.type]??'📌'} ${ev.name}`;
     const meta=document.createElement('div'); meta.className='task-meta';
-    const d=new Date(ev.date+'T00:00:00');
-    meta.textContent=`${d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · ${ev.duration} min${isOverdue?' · ⏰ Passé':''}`;
+    const dd=new Date(ev.date+'T00:00:00');
+    meta.textContent=`${dd.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'})} · ${ev.duration} min${isOverdue?' · ⏰ Passé':''}`;
     info.appendChild(name); info.appendChild(meta);
-
     const del=document.createElement('button'); del.className='task-del'; del.textContent='×';
-    del.addEventListener('click',()=>{ events.splice(realIdx,1); saveEvents(); renderTasks(); renderCalendar(); });
-
+    del.addEventListener('click',()=>{ events.splice(ri,1); saveEvents(); renderTasks(); renderCalendar(); });
     item.appendChild(check); item.appendChild(info); item.appendChild(del);
     list.appendChild(item);
   });
 }
 
-/* -- MODAL -- */
-function openModal(prefillDate=''){
+/* MODAL */
+function openModal(prefill=''){
   document.getElementById('ev-name').value='';
-  document.getElementById('ev-date').value=prefillDate||toYMD(today);
+  document.getElementById('ev-date').value=prefill||toYMD(today);
   document.getElementById('ev-duration').value='60';
   document.getElementById('ev-type').value='task';
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('ev-name').focus();
 }
 function closeModal(){ document.getElementById('modal-overlay').classList.remove('open'); }
-
 document.getElementById('btn-add-event').addEventListener('click',()=>openModal());
 document.getElementById('btn-cancel').addEventListener('click',closeModal);
 document.getElementById('modal-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
-
 document.getElementById('btn-save').addEventListener('click',()=>{
-  const name    =document.getElementById('ev-name').value.trim();
-  const date    =document.getElementById('ev-date').value;
+  const name=document.getElementById('ev-name').value.trim();
+  const date=document.getElementById('ev-date').value;
   const duration=parseInt(document.getElementById('ev-duration').value)||60;
-  const type    =document.getElementById('ev-type').value;
+  const type=document.getElementById('ev-type').value;
   if(!name||!date){ alert('Merci de renseigner le nom et la date.'); return; }
-  events.push({name,date,duration,type,done:false,created:new Date().toISOString()});
+  events.push({name,date,duration,type,done:false,logged:false,loggedAt:null,created:new Date().toISOString()});
   saveEvents(); renderTasks(); renderCalendar(); closeModal();
+  autoLogPastEvents();
 });
 
-/* -- CSV EXPORT -- */
-document.getElementById('export-btn').addEventListener('click',()=>{
-  if(events.length===0){ alert('Aucun événement à exporter.'); return; }
-  const header='Nom,Date,Durée (min),Type,Fait';
-  const rows=events.map(e=>`"${e.name.replace(/"/g,'""')}",${e.date},${e.duration},${e.type},${e.done?'Oui':'Non'}`);
-  const csv=header+'\n'+rows.join('\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url;
-  a.download=`evenements_${toYMD(today)}.csv`;
-  a.click(); URL.revokeObjectURL(url);
-});
+/* AUTO-LOG vers server.py */
+const logStatus=document.getElementById('log-status');
+async function autoLogPastEvents(){
+  const todayStr=toYMD(today);
+  const toLog=events.filter(ev=>!ev.logged&&ev.date<todayStr);
+  if(toLog.length===0) return;
+  try{
+    const res=await fetch('http://127.0.0.1:5000/log',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({events:toLog})
+    });
+    const result=await res.json();
+    if(result.ok){
+      const now=new Date().toISOString();
+      events=events.map(ev=>(!ev.logged&&ev.date<todayStr)?{...ev,logged:true,loggedAt:now}:ev);
+      saveEvents(); renderTasks();
+      logStatus.className='log-status ok';
+      logStatus.textContent=`✓ ${result.logged} événement(s) logé(s) dans evenements.csv`;
+      setTimeout(()=>logStatus.textContent='',4000);
+    }
+  }catch{
+    logStatus.className='log-status err';
+    logStatus.textContent='⚠️ Serveur local non disponible — lance start_firefox_accueil.bat';
+  }
+}
 
 /* Init */
 renderCalendar();
 renderTasks();
+autoLogPastEvents();
+setInterval(autoLogPastEvents, 60_000);
 </script>
 </body>
 </html>
