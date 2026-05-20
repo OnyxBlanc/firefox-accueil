@@ -45,21 +45,21 @@ function importJSON() {
         alert('❌ Fichier invalide — ce n\'est pas une sauvegarde Accueil.');
         return;
       }
-      if (!confirm('⚠️ Importer cette configuration ? Tes données actuelles seront remplacées.')) return;
+      if (!confirm('Tes données actuelles seront remplacées est-tu est sur de toi ?.')) return;
       setAllData(obj);
-      alert('✅ Configuration importée ! La page va se recharger.');
+      alert(' Configuration a bien été importée.');
       location.reload();
     } catch {
-      alert('❌ Impossible de lire le fichier JSON.');
+      alert('fichier JSON est a impossible a lire.');
     }
   });
   input.click();
 }
 
 function resetAll() {
-  if (!confirm('⚠️ Réinitialiser TOUTE la configuration ? (thème, favoris, tâches…)')) return;
+  if (!confirm('Réinitialiser TOUTE la configuration ? (thème, favoris, tâches…)')) return;
   KEYS.forEach(k => localStorage.removeItem(k));
-  alert('✅ Configuration réinitialisée. La page va se recharger.');
+  alert('Configuration a été réinitialisée.');
   location.reload();
 }
 
@@ -98,9 +98,9 @@ export function initConfig() {
       </div>
 
       <div class="config-section danger-zone">
-        <div class="config-section-title">⚠️ Zone de danger</div>
+        <div class="config-section-title">Zone de danger</div>
         <p class="config-desc">Supprime toutes les données locales : favoris, tâches, historique, thème et ville météo.</p>
-        <button class="config-action-btn reset" id="btn-cfg-reset">🗑️ Réinitialiser tout</button>
+        <button class="config-action-btn reset" id="btn-cfg-reset">Réinitialiser tout</button>
       </div>
 
       <div class="config-footer">
