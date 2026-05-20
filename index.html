@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accueil</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/lucide.css" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
@@ -72,9 +73,9 @@
         </div>
       </div>
       <div id="weather-right">
-        <span id="weather-humidity"><i data-lucide="droplets" class="inline-icon"></i> --%</span>
-        <span id="weather-wind"><i data-lucide="wind" class="inline-icon"></i> -- km/h</span>
-        <span id="weather-feels"><i data-lucide="thermometer" class="inline-icon"></i> Ressenti --°C</span>
+        <span id="weather-humidity"><i data-lucide="droplets" class="inline-icon"></i> <span id="wx-humidity-val">--%</span></span>
+        <span id="weather-wind"><i data-lucide="wind" class="inline-icon"></i> <span id="wx-wind-val">-- km/h</span></span>
+        <span id="weather-feels"><i data-lucide="thermometer" class="inline-icon"></i> <span id="wx-feels-val">Ressenti --°C</span></span>
       </div>
     </div>
     <div id="weather-search-row">
