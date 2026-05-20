@@ -21,6 +21,7 @@
     #stars-canvas {
       position:fixed; top:0; left:0; width:100%; height:100%;
       pointer-events:none; z-index:0;
+      will-change:transform;
     }
 
     /* Tout le contenu au-dessus du canvas */
@@ -437,11 +438,19 @@
   </div>
 
 <script>
+/* ── STORAGE HELPER (fix: mode privé Firefox) ── */
+const store = {
+  get(k, fallback) { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fallback; } catch { return fallback; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  raw(k, fallback) { try { return localStorage.getItem(k) ?? fallback; } catch { return fallback; } },
+  rawSet(k, v) { try { localStorage.setItem(k, v); } catch {} }
+};
+
 /* ── CANVAS ÉTOILES ── */
 (function(){
   const canvas = document.getElementById('stars-canvas');
   const ctx = canvas.getContext('2d');
-  let W, H, stars = [];
+  let W, H, stars = [], rafId = null, paused = false;
 
   function resize(){
     W = canvas.width  = window.innerWidth;
@@ -451,6 +460,7 @@
   function randBetween(a, b){ return a + Math.random() * (b - a); }
 
   function createStar(){
+    const colored = Math.random() < 0.15;
     return {
       x: Math.random() * W,
       y: Math.random() * H,
@@ -459,18 +469,27 @@
       dalpha: randBetween(0.003, 0.012) * (Math.random() < 0.5 ? 1 : -1),
       vx: randBetween(-0.06, 0.06),
       vy: randBetween(-0.04, 0.04),
-      hue: Math.random() < 0.15 ? randBetween(300, 340) : 0,
-      sat: Math.random() < 0.15 ? 80 : 0,
+      colored,
+      hue: colored ? randBetween(300, 340) : 0,
+      /* pré-calculer la couleur pour éviter le recalcul par frame */
+      fillStyle: colored ? `hsl(${randBetween(300,340).toFixed(0)},80%,85%)` : '#ffffff',
+      shadowColor: colored ? `hsl(${randBetween(300,340).toFixed(0)},80%,70%)` : 'rgba(255,220,235,0.8)',
+      shadowBlur: 0,
     };
   }
 
   function initStars(){
     stars = [];
     const count = Math.floor((W * H) / 5000);
-    for(let i = 0; i < count; i++) stars.push(createStar());
+    for(let i = 0; i < count; i++){
+      const s = createStar();
+      s.shadowBlur = s.r * (s.colored ? 6 : 4);
+      stars.push(s);
+    }
   }
 
   function draw(){
+    if(paused){ rafId = null; return; }
     ctx.clearRect(0, 0, W, H);
     for(const s of stars){
       s.x += s.vx;
@@ -485,27 +504,31 @@
 
       ctx.save();
       ctx.globalAlpha = s.alpha;
-      if(s.sat > 0){
-        ctx.fillStyle = `hsl(${s.hue},${s.sat}%,85%)`;
-        ctx.shadowColor = `hsl(${s.hue},${s.sat}%,70%)`;
-        ctx.shadowBlur = s.r * 6;
-      } else {
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(255,220,235,0.8)';
-        ctx.shadowBlur = s.r * 4;
-      }
+      ctx.fillStyle = s.fillStyle;
+      ctx.shadowColor = s.shadowColor;
+      ctx.shadowBlur = s.shadowBlur;
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
+
+  /* fix: pause le canvas quand l'onglet est en arrière-plan */
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      paused = true;
+    } else {
+      paused = false;
+      if(!rafId) rafId = requestAnimationFrame(draw);
+    }
+  });
 
   window.addEventListener('resize', ()=>{ resize(); initStars(); });
   resize();
   initStars();
-  draw();
+  rafId = requestAnimationFrame(draw);
 })();
 
 /* ── HORLOGE ── */
@@ -541,9 +564,9 @@ fmhyOverlay.addEventListener('click',e=>{ if(e.target===fmhyOverlay){ fmhyOverla
 
 const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'❄️',73:'❄️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
 const WD={0:'Ciel dégagé',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard givrant',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie légère',63:'Pluie',65:'Pluie forte',71:'Neige légère',73:'Neige',75:'Neige forte',80:'Averses légères',81:'Averses',82:'Averses violentes',95:'Orage',96:'Orage avec grêle',99:'Orage violent'};
-let weatherLat=parseFloat(localStorage.getItem('wx_lat'))||43.2965;
-let weatherLon=parseFloat(localStorage.getItem('wx_lon'))||5.3698;
-let weatherCityName=localStorage.getItem('wx_city')||'Marseille, FR';
+let weatherLat=parseFloat(store.raw('wx_lat','43.2965'));
+let weatherLon=parseFloat(store.raw('wx_lon','5.3698'));
+let weatherCityName=store.raw('wx_city','Marseille, FR');
 async function loadWeather(){
   document.getElementById('weather-error').style.display='none';
   try{
@@ -558,7 +581,11 @@ async function loadWeather(){
     document.getElementById('weather-feels').textContent=`🌡️ Ressenti ${Math.round(c.apparent_temperature)}°C`;
   }catch{ document.getElementById('weather-error').style.display='block'; }
 }
+/* fix: debounce pour éviter les requêtes en double */
+let searchCityTimer = null;
 async function searchCity(){
+  if(searchCityTimer) return;
+  searchCityTimer = setTimeout(()=>{ searchCityTimer=null; }, 1500);
   const input=document.getElementById('weather-city-input').value.trim();
   const status=document.getElementById('weather-city-status');
   if(!input) return; status.textContent='🔍 Recherche…';
@@ -569,7 +596,7 @@ async function searchCity(){
     const city=d.results[0];
     weatherLat=city.latitude; weatherLon=city.longitude;
     weatherCityName=`${city.name}${city.country_code?', '+city.country_code:''}`;
-    localStorage.setItem('wx_lat',weatherLat); localStorage.setItem('wx_lon',weatherLon); localStorage.setItem('wx_city',weatherCityName);
+    store.rawSet('wx_lat',weatherLat); store.rawSet('wx_lon',weatherLon); store.rawSet('wx_city',weatherCityName);
     status.textContent=`✓ ${weatherCityName}`;
     document.getElementById('weather-city-input').value='';
     setTimeout(()=>status.textContent='',3000); loadWeather();
@@ -580,10 +607,10 @@ document.getElementById('weather-city-input').addEventListener('keydown',e=>{ if
 loadWeather(); setInterval(loadWeather,600_000);
 
 const FAV_COUNT=8;
-let favs=JSON.parse(localStorage.getItem('nx_favs')||'null');
+let favs=store.get('nx_favs', null);
 if(!favs||!favs.left){ favs={ left:Array(FAV_COUNT).fill(null), right:Array(FAV_COUNT).fill(null) }; }
 let favEditSide=null,favEditIndex=null;
-function saveFavs(){ localStorage.setItem('nx_favs',JSON.stringify(favs)); }
+function saveFavs(){ store.set('nx_favs',favs); }
 function faviconUrl(url){ try{ const domain=new URL(url).hostname; return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`; }catch{ return null; } }
 function renderFavCol(side){
   const col=document.getElementById(`col-${side}`); col.innerHTML='';
@@ -624,15 +651,16 @@ document.getElementById('btn-fav-save').addEventListener('click',()=>{
 document.getElementById('btn-fav-delete').addEventListener('click',()=>{ favs[favEditSide][favEditIndex]=null; saveFavs(); renderFavCol(favEditSide); closeFavModal(); });
 renderFavCol('left'); renderFavCol('right');
 
-let events=JSON.parse(localStorage.getItem('nx_events')||'[]');
-let history=JSON.parse(localStorage.getItem('nx_history')||'[]');
+/* fix: renommé history → taskHistory pour éviter le shadow de window.history */
+let events=store.get('nx_events', []);
+let taskHistory=store.get('nx_history', []);
 events=events.map(ev=>{ if(ev.date&&!ev.start){ const s=ev.date+'T00:00'; return {...ev,start:s,end:new Date(new Date(s).getTime()+(ev.duration||60)*60000).toISOString().slice(0,16)}; } return ev; });
 const today=new Date();
 let calYear=today.getFullYear(),calMonth=today.getMonth();
 function toYMD(d){ return d.toISOString().slice(0,10); }
-function saveEvents(){ localStorage.setItem('nx_events',JSON.stringify(events)); }
-function saveHistory(){ localStorage.setItem('nx_history',JSON.stringify(history)); }
-function archiveEvent(ev,r){ history.push({...ev,raison:r,archive_le:new Date().toISOString()}); saveHistory(); }
+function saveEvents(){ store.set('nx_events',events); }
+function saveTaskHistory(){ store.set('nx_history',taskHistory); }
+function archiveEvent(ev,r){ taskHistory.push({...ev,raison:r,archive_le:new Date().toISOString()}); saveTaskHistory(); }
 function formatDuration(s,e){ const diff=new Date(e)-new Date(s); if(diff<=0) return '—'; const m=Math.floor(diff/60000),d=Math.floor(m/1440),h=Math.floor((m%1440)/60),mn=m%60; return [d&&`${d}j`,h&&`${h}h`,mn&&`${mn}min`].filter(Boolean).join(' '); }
 function eventDays(ev){ const days=[],s=new Date(ev.start),e=new Date(ev.end); s.setHours(0,0,0,0); e.setHours(0,0,0,0); for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)) days.push(toYMD(new Date(d))); return days; }
 document.getElementById('btn-export-csv').addEventListener('click',()=>{
@@ -664,10 +692,13 @@ const TYPE_ICON={task:'✅',event:'📅',reminder:'🔔'};
 function renderTasks(){
   const list=document.getElementById('tasks-list'),empty=document.getElementById('tasks-empty');
   list.innerHTML='';
-  const sorted=[...events].sort((a,b)=>a.done!==b.done?a.done?1:-1:a.start.localeCompare(b.start));
-  if(!sorted.length){ empty.style.display='block'; return; } empty.style.display='none';
-  sorted.forEach(ev=>{
-    const ri=events.indexOf(ev),isOverdue=!ev.done&&ev.end<new Date().toISOString().slice(0,16);
+  /* fix: trier sur une copie indexée pour garder l'index original stable */
+  const indexed=events.map((ev,i)=>({ev,i})).sort((a,b)=>
+    a.ev.done!==b.ev.done ? (a.ev.done?1:-1) : a.ev.start.localeCompare(b.ev.start)
+  );
+  if(!indexed.length){ empty.style.display='block'; return; } empty.style.display='none';
+  indexed.forEach(({ev,i:ri})=>{
+    const isOverdue=!ev.done&&ev.end<new Date().toISOString().slice(0,16);
     const item=document.createElement('div'); item.className='task-item'+(ev.done?' done':'')+(isOverdue?' overdue':'');
     const check=document.createElement('div'); check.className='task-check'+(ev.done?' checked':''); check.textContent=ev.done?'✓':'';
     check.addEventListener('click',()=>{ const was=events[ri].done; events[ri].done=!was; if(!was) archiveEvent(events[ri],'terminée'); saveEvents(); renderTasks(); renderCalendar(); });
@@ -685,8 +716,8 @@ function renderTasks(){
 function renderHistory(){
   const list=document.getElementById('history-list'),empty=document.getElementById('history-empty');
   list.innerHTML='';
-  if(!history.length){ empty.style.display='block'; return; } empty.style.display='none';
-  [...history].reverse().forEach(ev=>{
+  if(!taskHistory.length){ empty.style.display='block'; return; } empty.style.display='none';
+  [...taskHistory].reverse().forEach(ev=>{
     const item=document.createElement('div'); item.className='history-item';
     const badge=document.createElement('span'); badge.className=`history-badge ${ev.raison==='terminée'?'done':'deleted'}`; badge.textContent=ev.raison==='terminée'?'✓ Terminée':'✕ Supprimée';
     const info=document.createElement('div'); info.className='history-info';
@@ -700,10 +731,10 @@ function renderHistory(){
 document.getElementById('btn-history').addEventListener('click',()=>{ renderHistory(); document.getElementById('history-overlay').classList.add('open'); });
 document.getElementById('btn-history-close').addEventListener('click',()=>{ document.getElementById('history-overlay').classList.remove('open'); });
 document.getElementById('history-overlay').addEventListener('click',e=>{ if(e.target===e.currentTarget) document.getElementById('history-overlay').classList.remove('open'); });
-document.getElementById('btn-history-clear').addEventListener('click',()=>{ if(!history.length){ alert('L\'historique est déjà vide.'); return; } if(confirm('Vider tout l\'historique ?')){ history=[]; saveHistory(); renderHistory(); } });
+document.getElementById('btn-history-clear').addEventListener('click',()=>{ if(!taskHistory.length){ alert('L\'historique est déjà vide.'); return; } if(confirm('Vider tout l\'historique ?')){ taskHistory=[]; saveTaskHistory(); renderHistory(); } });
 document.getElementById('btn-history-export').addEventListener('click',()=>{
-  if(!history.length){ alert('Aucune entrée dans l\'historique.'); return; }
-  const csv=['nom,debut,fin,duree,type,raison,archive_le',...history.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.raison,e.archive_le].join(','))].join('\n');
+  if(!taskHistory.length){ alert('Aucune entrée dans l\'historique.'); return; }
+  const csv=['nom,debut,fin,duree,type,raison,archive_le',...taskHistory.map(e=>[`"${e.name.replace(/"/g,'""')}"`,e.start,e.end,formatDuration(e.start,e.end),e.type,e.raison,e.archive_le].join(','))].join('\n');
   Object.assign(document.createElement('a'),{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:`historique_${toYMD(today)}.csv`}).click();
 });
 function toLocal(date){ const p=n=>String(n).padStart(2,'0'); return `${date.getFullYear()}-${p(date.getMonth()+1)}-${p(date.getDate())}T${p(date.getHours())}:${p(date.getMinutes())}`; }
