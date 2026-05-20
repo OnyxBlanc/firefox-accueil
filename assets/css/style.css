@@ -330,12 +330,13 @@ body::-webkit-scrollbar { display: none; }
   cursor: pointer; padding: .3rem .9rem; border-radius: 50px;
   font-size: .75rem; font-weight: 600; letter-spacing: .06em;
   color: var(--text-soft); border: none; background: transparent;
-  transition: background .25s, color .25s, box-shadow .2s;
+  transition: background .25s, color .25s, transform .2s, box-shadow .2s;
   font-family: 'Inter', sans-serif;
+  transform-origin: center;
 }
 .engine-tab.active {
   background: linear-gradient(90deg, var(--c1), var(--c2));
-  color: #fff; box-shadow: 0 0 12px var(--glow-d);
+  color: #fff; transform: scale(1.05); box-shadow: 0 0 12px var(--glow-d);
 }
 .engine-tab:not(.active):hover { color: var(--c3); background: var(--glow-a); }
 
@@ -343,13 +344,14 @@ body::-webkit-scrollbar { display: none; }
   cursor: pointer; padding: .3rem .9rem; border-radius: 50px;
   font-size: .75rem; font-weight: 600; letter-spacing: .06em;
   color: var(--text-soft); border: none; background: transparent;
-  transition: background .25s, color .25s, box-shadow .2s;
+  transition: background .25s, color .25s, transform .2s, box-shadow .2s;
   font-family: 'Inter', sans-serif;
+  transform-origin: center;
 }
 #fmhy-btn:hover { color: var(--c3); background: var(--glow-a); }
 #fmhy-btn.open {
   background: linear-gradient(90deg, var(--c1), var(--c2));
-  color: #fff; box-shadow: 0 0 12px var(--glow-d);
+  color: #fff; transform: scale(1.05); box-shadow: 0 0 12px var(--glow-d);
 }
 
 @keyframes slideUp {
