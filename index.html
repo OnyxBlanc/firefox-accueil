@@ -17,6 +17,17 @@
     }
     body::-webkit-scrollbar { display:none; }
 
+    /* CANVAS ETOILES */
+    #stars-canvas {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      pointer-events:none; z-index:0;
+    }
+
+    /* Tout le contenu au-dessus du canvas */
+    .side-col, #clock-section, #search-wrapper, #weather-widget,
+    #main-panel, .divider, #quote,
+    .overlay { position:relative; z-index:1; }
+
     /* COLONNES FAVORIS FIXES */
     .side-col {
       position:fixed; top:50%; transform:translateY(-50%);
@@ -69,6 +80,8 @@
       font-size:4.5rem; font-weight:300; letter-spacing:.08em;
       background:linear-gradient(90deg,#f4a0b5,#e06080,#c94070);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1;
+      text-shadow: none;
+      filter: drop-shadow(0 0 18px rgba(201,64,112,.45));
     }
     #date { font-size:.95rem; font-weight:300; color:#c890a8; margin-top:.35rem; letter-spacing:.15em; text-transform:capitalize; }
 
@@ -93,7 +106,16 @@
     #search-btn:hover { opacity:.88; transform:scale(1.04); box-shadow:0 0 14px rgba(220,80,120,.45); }
 
     /* METEO */
-    #weather-widget { width:100%; max-width:600px; background:rgba(255,160,190,.06); border:1px solid rgba(220,100,140,.18); border-radius:20px; padding:1rem 1.4rem; backdrop-filter:blur(10px); animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both; display:flex; flex-direction:column; gap:.75rem; }
+    #weather-widget {
+      width:100%; max-width:600px;
+      background:rgba(255,160,190,.06);
+      border:1px solid rgba(220,100,140,.22);
+      border-radius:20px; padding:1rem 1.4rem;
+      backdrop-filter:blur(10px);
+      animation:slideUp .6s .1s cubic-bezier(.22,1,.36,1) both;
+      display:flex; flex-direction:column; gap:.75rem;
+      box-shadow:0 4px 32px rgba(201,64,112,.18), 0 1px 0 rgba(255,160,190,.08) inset;
+    }
     #weather-top { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
     #weather-left { display:flex; align-items:center; gap:1rem; }
     #weather-icon { font-size:2.4rem; line-height:1; animation:floatIcon 3s ease-in-out infinite; }
@@ -117,7 +139,15 @@
     #main-panel { display:flex; gap:1.5rem; width:100%; max-width:900px; flex-wrap:wrap; }
 
     /* CALENDRIER */
-    #calendar-section { flex:1 1 320px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both; }
+    #calendar-section {
+      flex:1 1 320px;
+      background:rgba(255,160,190,.05);
+      border:1px solid rgba(220,100,140,.18);
+      border-radius:20px; padding:1.2rem;
+      backdrop-filter:blur(8px);
+      animation:slideUp .5s .15s cubic-bezier(.22,1,.36,1) both;
+      box-shadow:0 4px 28px rgba(201,64,112,.15), 0 1px 0 rgba(255,160,190,.07) inset;
+    }
     #cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.8rem; }
     #cal-month-label { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     .cal-nav { background:none; border:none; color:#e07090; cursor:pointer; font-size:1rem; padding:.2rem .5rem; border-radius:8px; transition:background .2s; }
@@ -134,7 +164,17 @@
     .cal-day.past { opacity:.5; }
 
     /* TACHES */
-    #tasks-section { flex:1 1 300px; background:rgba(255,160,190,.05); border:1px solid rgba(220,100,140,.15); border-radius:20px; padding:1.2rem; backdrop-filter:blur(8px); display:flex; flex-direction:column; gap:.8rem; animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both; max-height:440px; }
+    #tasks-section {
+      flex:1 1 300px;
+      background:rgba(255,160,190,.05);
+      border:1px solid rgba(220,100,140,.18);
+      border-radius:20px; padding:1.2rem;
+      backdrop-filter:blur(8px);
+      display:flex; flex-direction:column; gap:.8rem;
+      animation:slideUp .5s .2s cubic-bezier(.22,1,.36,1) both;
+      max-height:440px;
+      box-shadow:0 4px 28px rgba(201,64,112,.15), 0 1px 0 rgba(255,160,190,.07) inset;
+    }
     #tasks-header { display:flex; align-items:center; justify-content:space-between; }
     #tasks-title { font-size:.95rem; font-weight:600; color:#f0d6e0; }
     #tasks-actions { display:flex; gap:.4rem; }
@@ -218,6 +258,9 @@
   </style>
 </head>
 <body>
+
+  <!-- CANVAS ÉTOILES -->
+  <canvas id="stars-canvas"></canvas>
 
   <div class="side-col left"  id="col-left"></div>
   <div class="side-col right" id="col-right"></div>
@@ -394,6 +437,78 @@
   </div>
 
 <script>
+/* ── CANVAS ÉTOILES ── */
+(function(){
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function randBetween(a, b){ return a + Math.random() * (b - a); }
+
+  function createStar(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: randBetween(0.4, 1.6),
+      alpha: randBetween(0.2, 1),
+      dalpha: randBetween(0.003, 0.012) * (Math.random() < 0.5 ? 1 : -1),
+      vx: randBetween(-0.06, 0.06),
+      vy: randBetween(-0.04, 0.04),
+      hue: Math.random() < 0.15 ? randBetween(300, 340) : 0,
+      sat: Math.random() < 0.15 ? 80 : 0,
+    };
+  }
+
+  function initStars(){
+    stars = [];
+    const count = Math.floor((W * H) / 5000);
+    for(let i = 0; i < count; i++) stars.push(createStar());
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+    for(const s of stars){
+      s.x += s.vx;
+      s.y += s.vy;
+      s.alpha += s.dalpha;
+      if(s.alpha <= 0.05 || s.alpha >= 1) s.dalpha *= -1;
+      s.alpha = Math.max(0.05, Math.min(1, s.alpha));
+      if(s.x < -2) s.x = W + 2;
+      if(s.x > W + 2) s.x = -2;
+      if(s.y < -2) s.y = H + 2;
+      if(s.y > H + 2) s.y = -2;
+
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      if(s.sat > 0){
+        ctx.fillStyle = `hsl(${s.hue},${s.sat}%,85%)`;
+        ctx.shadowColor = `hsl(${s.hue},${s.sat}%,70%)`;
+        ctx.shadowBlur = s.r * 6;
+      } else {
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = 'rgba(255,220,235,0.8)';
+        ctx.shadowBlur = s.r * 4;
+      }
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', ()=>{ resize(); initStars(); });
+  resize();
+  initStars();
+  draw();
+})();
+
+/* ── HORLOGE ── */
 function updateClock(){
   const n=new Date();
   document.getElementById('time').textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
