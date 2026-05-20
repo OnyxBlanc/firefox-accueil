@@ -16,7 +16,9 @@
       box-sizing: border-box;
     }
 
-    html { overflow: hidden; }
+    html {
+      overflow: hidden;
+    }
 
     body {
       height: 100vh;
@@ -24,179 +26,17 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       font-family: 'Inter', sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-base);
+      background: linear-gradient(135deg, #1a0a10 0%, #2d1020 30%, #1e0a1a 60%, #0d0510 100%);
+      color: #f0d6e0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       gap: 2rem;
       padding: 2rem 1rem 3rem;
-      transition: background .4s;
     }
 
     body::-webkit-scrollbar { display: none; }
-
-
-    /* ═══════════════════════════════════════════
-       THÈMES — variables CSS
-    ═══════════════════════════════════════════ */
-
-    /* Rose (défaut) */
-    :root, [data-theme="rose"] {
-      --c1:           #c94070;
-      --c2:           #e06080;
-      --c3:           #f4a0b5;
-      --text-base:    #f0d6e0;
-      --text-mid:     #c890a8;
-      --text-soft:    #9a6070;
-      --text-faint:   #5a3040;
-      --bg-gradient:  linear-gradient(135deg, #1a0a10 0%, #2d1020 30%, #1e0a1a 60%, #0d0510 100%);
-      --bg-modal:     linear-gradient(135deg, #2d1020, #1a0a10);
-      --tint-a:       rgba(255, 160, 190, .05);
-      --tint-b:       rgba(255, 160, 190, .06);
-      --tint-c:       rgba(255, 160, 190, .07);
-      --tint-d:       rgba(255, 160, 190, .08);
-      --border-a:     rgba(220, 100, 140, .10);
-      --border-b:     rgba(220, 100, 140, .15);
-      --border-c:     rgba(220, 100, 140, .18);
-      --border-d:     rgba(220, 100, 140, .22);
-      --border-e:     rgba(220, 100, 140, .25);
-      --border-f:     rgba(220, 100, 140, .30);
-      --glow-a:       rgba(220,  80, 120, .15);
-      --glow-b:       rgba(220,  80, 120, .25);
-      --glow-c:       rgba(220,  80, 120, .30);
-      --glow-d:       rgba(220,  80, 120, .40);
-      --glow-e:       rgba(220,  80, 120, .45);
-      --shadow-panel: rgba(201,  64, 112, .15);
-      --shadow-wx:    rgba(201,  64, 112, .18);
-      --star-hue-min: 300;
-      --star-hue-max: 340;
-    }
-
-    [data-theme="bleu"] {
-      --c1:           #2060c0;
-      --c2:           #4090e0;
-      --c3:           #90c4f4;
-      --text-base:    #d6e8f8;
-      --text-mid:     #88aac8;
-      --text-soft:    #607090;
-      --text-faint:   #304060;
-      --bg-gradient:  linear-gradient(135deg, #050e1a 0%, #0d2035 30%, #0a1828 60%, #030810 100%);
-      --bg-modal:     linear-gradient(135deg, #0d2035, #050e1a);
-      --tint-a:       rgba(100, 170, 255, .05);
-      --tint-b:       rgba(100, 170, 255, .06);
-      --tint-c:       rgba(100, 170, 255, .07);
-      --tint-d:       rgba(100, 170, 255, .08);
-      --border-a:     rgba( 60, 130, 220, .10);
-      --border-b:     rgba( 60, 130, 220, .15);
-      --border-c:     rgba( 60, 130, 220, .18);
-      --border-d:     rgba( 60, 130, 220, .22);
-      --border-e:     rgba( 60, 130, 220, .25);
-      --border-f:     rgba( 60, 130, 220, .30);
-      --glow-a:       rgba( 40, 120, 220, .15);
-      --glow-b:       rgba( 40, 120, 220, .25);
-      --glow-c:       rgba( 40, 120, 220, .30);
-      --glow-d:       rgba( 40, 120, 220, .40);
-      --glow-e:       rgba( 40, 120, 220, .45);
-      --shadow-panel: rgba( 30,  90, 200, .15);
-      --shadow-wx:    rgba( 30,  90, 200, .18);
-      --star-hue-min: 200;
-      --star-hue-max: 240;
-    }
-
-    [data-theme="vert"] {
-      --c1:           #208050;
-      --c2:           #40b070;
-      --c3:           #90e4b0;
-      --text-base:    #d6f4e0;
-      --text-mid:     #88c8a0;
-      --text-soft:    #607060;
-      --text-faint:   #304030;
-      --bg-gradient:  linear-gradient(135deg, #050e08 0%, #0d2015 30%, #0a1810 60%, #030803 100%);
-      --bg-modal:     linear-gradient(135deg, #0d2015, #050e08);
-      --tint-a:       rgba(100, 220, 140, .05);
-      --tint-b:       rgba(100, 220, 140, .06);
-      --tint-c:       rgba(100, 220, 140, .07);
-      --tint-d:       rgba(100, 220, 140, .08);
-      --border-a:     rgba( 60, 180,  80, .10);
-      --border-b:     rgba( 60, 180,  80, .15);
-      --border-c:     rgba( 60, 180,  80, .18);
-      --border-d:     rgba( 60, 180,  80, .22);
-      --border-e:     rgba( 60, 180,  80, .25);
-      --border-f:     rgba( 60, 180,  80, .30);
-      --glow-a:       rgba( 40, 160,  60, .15);
-      --glow-b:       rgba( 40, 160,  60, .25);
-      --glow-c:       rgba( 40, 160,  60, .30);
-      --glow-d:       rgba( 40, 160,  60, .40);
-      --glow-e:       rgba( 40, 160,  60, .45);
-      --shadow-panel: rgba( 30, 130,  50, .15);
-      --shadow-wx:    rgba( 30, 130,  50, .18);
-      --star-hue-min: 120;
-      --star-hue-max: 160;
-    }
-
-    [data-theme="rouge"] {
-      --c1:           #c02020;
-      --c2:           #e04040;
-      --c3:           #f4a090;
-      --text-base:    #f8d6d6;
-      --text-mid:     #c89090;
-      --text-soft:    #906070;
-      --text-faint:   #503040;
-      --bg-gradient:  linear-gradient(135deg, #1a0505 0%, #2d0d0d 30%, #1e0a0a 60%, #0d0303 100%);
-      --bg-modal:     linear-gradient(135deg, #2d0d0d, #1a0505);
-      --tint-a:       rgba(255, 120, 100, .05);
-      --tint-b:       rgba(255, 120, 100, .06);
-      --tint-c:       rgba(255, 120, 100, .07);
-      --tint-d:       rgba(255, 120, 100, .08);
-      --border-a:     rgba(220,  70,  70, .10);
-      --border-b:     rgba(220,  70,  70, .15);
-      --border-c:     rgba(220,  70,  70, .18);
-      --border-d:     rgba(220,  70,  70, .22);
-      --border-e:     rgba(220,  70,  70, .25);
-      --border-f:     rgba(220,  70,  70, .30);
-      --glow-a:       rgba(210,  50,  50, .15);
-      --glow-b:       rgba(210,  50,  50, .25);
-      --glow-c:       rgba(210,  50,  50, .30);
-      --glow-d:       rgba(210,  50,  50, .40);
-      --glow-e:       rgba(210,  50,  50, .45);
-      --shadow-panel: rgba(190,  40,  40, .15);
-      --shadow-wx:    rgba(190,  40,  40, .18);
-      --star-hue-min:   0;
-      --star-hue-max:  30;
-    }
-
-    [data-theme="violet"] {
-      --c1:           #7030c0;
-      --c2:           #9060e0;
-      --c3:           #c4a0f4;
-      --text-base:    #ead6f8;
-      --text-mid:     #a888c8;
-      --text-soft:    #706090;
-      --text-faint:   #403060;
-      --bg-gradient:  linear-gradient(135deg, #0e0518 0%, #1e0d30 30%, #180a28 60%, #080310 100%);
-      --bg-modal:     linear-gradient(135deg, #1e0d30, #0e0518);
-      --tint-a:       rgba(170, 120, 255, .05);
-      --tint-b:       rgba(170, 120, 255, .06);
-      --tint-c:       rgba(170, 120, 255, .07);
-      --tint-d:       rgba(170, 120, 255, .08);
-      --border-a:     rgba(140,  80, 220, .10);
-      --border-b:     rgba(140,  80, 220, .15);
-      --border-c:     rgba(140,  80, 220, .18);
-      --border-d:     rgba(140,  80, 220, .22);
-      --border-e:     rgba(140,  80, 220, .25);
-      --border-f:     rgba(140,  80, 220, .30);
-      --glow-a:       rgba(120,  60, 210, .15);
-      --glow-b:       rgba(120,  60, 210, .25);
-      --glow-c:       rgba(120,  60, 210, .30);
-      --glow-d:       rgba(120,  60, 210, .40);
-      --glow-e:       rgba(120,  60, 210, .45);
-      --shadow-panel: rgba( 90,  40, 190, .15);
-      --shadow-wx:    rgba( 90,  40, 190, .18);
-      --star-hue-min: 260;
-      --star-hue-max: 300;
-    }
 
 
     /* ═══════════════════════════════════════════
@@ -213,6 +53,7 @@
       will-change: transform;
     }
 
+    /* Tout le contenu passe au-dessus du canvas */
     .side-col,
     #clock-section,
     #search-wrapper,
@@ -224,50 +65,6 @@
       position: relative;
       z-index: 1;
     }
-
-
-    /* ═══════════════════════════════════════════
-       SÉLECTEUR DE THÈME
-    ═══════════════════════════════════════════ */
-    #theme-switcher {
-      position: fixed;
-      bottom: 1.2rem;
-      right: 1.2rem;
-      display: flex;
-      gap: .45rem;
-      z-index: 100;
-      background: rgba(0, 0, 0, .35);
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 50px;
-      padding: .35rem .5rem;
-      backdrop-filter: blur(10px);
-    }
-
-    .theme-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: transform .2s, border-color .2s, box-shadow .2s;
-      flex-shrink: 0;
-    }
-
-    .theme-dot:hover {
-      transform: scale(1.25);
-    }
-
-    .theme-dot.active {
-      border-color: rgba(255, 255, 255, .8);
-      box-shadow: 0 0 8px rgba(255, 255, 255, .4);
-      transform: scale(1.15);
-    }
-
-    .theme-dot[data-theme="rose"]   { background: linear-gradient(135deg, #c94070, #f4a0b5); }
-    .theme-dot[data-theme="bleu"]   { background: linear-gradient(135deg, #2060c0, #90c4f4); }
-    .theme-dot[data-theme="vert"]   { background: linear-gradient(135deg, #208050, #90e4b0); }
-    .theme-dot[data-theme="rouge"]  { background: linear-gradient(135deg, #c02020, #f4a090); }
-    .theme-dot[data-theme="violet"] { background: linear-gradient(135deg, #7030c0, #c4a0f4); }
 
 
     /* ═══════════════════════════════════════════
@@ -297,23 +94,23 @@
       cursor: pointer;
       position: relative;
       transition: background .2s, transform .15s, box-shadow .2s;
-      background: var(--tint-a);
-      border: 1px solid var(--border-a);
+      background: rgba(255, 160, 190, .04);
+      border: 1px solid rgba(220, 100, 140, .1);
       text-decoration: none;
-      color: var(--text-base);
+      color: #f0d6e0;
       flex-shrink: 0;
       overflow: visible;
     }
 
     .fav-slot:hover {
-      background: var(--glow-a);
+      background: rgba(220, 80, 120, .15);
       transform: scale(1.12);
-      box-shadow: 0 0 14px var(--glow-c);
-      border-color: var(--border-e);
+      box-shadow: 0 0 14px rgba(220, 80, 120, .3);
+      border-color: rgba(220, 100, 140, .35);
     }
 
-    .fav-slot.empty       { opacity: .3; font-size: 1rem; }
-    .fav-slot.empty:hover { opacity: .65; }
+    .fav-slot.empty         { opacity: .3; font-size: 1rem; }
+    .fav-slot.empty:hover   { opacity: .65; }
 
     .fav-slot img.fav-favicon {
       width: 24px;
@@ -328,12 +125,12 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: var(--bg-modal);
-      border: 1px solid var(--border-e);
+      background: linear-gradient(135deg, #2d1020, #1a0a10);
+      border: 1px solid rgba(220, 100, 140, .25);
       border-radius: 8px;
       padding: .25rem .6rem;
       font-size: .68rem;
-      color: var(--text-mid);
+      color: #e0b8c8;
       white-space: nowrap;
       pointer-events: none;
       opacity: 0;
@@ -352,7 +149,7 @@
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      background: var(--c1);
+      background: #c94070;
       border: none;
       cursor: pointer;
       font-size: .5rem;
@@ -375,19 +172,19 @@
       font-size: 4.5rem;
       font-weight: 300;
       letter-spacing: .08em;
-      background: linear-gradient(90deg, var(--c3), var(--c2), var(--c1));
+      background: linear-gradient(90deg, #f4a0b5, #e06080, #c94070);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 1;
       text-shadow: none;
-      filter: drop-shadow(0 0 18px var(--glow-e));
+      filter: drop-shadow(0 0 18px rgba(201, 64, 112, .45));
     }
 
     #date {
       font-size: .95rem;
       font-weight: 300;
-      color: var(--text-mid);
+      color: #c890a8;
       margin-top: .35rem;
       letter-spacing: .15em;
       text-transform: capitalize;
@@ -409,8 +206,8 @@
     #engine-tabs {
       display: flex;
       gap: .5rem;
-      background: var(--tint-a);
-      border: 1px solid var(--border-b);
+      background: rgba(255, 160, 190, .05);
+      border: 1px solid rgba(220, 100, 140, .15);
       border-radius: 50px;
       padding: .3rem;
       backdrop-filter: blur(8px);
@@ -423,7 +220,7 @@
       font-size: .75rem;
       font-weight: 600;
       letter-spacing: .06em;
-      color: var(--text-soft);
+      color: #a07080;
       border: none;
       background: transparent;
       transition: background .25s, color .25s, transform .2s;
@@ -431,15 +228,15 @@
     }
 
     .engine-tab.active {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       color: #fff;
       transform: scale(1.05);
-      box-shadow: 0 0 12px var(--glow-d);
+      box-shadow: 0 0 12px rgba(220, 80, 120, .4);
     }
 
     .engine-tab:not(.active):hover {
-      color: var(--c3);
-      background: var(--glow-a);
+      color: #f4a0b5;
+      background: rgba(220, 80, 120, .1);
     }
 
     #fmhy-btn {
@@ -449,7 +246,7 @@
       font-size: .75rem;
       font-weight: 600;
       letter-spacing: .06em;
-      color: var(--text-soft);
+      color: #a07080;
       border: none;
       background: transparent;
       transition: background .25s, color .25s, transform .2s;
@@ -457,15 +254,15 @@
     }
 
     #fmhy-btn:hover {
-      color: var(--c3);
-      background: var(--glow-a);
+      color: #f4a0b5;
+      background: rgba(220, 80, 120, .1);
     }
 
     #fmhy-btn.open {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       color: #fff;
       transform: scale(1.05);
-      box-shadow: 0 0 12px var(--glow-d);
+      box-shadow: 0 0 12px rgba(220, 80, 120, .4);
     }
 
     @keyframes slideUp {
@@ -477,8 +274,8 @@
       display: flex;
       align-items: center;
       width: 100%;
-      background: var(--tint-c);
-      border: 1px solid var(--border-d);
+      background: rgba(255, 180, 200, .07);
+      border: 1px solid rgba(240, 120, 150, .2);
       border-radius: 50px;
       padding: .65rem 1.2rem;
       backdrop-filter: blur(12px);
@@ -487,8 +284,8 @@
     }
 
     #search-form:focus-within {
-      border-color: var(--border-f);
-      box-shadow: 0 0 22px var(--glow-b), 0 0 0 3px var(--glow-a);
+      border-color: rgba(240, 100, 140, .65);
+      box-shadow: 0 0 22px rgba(220, 80, 120, .25), 0 0 0 3px rgba(220, 80, 120, .07);
       transform: scale(1.015);
     }
 
@@ -509,16 +306,16 @@
       background: transparent;
       border: none;
       outline: none;
-      color: var(--text-base);
+      color: #f0d6e0;
       font-size: 1rem;
       width: 100%;
       font-family: 'Inter', sans-serif;
     }
 
-    #search-form input::placeholder { color: var(--text-soft); }
+    #search-form input::placeholder { color: #a06070; }
 
     #search-btn {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       border: none;
       cursor: pointer;
       color: #fff;
@@ -535,7 +332,7 @@
     #search-btn:hover {
       opacity: .88;
       transform: scale(1.04);
-      box-shadow: 0 0 14px var(--glow-e);
+      box-shadow: 0 0 14px rgba(220, 80, 120, .45);
     }
 
 
@@ -545,8 +342,8 @@
     #weather-widget {
       width: 100%;
       max-width: 600px;
-      background: var(--tint-b);
-      border: 1px solid var(--border-d);
+      background: rgba(255, 160, 190, .06);
+      border: 1px solid rgba(220, 100, 140, .22);
       border-radius: 20px;
       padding: 1rem 1.4rem;
       backdrop-filter: blur(10px);
@@ -555,8 +352,8 @@
       flex-direction: column;
       gap: .75rem;
       box-shadow:
-        0 4px 32px var(--shadow-wx),
-        0 1px 0 var(--tint-d) inset;
+        0 4px 32px rgba(201, 64, 112, .18),
+        0 1px 0 rgba(255, 160, 190, .08) inset;
     }
 
     #weather-top {
@@ -593,15 +390,15 @@
     #weather-temp {
       font-size: 1.8rem;
       font-weight: 300;
-      background: linear-gradient(90deg, var(--c3), var(--c2));
+      background: linear-gradient(90deg, #f4a0b5, #e06080);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       line-height: 1;
     }
 
-    #weather-desc       { font-size: .78rem; color: var(--text-mid); text-transform: capitalize; }
-    #weather-city-label { font-size: .7rem;  color: var(--text-soft); letter-spacing: .06em; }
+    #weather-desc       { font-size: .78rem; color: #c890a8; text-transform: capitalize; }
+    #weather-city-label { font-size: .7rem;  color: #9a6070; letter-spacing: .06em; }
 
     #weather-right {
       display: flex;
@@ -609,14 +406,14 @@
       align-items: flex-end;
       gap: .25rem;
       font-size: .73rem;
-      color: var(--text-mid);
+      color: #c890a8;
     }
 
     #weather-right span { display: flex; align-items: center; gap: .3rem; }
 
     #weather-error {
       font-size: .78rem;
-      color: var(--c1);
+      color: #c94070;
       display: none;
       margin-top: .3rem;
     }
@@ -629,22 +426,22 @@
 
     #weather-city-input {
       flex: 1;
-      background: var(--tint-c);
-      border: 1px solid var(--border-d);
+      background: rgba(255, 160, 190, .07);
+      border: 1px solid rgba(220, 100, 140, .2);
       border-radius: 50px;
       padding: .35rem .9rem;
-      color: var(--text-base);
+      color: #f0d6e0;
       font-size: .78rem;
       font-family: 'Inter', sans-serif;
       outline: none;
       transition: border-color .2s;
     }
 
-    #weather-city-input:focus        { border-color: var(--border-f); }
-    #weather-city-input::placeholder { color: var(--text-soft); }
+    #weather-city-input:focus       { border-color: rgba(240, 100, 140, .6); }
+    #weather-city-input::placeholder { color: #a06070; }
 
     #weather-city-btn {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       border: none;
       color: #fff;
       font-size: .75rem;
@@ -661,7 +458,7 @@
 
     #weather-city-status {
       font-size: .68rem;
-      color: var(--text-soft);
+      color: #9a6070;
       font-style: italic;
       min-height: .9rem;
     }
@@ -681,15 +478,15 @@
     /* --- Calendrier --- */
     #calendar-section {
       flex: 1 1 320px;
-      background: var(--tint-a);
-      border: 1px solid var(--border-c);
+      background: rgba(255, 160, 190, .05);
+      border: 1px solid rgba(220, 100, 140, .18);
       border-radius: 20px;
       padding: 1.2rem;
       backdrop-filter: blur(8px);
       animation: slideUp .5s .15s cubic-bezier(.22, 1, .36, 1) both;
       box-shadow:
-        0 4px 28px var(--shadow-panel),
-        0 1px 0 var(--tint-a) inset;
+        0 4px 28px rgba(201, 64, 112, .15),
+        0 1px 0 rgba(255, 160, 190, .07) inset;
     }
 
     #cal-header {
@@ -699,12 +496,12 @@
       margin-bottom: .8rem;
     }
 
-    #cal-month-label { font-size: .95rem; font-weight: 600; color: var(--text-base); }
+    #cal-month-label { font-size: .95rem; font-weight: 600; color: #f0d6e0; }
 
     .cal-nav {
       background: none;
       border: none;
-      color: var(--c2);
+      color: #e07090;
       cursor: pointer;
       font-size: 1rem;
       padding: .2rem .5rem;
@@ -712,7 +509,7 @@
       transition: background .2s;
     }
 
-    .cal-nav:hover { background: var(--glow-a); }
+    .cal-nav:hover { background: rgba(220, 80, 120, .15); }
 
     #cal-dow-row {
       display: grid;
@@ -723,7 +520,7 @@
     .cal-dow {
       text-align: center;
       font-size: .65rem;
-      color: var(--text-soft);
+      color: #9a6070;
       font-weight: 600;
       padding: .2rem 0;
       letter-spacing: .06em;
@@ -745,41 +542,41 @@
       border-radius: 8px;
       cursor: pointer;
       transition: background .2s, transform .15s;
-      color: var(--text-mid);
+      color: #c890a8;
       gap: 2px;
     }
 
     .cal-day:hover {
-      background: var(--glow-a);
-      color: var(--c3);
+      background: rgba(220, 80, 120, .18);
+      color: #f4c8d8;
       transform: scale(1.1);
     }
 
     .cal-day.today {
-      background: linear-gradient(135deg, var(--c1), var(--c2));
+      background: linear-gradient(135deg, #c94070, #e06080);
       color: #fff;
       font-weight: 600;
-      box-shadow: 0 0 10px var(--glow-d);
+      box-shadow: 0 0 10px rgba(220, 80, 120, .4);
     }
 
     .cal-day-dot {
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background: var(--c3);
+      background: #f4a0b5;
       flex-shrink: 0;
     }
 
     .cal-day.today .cal-day-dot { background: #fff; }
-    .cal-day.other-month         { color: var(--text-faint); }
+    .cal-day.other-month         { color: #5a3040; }
     .cal-day.past                { opacity: .5; }
 
 
     /* --- Tâches --- */
     #tasks-section {
       flex: 1 1 300px;
-      background: var(--tint-a);
-      border: 1px solid var(--border-c);
+      background: rgba(255, 160, 190, .05);
+      border: 1px solid rgba(220, 100, 140, .18);
       border-radius: 20px;
       padding: 1.2rem;
       backdrop-filter: blur(8px);
@@ -789,8 +586,8 @@
       animation: slideUp .5s .2s cubic-bezier(.22, 1, .36, 1) both;
       max-height: 440px;
       box-shadow:
-        0 4px 28px var(--shadow-panel),
-        0 1px 0 var(--tint-a) inset;
+        0 4px 28px rgba(201, 64, 112, .15),
+        0 1px 0 rgba(255, 160, 190, .07) inset;
     }
 
     #tasks-header {
@@ -799,12 +596,12 @@
       justify-content: space-between;
     }
 
-    #tasks-title { font-size: .95rem; font-weight: 600; color: var(--text-base); }
+    #tasks-title { font-size: .95rem; font-weight: 600; color: #f0d6e0; }
 
     #tasks-actions { display: flex; gap: .4rem; }
 
     #btn-add-event {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       border: none;
       color: #fff;
       font-size: .75rem;
@@ -820,9 +617,9 @@
 
     #btn-export-csv,
     #btn-history {
-      background: var(--tint-d);
-      border: 1px solid var(--border-e);
-      color: var(--text-mid);
+      background: rgba(255, 160, 190, .08);
+      border: 1px solid rgba(220, 100, 140, .25);
+      color: #c890a8;
       font-size: .72rem;
       padding: .32rem .75rem;
       border-radius: 50px;
@@ -835,8 +632,8 @@
 
     #btn-export-csv:hover,
     #btn-history:hover {
-      background: var(--glow-a);
-      color: var(--c3);
+      background: rgba(220, 80, 120, .15);
+      color: #f4a0b5;
     }
 
     #tasks-list {
@@ -849,7 +646,7 @@
 
     #tasks-list::-webkit-scrollbar       { width: 4px; }
     #tasks-list::-webkit-scrollbar-track  { background: transparent; }
-    #tasks-list::-webkit-scrollbar-thumb  { background: var(--glow-c); border-radius: 4px; }
+    #tasks-list::-webkit-scrollbar-thumb  { background: rgba(220, 80, 120, .3); border-radius: 4px; }
 
     @keyframes fadeInPill {
       from { opacity: 0; transform: translateY(6px); }
@@ -860,23 +657,23 @@
       display: flex;
       align-items: center;
       gap: .6rem;
-      background: var(--tint-a);
-      border: 1px solid var(--border-a);
+      background: rgba(255, 160, 190, .05);
+      border: 1px solid rgba(220, 100, 140, .12);
       border-radius: 12px;
       padding: .6rem .8rem;
       transition: background .2s, border-color .2s;
       animation: fadeInPill .3s ease both;
     }
 
-    .task-item.done            { opacity: .55; }
-    .task-item.done .task-name { text-decoration: line-through; color: var(--text-soft); }
-    .task-item.overdue         { border-color: rgba(220, 60, 80, .35); }
+    .task-item.done           { opacity: .55; }
+    .task-item.done .task-name { text-decoration: line-through; color: #9a6070; }
+    .task-item.overdue        { border-color: rgba(220, 60, 80, .35); }
 
     .task-check {
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      border: 2px solid var(--border-e);
+      border: 2px solid rgba(220, 100, 140, .4);
       cursor: pointer;
       flex-shrink: 0;
       transition: background .2s, border-color .2s;
@@ -888,8 +685,8 @@
     }
 
     .task-check.checked {
-      background: linear-gradient(135deg, var(--c1), var(--c2));
-      border-color: var(--c2);
+      background: linear-gradient(135deg, #c94070, #e06080);
+      border-color: #e06080;
       color: #fff;
     }
 
@@ -897,28 +694,28 @@
 
     .task-name {
       font-size: .8rem;
-      color: var(--text-base);
+      color: #e8c0d0;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .task-meta { font-size: .67rem; color: var(--text-soft); margin-top: .1rem; }
+    .task-meta { font-size: .67rem; color: #9a6070; margin-top: .1rem; }
 
     .task-del {
       background: none;
       border: none;
-      color: var(--text-soft);
+      color: #9a6070;
       cursor: pointer;
       font-size: .85rem;
       transition: color .2s;
     }
 
-    .task-del:hover { color: var(--c2); }
+    .task-del:hover { color: #e06080; }
 
     #tasks-empty {
       font-size: .8rem;
-      color: var(--text-soft);
+      color: #9a6070;
       font-style: italic;
       text-align: center;
       padding: 1rem 0;
@@ -948,8 +745,8 @@
     }
 
     .modal-box {
-      background: var(--bg-modal);
-      border: 1px solid var(--border-f);
+      background: linear-gradient(135deg, #2d1020, #1a0a10);
+      border: 1px solid rgba(220, 100, 140, .3);
       border-radius: 20px;
       padding: 1.6rem;
       width: 90%;
@@ -960,7 +757,7 @@
 
     .overlay.open .modal-box { transform: translateY(0) scale(1); }
 
-    .modal-box h3 { font-size: 1rem; font-weight: 600; color: var(--c3); margin-bottom: 1.2rem; }
+    .modal-box h3 { font-size: 1rem; font-weight: 600; color: #f4a0b5; margin-bottom: 1.2rem; }
 
     .modal-header {
       display: flex;
@@ -974,13 +771,13 @@
     .btn-close-modal {
       background: none;
       border: none;
-      color: var(--text-soft);
+      color: #9a6070;
       cursor: pointer;
       font-size: 1.1rem;
       transition: color .2s;
     }
 
-    .btn-close-modal:hover { color: var(--c2); }
+    .btn-close-modal:hover { color: #e06080; }
 
     .field {
       display: flex;
@@ -991,18 +788,18 @@
 
     .field label {
       font-size: .75rem;
-      color: var(--text-mid);
+      color: #c890a8;
       font-weight: 600;
       letter-spacing: .06em;
     }
 
     .field input,
     .field select {
-      background: var(--tint-c);
-      border: 1px solid var(--border-d);
+      background: rgba(255, 160, 190, .07);
+      border: 1px solid rgba(220, 100, 140, .2);
       border-radius: 10px;
       padding: .55rem .9rem;
-      color: var(--text-base);
+      color: #f0d6e0;
       font-size: .85rem;
       font-family: 'Inter', sans-serif;
       outline: none;
@@ -1010,8 +807,9 @@
     }
 
     .field input:focus,
-    .field select:focus             { border-color: var(--border-f); }
-    .field select option             { background: #1a0a10; }
+    .field select:focus { border-color: rgba(240, 100, 140, .6); }
+
+    .field select option             { background: #2d1020; }
     .field input[type="datetime-local"] { color-scheme: dark; }
 
     .modal-actions {
@@ -1022,9 +820,9 @@
     }
 
     .btn-cancel {
-      background: var(--tint-d);
-      border: 1px solid var(--border-d);
-      color: var(--text-mid);
+      background: rgba(255, 160, 190, .08);
+      border: 1px solid rgba(220, 100, 140, .2);
+      color: #c890a8;
       font-size: .82rem;
       padding: .45rem 1rem;
       border-radius: 50px;
@@ -1033,10 +831,10 @@
       transition: background .2s;
     }
 
-    .btn-cancel:hover { background: var(--glow-a); }
+    .btn-cancel:hover { background: rgba(220, 80, 120, .15); }
 
     .btn-save {
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, #c94070, #e06080);
       border: none;
       color: #fff;
       font-size: .82rem;
@@ -1075,15 +873,18 @@
       flex-direction: column;
     }
 
-    #fmhy-modal-body { overflow-y: auto; flex: 1; }
+    #fmhy-modal-body {
+      overflow-y: auto;
+      flex: 1;
+    }
 
     #fmhy-modal-body::-webkit-scrollbar       { width: 4px; }
-    #fmhy-modal-body::-webkit-scrollbar-thumb  { background: var(--glow-c); border-radius: 4px; }
+    #fmhy-modal-body::-webkit-scrollbar-thumb  { background: rgba(220, 80, 120, .3); border-radius: 4px; }
 
     .fmhy-section-title {
       font-size: .65rem;
       font-weight: 600;
-      color: var(--text-soft);
+      color: #9a6070;
       letter-spacing: .1em;
       text-transform: uppercase;
       padding: .5rem 0 .4rem;
@@ -1103,14 +904,14 @@
       padding: .45rem .7rem;
       border-radius: 10px;
       text-decoration: none;
-      color: var(--text-mid);
+      color: #e0b8c8;
       font-size: .78rem;
       transition: background .18s, color .18s;
     }
 
-    .fmhy-link:hover    { background: var(--glow-a); color: #fff; }
+    .fmhy-link:hover    { background: rgba(220, 80, 120, .18); color: #fff; }
     .fmhy-link span     { font-size: .9rem; flex-shrink: 0; }
-    .fmhy-divider       { height: 1px; background: var(--border-b); margin: .4rem 0; }
+    .fmhy-divider       { height: 1px; background: rgba(220, 100, 140, .15); margin: .4rem 0; }
 
 
     #history-modal {
@@ -1124,9 +925,9 @@
 
     #btn-history-export,
     #btn-history-clear {
-      background: var(--tint-d);
-      border: 1px solid var(--border-e);
-      color: var(--text-mid);
+      background: rgba(255, 160, 190, .08);
+      border: 1px solid rgba(220, 100, 140, .25);
+      color: #c890a8;
       font-size: .72rem;
       padding: .32rem .75rem;
       border-radius: 50px;
@@ -1137,8 +938,8 @@
       white-space: nowrap;
     }
 
-    #btn-history-export:hover { background: var(--glow-a);            color: var(--c3); }
-    #btn-history-clear:hover  { background: rgba(180, 40, 60, .25);   color: var(--c3); }
+    #btn-history-export:hover { background: rgba(220,  80, 120, .15); color: #f4a0b5; }
+    #btn-history-clear:hover  { background: rgba(180,  40,  60, .25); color: #f4a0b5; }
 
     #history-list {
       overflow-y: auto;
@@ -1149,14 +950,14 @@
     }
 
     #history-list::-webkit-scrollbar       { width: 4px; }
-    #history-list::-webkit-scrollbar-thumb  { background: var(--glow-c); border-radius: 4px; }
+    #history-list::-webkit-scrollbar-thumb  { background: rgba(220, 80, 120, .3); border-radius: 4px; }
 
     .history-item {
       display: flex;
       align-items: flex-start;
       gap: .7rem;
-      background: var(--tint-a);
-      border: 1px solid var(--border-a);
+      background: rgba(255, 160, 190, .04);
+      border: 1px solid rgba(220, 100, 140, .1);
       border-radius: 12px;
       padding: .6rem .8rem;
     }
@@ -1183,12 +984,12 @@
     }
 
     .history-info  { flex: 1; min-width: 0; }
-    .history-name  { font-size: .8rem;  color: var(--text-base); }
-    .history-meta  { font-size: .67rem; color: var(--text-soft); margin-top: .1rem; }
+    .history-name  { font-size: .8rem;  color: #e8c0d0; }
+    .history-meta  { font-size: .67rem; color: #9a6070; margin-top: .1rem; }
 
     #history-empty {
       font-size: .8rem;
-      color: var(--text-soft);
+      color: #9a6070;
       font-style: italic;
       text-align: center;
       padding: 2rem 0;
@@ -1202,14 +1003,14 @@
       width: 100%;
       max-width: 900px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-f), transparent);
+      background: linear-gradient(90deg, transparent, rgba(220, 100, 140, .3), transparent);
     }
 
     #quote {
       text-align: center;
       max-width: 420px;
       font-size: .82rem;
-      color: var(--text-soft);
+      color: #9a6070;
       font-style: italic;
       line-height: 1.6;
     }
@@ -1219,15 +1020,6 @@
 
   <!-- ══ CANVAS ÉTOILES ══ -->
   <canvas id="stars-canvas"></canvas>
-
-  <!-- ══ SÉLECTEUR DE THÈME ══ -->
-  <div id="theme-switcher">
-    <div class="theme-dot active" data-theme="rose"   title="Rose"></div>
-    <div class="theme-dot"        data-theme="bleu"   title="Bleu"></div>
-    <div class="theme-dot"        data-theme="vert"   title="Vert"></div>
-    <div class="theme-dot"        data-theme="rouge"  title="Rouge"></div>
-    <div class="theme-dot"        data-theme="violet" title="Violet"></div>
-  </div>
 
   <!-- ══ COLONNES FAVORIS ══ -->
   <div class="side-col left"  id="col-left"></div>
@@ -1358,18 +1150,951 @@
         <button class="btn-close-modal" id="btn-fmhy-close">✕</button>
       </div>
       <div id="fmhy-modal-body">
+
         <div class="fmhy-section-title">Wiki</div>
         <div class="fmhy-grid">
-          <a class="fmhy-link" href="https://fmhy.net/privacy"            target="_blank"><span>🛡️</span> Adblocking / Privacy</a>
-          <a class="fmhy-link" href="https://fmhy.net/ai"                 target="_blank"><span>🤖</span> Artificial Intelligence</a>
-          <a class="fmhy-link" href="https://fmhy.net/videopiracyguide"   target="_blank"><span>📺</span> Movies / TV / Anime</a>
-          <a class="fmhy-link" href="https://fmhy.net/audiopiracyguide"   target="_blank"><span>🎵</span> Music / Podcasts / Radio</a>
-          <a class="fmhy-link" href="https://fmhy.net/gamingpiracyguide"  target="_blank"><span>🎮</span> Gaming / Emulation</a>
+          <a class="fmhy-link" href="https://fmhy.net/privacy"           target="_blank"><span>🛡️</span> Adblocking / Privacy</a>
+          <a class="fmhy-link" href="https://fmhy.net/ai"                target="_blank"><span>🤖</span> Artificial Intelligence</a>
+          <a class="fmhy-link" href="https://fmhy.net/videopiracyguide"  target="_blank"><span>📺</span> Movies / TV / Anime</a>
+          <a class="fmhy-link" href="https://fmhy.net/audiopiracyguide"  target="_blank"><span>🎵</span> Music / Podcasts / Radio</a>
+          <a class="fmhy-link" href="https://fmhy.net/gamingpiracyguide" target="_blank"><span>🎮</span> Gaming / Emulation</a>
           <a class="fmhy-link" href="https://fmhy.net/readingpiracyguide" target="_blank"><span>📗</span> Books / Comics / Manga</a>
           <a class="fmhy-link" href="https://fmhy.net/downloadpiracyguide" target="_blank"><span>💾</span> Downloading</a>
           <a class="fmhy-link" href="https://fmhy.net/torrentpiracyguide" target="_blank"><span>🔄</span> Torrenting</a>
-          <a class="fmhy-link" href="https://fmhy.net/educational"         target="_blank"><span>🧠</span> Educational</a>
-          <a class="fmhy-link" href="https://fmhy.net/android-iosguide"    target="_blank"><span>📱</span> Android / iOS</a>
-          <a class="fmhy-link" href="https://fmhy.net/linuxguide"          target="_blank"><span>🐧</span> Linux / macOS</a>
-          <a class="fmhy-link" href="https://fmhy.net/non-english"         target="_blank"><span>🌍</span> Non-English</a>
-          <a class="fmhy-link" href="h
+          <a class="fmhy-link" href="https://fmhy.net/educational"        target="_blank"><span>🧠</span> Educational</a>
+          <a class="fmhy-link" href="https://fmhy.net/android-iosguide"   target="_blank"><span>📱</span> Android / iOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/linuxguide"         target="_blank"><span>🐧</span> Linux / macOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/non-english"        target="_blank"><span>🌍</span> Non-English</a>
+          <a class="fmhy-link" href="https://fmhy.net/misc"              target="_blank"><span>📁</span> Miscellaneous</a>
+        </div>
+
+        <div class="fmhy-divider"></div>
+
+        <div class="fmhy-section-title">Tools</div>
+        <div class="fmhy-grid">
+          <a class="fmhy-link" href="https://fmhy.net/system-tools"       target="_blank"><span>💻</span> System Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/file-tools"         target="_blank"><span>🗂️</span> File Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/internet-tools"     target="_blank"><span>🌐</span> Internet Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/social-media-tools" target="_blank"><span>💬</span> Social Media Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/text-tools"         target="_blank"><span>✏️</span> Text Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/gaming-tools"       target="_blank"><span>🕹️</span> Gaming Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/img-tools"          target="_blank"><span>📷</span> Image Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/video-tools"        target="_blank"><span>🎞️</span> Video Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/audio-tools"        target="_blank"><span>🔊</span> Audio Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/edu-tools"          target="_blank"><span>🍎</span> Educational Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/dev-tools"          target="_blank"><span>👨‍💻</span> Developer Tools</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Ajout d'événement -->
+  <div class="overlay" id="modal-overlay">
+    <div class="modal-box" style="max-width:400px">
+      <h3>✨ Nouvel événement</h3>
+      <div class="field">
+        <label>NOM</label>
+        <input id="ev-name" type="text" placeholder="Ex : Cours réseaux, RDV médecin…" />
+      </div>
+      <div class="field">
+        <label>DÉBUT</label>
+        <input id="ev-start" type="datetime-local" />
+      </div>
+      <div class="field">
+        <label>FIN</label>
+        <input id="ev-end" type="datetime-local" />
+      </div>
+      <div class="field">
+        <label>TYPE</label>
+        <select id="ev-type">
+          <option value="task">Tâche</option>
+          <option value="event">Événement</option>
+          <option value="reminder">Rappel</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btn-cancel">Annuler</button>
+        <button class="btn-save"   id="btn-save">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Historique -->
+  <div class="overlay" id="history-overlay">
+    <div class="modal-box" id="history-modal">
+      <div class="modal-header">
+        <h3>🕘 Historique</h3>
+        <div id="history-modal-actions">
+          <button id="btn-history-export">⬇️ CSV</button>
+          <button id="btn-history-clear">🗑️ Vider</button>
+          <button class="btn-close-modal" id="btn-history-close">✕</button>
+        </div>
+      </div>
+      <div id="history-list"></div>
+      <p id="history-empty" style="display:none">Aucune tâche dans l'historique.</p>
+    </div>
+  </div>
+
+  <!-- Modale Édition de favori -->
+  <div class="overlay" id="fav-overlay">
+    <div class="modal-box" id="fav-modal">
+      <div class="modal-header">
+        <h3 id="fav-modal-title">★ Favori</h3>
+        <button class="btn-close-modal" id="btn-fav-close">✕</button>
+      </div>
+      <div class="field">
+        <label>NOM</label>
+        <input id="fav-name-input" type="text" placeholder="Nom du site…" />
+      </div>
+      <div class="field">
+        <label>URL</label>
+        <input id="fav-url-input" type="url" placeholder="https://exemple.com" />
+      </div>
+      <p style="font-size:.7rem; color:#9a6070; margin-top:-.4rem; margin-bottom:.8rem">
+        Le favicon du site sera affiché automatiquement.
+      </p>
+      <div class="modal-actions">
+        <button class="btn-danger"  id="btn-fav-delete" style="display:none">🗑️ Supprimer</button>
+        <button class="btn-cancel"  id="btn-fav-cancel">Annuler</button>
+        <button class="btn-save"    id="btn-fav-save">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+
+/* ══════════════════════════════════════════════════════════
+   STORAGE HELPER
+   Wrappé dans try/catch pour éviter les crashes en mode
+   privé Firefox (localStorage peut lever une exception)
+══════════════════════════════════════════════════════════ */
+const store = {
+  get(key, fallback) {
+    try {
+      const val = localStorage.getItem(key);
+      return val !== null ? JSON.parse(val) : fallback;
+    } catch {
+      return fallback;
+    }
+  },
+
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  },
+
+  raw(key, fallback) {
+    try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; }
+  },
+
+  rawSet(key, value) {
+    try { localStorage.setItem(key, value); } catch {}
+  },
+};
+
+
+/* ══════════════════════════════════════════════════════════
+   CANVAS ÉTOILES
+   IIFE isolée pour éviter de polluer le scope global
+══════════════════════════════════════════════════════════ */
+(function initStarsCanvas() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  let stars  = [];
+  let rafId  = null;
+  let paused = false;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function randBetween(a, b) {
+    return a + Math.random() * (b - a);
+  }
+
+  function createStar() {
+    const colored = Math.random() < 0.15;
+    const hue     = randBetween(300, 340);
+    return {
+      x:      Math.random() * W,
+      y:      Math.random() * H,
+      r:      randBetween(0.4, 1.6),
+      alpha:  randBetween(0.2, 1),
+      dalpha: randBetween(0.003, 0.012) * (Math.random() < 0.5 ? 1 : -1),
+      vx:     randBetween(-0.06, 0.06),
+      vy:     randBetween(-0.04, 0.04),
+      colored,
+      // Couleurs pré-calculées → pas de recalcul par frame
+      fillStyle:   colored ? `hsl(${hue.toFixed(0)}, 80%, 85%)` : '#ffffff',
+      shadowColor: colored ? `hsl(${hue.toFixed(0)}, 80%, 70%)` : 'rgba(255, 220, 235, 0.8)',
+      shadowBlur:  0,
+    };
+  }
+
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 5000);
+    for (let i = 0; i < count; i++) {
+      const s    = createStar();
+      s.shadowBlur = s.r * (s.colored ? 6 : 4);
+      stars.push(s);
+    }
+  }
+
+  function draw() {
+    if (paused) { rafId = null; return; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    for (const s of stars) {
+      // Mouvement
+      s.x     += s.vx;
+      s.y     += s.vy;
+      s.alpha += s.dalpha;
+
+      // Oscillation de l'opacité
+      if (s.alpha <= 0.05 || s.alpha >= 1) s.dalpha *= -1;
+      s.alpha = Math.max(0.05, Math.min(1, s.alpha));
+
+      // Rebouclage en bord de canvas
+      if (s.x < -2)    s.x = W + 2;
+      if (s.x > W + 2) s.x = -2;
+      if (s.y < -2)    s.y = H + 2;
+      if (s.y > H + 2) s.y = -2;
+
+      // Dessin
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      ctx.fillStyle   = s.fillStyle;
+      ctx.shadowColor = s.shadowColor;
+      ctx.shadowBlur  = s.shadowBlur;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    rafId = requestAnimationFrame(draw);
+  }
+
+  // Pause quand l'onglet passe en arrière-plan → économie CPU
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      paused = true;
+    } else {
+      paused = false;
+      if (!rafId) rafId = requestAnimationFrame(draw);
+    }
+  });
+
+  window.addEventListener('resize', () => { resize(); initStars(); });
+
+  resize();
+  initStars();
+  rafId = requestAnimationFrame(draw);
+})();
+
+
+/* ══════════════════════════════════════════════════════════
+   HORLOGE
+══════════════════════════════════════════════════════════ */
+function updateClock() {
+  const now  = new Date();
+  const pad  = n => String(n).padStart(2, '0');
+
+  document.getElementById('time').textContent =
+    [now.getHours(), now.getMinutes(), now.getSeconds()].map(pad).join(':');
+
+  document.getElementById('date').textContent =
+    now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+
+/* ══════════════════════════════════════════════════════════
+   MOTEUR DE RECHERCHE
+══════════════════════════════════════════════════════════ */
+let currentSearchUrl = 'https://duckduckgo.com/?q=';
+
+function setEngine(tab) {
+  document.querySelectorAll('.engine-tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  currentSearchUrl = tab.dataset.url;
+
+  document.getElementById('search-input').placeholder = tab.dataset.ph;
+
+  const icon = document.getElementById('engine-icon');
+  icon.classList.remove('spin');
+  void icon.offsetWidth;                 // force reflow pour relancer l'animation
+  icon.textContent = tab.dataset.icon;
+  icon.classList.add('spin');
+}
+
+document.querySelectorAll('.engine-tab').forEach(tab => {
+  tab.addEventListener('click', () => setEngine(tab));
+});
+
+setEngine(document.querySelector('.engine-tab.active'));
+
+document.getElementById('search-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const query = document.getElementById('search-input').value.trim();
+  if (query) window.open(currentSearchUrl + encodeURIComponent(query), '_blank');
+});
+
+
+/* ══════════════════════════════════════════════════════════
+   MODALE FMHY
+══════════════════════════════════════════════════════════ */
+const fmhyBtn     = document.getElementById('fmhy-btn');
+const fmhyOverlay = document.getElementById('fmhy-overlay');
+
+fmhyBtn.addEventListener('click', () => {
+  fmhyOverlay.classList.add('open');
+  fmhyBtn.classList.add('open');
+});
+
+document.getElementById('btn-fmhy-close').addEventListener('click', () => {
+  fmhyOverlay.classList.remove('open');
+  fmhyBtn.classList.remove('open');
+});
+
+fmhyOverlay.addEventListener('click', e => {
+  if (e.target === fmhyOverlay) {
+    fmhyOverlay.classList.remove('open');
+    fmhyBtn.classList.remove('open');
+  }
+});
+
+
+/* ══════════════════════════════════════════════════════════
+   MÉTÉO
+   API : open-meteo.com (gratuite, sans clé)
+══════════════════════════════════════════════════════════ */
+const WEATHER_ICONS = {
+  0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
+  45: '🌫️', 48: '🌫️',
+  51: '🌦️', 53: '🌦️', 55: '🌧️',
+  61: '🌧️', 63: '🌧️', 65: '🌧️',
+  71: '❄️', 73: '❄️', 75: '❄️',
+  80: '🌦️', 81: '🌧️', 82: '⛈️',
+  95: '⛈️', 96: '⛈️', 99: '⛈️',
+};
+
+const WEATHER_DESCS = {
+  0: 'Ciel dégagé',   1: 'Peu nuageux',         2: 'Partiellement nuageux', 3: 'Couvert',
+  45: 'Brouillard',   48: 'Brouillard givrant',
+  51: 'Bruine légère', 53: 'Bruine',             55: 'Bruine forte',
+  61: 'Pluie légère', 63: 'Pluie',               65: 'Pluie forte',
+  71: 'Neige légère', 73: 'Neige',               75: 'Neige forte',
+  80: 'Averses légères', 81: 'Averses',          82: 'Averses violentes',
+  95: 'Orage',        96: 'Orage avec grêle',    99: 'Orage violent',
+};
+
+let weatherLat      = parseFloat(store.raw('wx_lat',  '43.2965'));
+let weatherLon      = parseFloat(store.raw('wx_lon',  '5.3698'));
+let weatherCityName = store.raw('wx_city', 'Marseille, FR');
+
+async function loadWeather() {
+  document.getElementById('weather-error').style.display = 'none';
+  try {
+    const res  = await fetch(
+      `https://api.open-meteo.com/v1/forecast` +
+      `?latitude=${weatherLat}&longitude=${weatherLon}` +
+      `&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code` +
+      `&wind_speed_unit=kmh&timezone=auto`
+    );
+    const data = await res.json();
+    const c    = data.current;
+
+    document.getElementById('weather-icon').textContent     = WEATHER_ICONS[c.weather_code] ?? '🌡️';
+    document.getElementById('weather-temp').textContent     = `${Math.round(c.temperature_2m)}°C`;
+    document.getElementById('weather-desc').textContent     = WEATHER_DESCS[c.weather_code] ?? 'Inconnu';
+    document.getElementById('weather-city-label').textContent = `📍 ${weatherCityName}`;
+    document.getElementById('weather-humidity').textContent = `💧 ${c.relative_humidity_2m}%`;
+    document.getElementById('weather-wind').textContent     = `💨 ${Math.round(c.wind_speed_10m)} km/h`;
+    document.getElementById('weather-feels').textContent    = `🌡️ Ressenti ${Math.round(c.apparent_temperature)}°C`;
+  } catch {
+    document.getElementById('weather-error').style.display = 'block';
+  }
+}
+
+// Debounce : empêche un double clic / double Entrée de lancer 2 requêtes
+let searchCityTimer = null;
+
+async function searchCity() {
+  if (searchCityTimer) return;
+  searchCityTimer = setTimeout(() => { searchCityTimer = null; }, 1500);
+
+  const input  = document.getElementById('weather-city-input').value.trim();
+  const status = document.getElementById('weather-city-status');
+  if (!input) return;
+
+  status.textContent = '🔍 Recherche…';
+
+  try {
+    const res  = await fetch(
+      `https://geocoding-api.open-meteo.com/v1/search` +
+      `?name=${encodeURIComponent(input)}&count=1&language=fr&format=json`
+    );
+    const data = await res.json();
+
+    if (!data.results?.length) {
+      status.textContent = '❌ Ville introuvable';
+      return;
+    }
+
+    const city = data.results[0];
+    weatherLat      = city.latitude;
+    weatherLon      = city.longitude;
+    weatherCityName = `${city.name}${city.country_code ? ', ' + city.country_code : ''}`;
+
+    store.rawSet('wx_lat',  weatherLat);
+    store.rawSet('wx_lon',  weatherLon);
+    store.rawSet('wx_city', weatherCityName);
+
+    status.textContent = `✓ ${weatherCityName}`;
+    document.getElementById('weather-city-input').value = '';
+    setTimeout(() => { status.textContent = ''; }, 3000);
+
+    loadWeather();
+  } catch {
+    status.textContent = '❌ Erreur de connexion';
+  }
+}
+
+document.getElementById('weather-city-btn').addEventListener('click', searchCity);
+document.getElementById('weather-city-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchCity();
+});
+
+loadWeather();
+setInterval(loadWeather, 600_000);  // rafraîchissement toutes les 10 min
+
+
+/* ══════════════════════════════════════════════════════════
+   FAVORIS
+══════════════════════════════════════════════════════════ */
+const FAV_COUNT = 8;
+
+let favs = store.get('nx_favs', null);
+if (!favs || !favs.left) {
+  favs = { left: Array(FAV_COUNT).fill(null), right: Array(FAV_COUNT).fill(null) };
+}
+
+let favEditSide  = null;
+let favEditIndex = null;
+
+function saveFavs() {
+  store.set('nx_favs', favs);
+}
+
+function faviconUrl(url) {
+  try {
+    const domain = new URL(url).hostname;
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+  } catch {
+    return null;
+  }
+}
+
+function renderFavCol(side) {
+  const col = document.getElementById(`col-${side}`);
+  col.innerHTML = '';
+
+  favs[side].forEach((fav, i) => {
+    const isLink = fav && fav.url;
+    const slot   = document.createElement(isLink ? 'a' : 'div');
+    slot.className = 'fav-slot' + (fav ? '' : ' empty');
+
+    if (isLink) {
+      slot.href   = fav.url;
+      slot.target = '_blank';
+      slot.rel    = 'noopener noreferrer';
+    }
+
+    if (isLink) {
+      const img   = document.createElement('img');
+      img.className = 'fav-favicon';
+      img.src     = faviconUrl(fav.url);
+      img.alt     = fav.name || '';
+      img.onerror = () => {
+        img.style.display = 'none';
+        slot.insertAdjacentText('beforeend', fav.name ? fav.name.slice(0, 2) : '?');
+      };
+      slot.appendChild(img);
+    } else {
+      const plus = document.createElement('span');
+      plus.className   = 'fav-plus';
+      plus.textContent = '＋';
+      slot.appendChild(plus);
+    }
+
+    if (fav?.name) {
+      const label = document.createElement('span');
+      label.className   = 'fav-label';
+      label.textContent = fav.name;
+      slot.appendChild(label);
+    }
+
+    const editBtn = document.createElement('button');
+    editBtn.className   = 'fav-edit-btn';
+    editBtn.textContent = '✏';
+    editBtn.addEventListener('click', ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      openFavModal(side, i);
+    });
+    slot.appendChild(editBtn);
+
+    if (!fav) {
+      slot.addEventListener('click', ev => { ev.preventDefault(); openFavModal(side, i); });
+    }
+
+    col.appendChild(slot);
+  });
+}
+
+function openFavModal(side, index) {
+  favEditSide  = side;
+  favEditIndex = index;
+  const fav    = favs[side][index];
+
+  document.getElementById('fav-modal-title').textContent =
+    `★ Favori — ${side === 'left' ? 'Gauche' : 'Droite'} #${index + 1}`;
+  document.getElementById('fav-name-input').value        = fav ? fav.name : '';
+  document.getElementById('fav-url-input').value         = fav ? fav.url  : '';
+  document.getElementById('btn-fav-delete').style.display = fav ? 'block' : 'none';
+  document.getElementById('fav-overlay').classList.add('open');
+  document.getElementById('fav-name-input').focus();
+}
+
+function closeFavModal() {
+  document.getElementById('fav-overlay').classList.remove('open');
+}
+
+document.getElementById('btn-fav-close').addEventListener('click', closeFavModal);
+document.getElementById('btn-fav-cancel').addEventListener('click', closeFavModal);
+document.getElementById('fav-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeFavModal();
+});
+
+document.getElementById('btn-fav-save').addEventListener('click', () => {
+  const name = document.getElementById('fav-name-input').value.trim();
+  let   url  = document.getElementById('fav-url-input').value.trim();
+
+  if (!url) { alert('Merci de saisir une URL.'); return; }
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+  favs[favEditSide][favEditIndex] = { name, url };
+  saveFavs();
+  renderFavCol(favEditSide);
+  closeFavModal();
+});
+
+document.getElementById('btn-fav-delete').addEventListener('click', () => {
+  favs[favEditSide][favEditIndex] = null;
+  saveFavs();
+  renderFavCol(favEditSide);
+  closeFavModal();
+});
+
+renderFavCol('left');
+renderFavCol('right');
+
+
+/* ══════════════════════════════════════════════════════════
+   ÉVÉNEMENTS & TÂCHES
+══════════════════════════════════════════════════════════ */
+
+// Note : on utilise « taskHistory » et non « history » pour éviter
+// de shadow la variable globale window.history du navigateur.
+let events      = store.get('nx_events',  []);
+let taskHistory = store.get('nx_history', []);
+
+// Migration des anciens événements qui utilisaient « date » au lieu de « start/end »
+events = events.map(ev => {
+  if (ev.date && !ev.start) {
+    const s = ev.date + 'T00:00';
+    return {
+      ...ev,
+      start: s,
+      end: new Date(new Date(s).getTime() + (ev.duration || 60) * 60_000)
+             .toISOString().slice(0, 16),
+    };
+  }
+  return ev;
+});
+
+const today    = new Date();
+let calYear  = today.getFullYear();
+let calMonth = today.getMonth();
+
+const TYPE_ICON = { task: '✅', event: '📅', reminder: '🔔' };
+
+function toYMD(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function toLocal(date) {
+  const p = n => String(n).padStart(2, '0');
+  return `${date.getFullYear()}-${p(date.getMonth() + 1)}-${p(date.getDate())}` +
+         `T${p(date.getHours())}:${p(date.getMinutes())}`;
+}
+
+function saveEvents() {
+  store.set('nx_events', events);
+}
+
+function saveTaskHistory() {
+  store.set('nx_history', taskHistory);
+}
+
+function archiveEvent(ev, raison) {
+  taskHistory.push({ ...ev, raison, archive_le: new Date().toISOString() });
+  saveTaskHistory();
+}
+
+function formatDuration(start, end) {
+  const diff = new Date(end) - new Date(start);
+  if (diff <= 0) return '—';
+  const totalMin = Math.floor(diff / 60_000);
+  const days     = Math.floor(totalMin / 1440);
+  const hours    = Math.floor((totalMin % 1440) / 60);
+  const mins     = totalMin % 60;
+  return [days && `${days}j`, hours && `${hours}h`, mins && `${mins}min`]
+    .filter(Boolean).join(' ');
+}
+
+function eventDays(ev) {
+  const days = [];
+  const s    = new Date(ev.start);
+  const e    = new Date(ev.end);
+  s.setHours(0, 0, 0, 0);
+  e.setHours(0, 0, 0, 0);
+  for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+    days.push(toYMD(new Date(d)));
+  }
+  return days;
+}
+
+
+/* ── Calendrier ── */
+function renderCalendar() {
+  const MONTHS = [
+    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
+  ];
+
+  document.getElementById('cal-month-label').textContent = `${MONTHS[calMonth]} ${calYear}`;
+
+  const grid      = document.getElementById('cal-grid');
+  grid.innerHTML  = '';
+
+  const first     = new Date(calYear, calMonth, 1);
+  const last      = new Date(calYear, calMonth + 1, 0);
+  const todayStr  = toYMD(today);
+  const eventDates = new Set(events.flatMap(ev => eventDays(ev)));
+
+  // Jours de la semaine du mois précédent (lundi = 0)
+  const startDow = (first.getDay() + 6) % 7;
+  for (let i = 0; i < startDow; i++) {
+    const el = document.createElement('div');
+    el.className   = 'cal-day other-month';
+    el.textContent = new Date(calYear, calMonth, 1 - startDow + i).getDate();
+    grid.appendChild(el);
+  }
+
+  // Jours du mois courant
+  for (let d = 1; d <= last.getDate(); d++) {
+    const ds  = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const el  = document.createElement('div');
+    el.className = 'cal-day';
+    if (ds === todayStr) el.classList.add('today');
+    if (ds < todayStr)  el.classList.add('past');
+
+    const sp = document.createElement('span');
+    sp.textContent = d;
+    el.appendChild(sp);
+
+    if (eventDates.has(ds)) {
+      const dot = document.createElement('span');
+      dot.className = 'cal-day-dot';
+      el.appendChild(dot);
+    }
+
+    el.addEventListener('click', () => openEventModal(ds));
+    grid.appendChild(el);
+  }
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => {
+  if (--calMonth < 0) { calMonth = 11; calYear--; }
+  renderCalendar();
+});
+
+document.getElementById('cal-next').addEventListener('click', () => {
+  if (++calMonth > 11) { calMonth = 0; calYear++; }
+  renderCalendar();
+});
+
+
+/* ── Liste des tâches ── */
+function renderTasks() {
+  const list  = document.getElementById('tasks-list');
+  const empty = document.getElementById('tasks-empty');
+  list.innerHTML = '';
+
+  // Tri sur une copie indexée pour conserver l'index d'origine stable
+  const indexed = events
+    .map((ev, i) => ({ ev, i }))
+    .sort((a, b) =>
+      a.ev.done !== b.ev.done
+        ? (a.ev.done ? 1 : -1)
+        : a.ev.start.localeCompare(b.ev.start)
+    );
+
+  if (!indexed.length) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  indexed.forEach(({ ev, i: realIndex }) => {
+    const isOverdue = !ev.done && ev.end < new Date().toISOString().slice(0, 16);
+
+    const item = document.createElement('div');
+    item.className = 'task-item' + (ev.done ? ' done' : '') + (isOverdue ? ' overdue' : '');
+
+    // Checkbox
+    const check = document.createElement('div');
+    check.className   = 'task-check' + (ev.done ? ' checked' : '');
+    check.textContent = ev.done ? '✓' : '';
+    check.addEventListener('click', () => {
+      const wasDone = events[realIndex].done;
+      events[realIndex].done = !wasDone;
+      if (!wasDone) archiveEvent(events[realIndex], 'terminée');
+      saveEvents();
+      renderTasks();
+      renderCalendar();
+    });
+
+    // Infos
+    const info = document.createElement('div');
+    info.className = 'task-info';
+
+    const nameEl = document.createElement('div');
+    nameEl.className   = 'task-name';
+    nameEl.textContent = `${TYPE_ICON[ev.type] ?? '📌'} ${ev.name}`;
+
+    const meta  = document.createElement('div');
+    meta.className = 'task-meta';
+    const sd = new Date(ev.start);
+    const ed = new Date(ev.end);
+    const fmtDate = (d, opts) => d.toLocaleDateString('fr-FR', opts);
+    const fmtTime = d => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    meta.textContent =
+      `${fmtDate(sd, { day: 'numeric', month: 'short', year: 'numeric' })} ${fmtTime(sd)}` +
+      ` → ${fmtDate(ed, { day: 'numeric', month: 'short' })} ${fmtTime(ed)}` +
+      ` · ${formatDuration(ev.start, ev.end)}` +
+      (isOverdue ? ' · ⏰ Passé' : '');
+
+    info.appendChild(nameEl);
+    info.appendChild(meta);
+
+    // Bouton supprimer
+    const del = document.createElement('button');
+    del.className   = 'task-del';
+    del.textContent = '×';
+    del.addEventListener('click', () => {
+      archiveEvent(events[realIndex], 'supprimée');
+      events.splice(realIndex, 1);
+      saveEvents();
+      renderTasks();
+      renderCalendar();
+    });
+
+    item.appendChild(check);
+    item.appendChild(info);
+    item.appendChild(del);
+    list.appendChild(item);
+  });
+}
+
+
+/* ── Export CSV événements ── */
+document.getElementById('btn-export-csv').addEventListener('click', () => {
+  if (!events.length) { alert('Aucun événement à exporter.'); return; }
+
+  const header = 'nom,debut,fin,duree,type,fait';
+  const rows   = events.map(e =>
+    [
+      `"${e.name.replace(/"/g, '""')}"`,
+      e.start,
+      e.end,
+      formatDuration(e.start, e.end),
+      e.type,
+      e.done ? 'oui' : 'non',
+    ].join(',')
+  );
+
+  const csv = [header, ...rows].join('\n');
+  const a   = document.createElement('a');
+  a.href     = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `evenements_${toYMD(today)}.csv`;
+  a.click();
+});
+
+
+/* ── Historique ── */
+function renderHistory() {
+  const list  = document.getElementById('history-list');
+  const empty = document.getElementById('history-empty');
+  list.innerHTML = '';
+
+  if (!taskHistory.length) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  [...taskHistory].reverse().forEach(ev => {
+    const item  = document.createElement('div');
+    item.className = 'history-item';
+
+    const isDone = ev.raison === 'terminée';
+
+    const badge = document.createElement('span');
+    badge.className   = `history-badge ${isDone ? 'done' : 'deleted'}`;
+    badge.textContent = isDone ? '✓ Terminée' : '✕ Supprimée';
+
+    const info = document.createElement('div');
+    info.className = 'history-info';
+
+    const nameEl = document.createElement('div');
+    nameEl.className   = 'history-name';
+    nameEl.textContent = `${TYPE_ICON[ev.type] ?? '📌'} ${ev.name}`;
+
+    const meta = document.createElement('div');
+    meta.className = 'history-meta';
+    const ad = new Date(ev.archive_le);
+    const sd = new Date(ev.start);
+    meta.textContent =
+      `${sd.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}` +
+      ` · Archivé le ${ad.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}` +
+      ` à ${ad.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}`;
+
+    info.appendChild(nameEl);
+    info.appendChild(meta);
+    item.appendChild(badge);
+    item.appendChild(info);
+    list.appendChild(item);
+  });
+}
+
+document.getElementById('btn-history').addEventListener('click', () => {
+  renderHistory();
+  document.getElementById('history-overlay').classList.add('open');
+});
+
+document.getElementById('btn-history-close').addEventListener('click', () => {
+  document.getElementById('history-overlay').classList.remove('open');
+});
+
+document.getElementById('history-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) {
+    document.getElementById('history-overlay').classList.remove('open');
+  }
+});
+
+document.getElementById('btn-history-clear').addEventListener('click', () => {
+  if (!taskHistory.length) { alert("L'historique est déjà vide."); return; }
+  if (confirm("Vider tout l'historique ?")) {
+    taskHistory = [];
+    saveTaskHistory();
+    renderHistory();
+  }
+});
+
+document.getElementById('btn-history-export').addEventListener('click', () => {
+  if (!taskHistory.length) { alert("Aucune entrée dans l'historique."); return; }
+
+  const header = 'nom,debut,fin,duree,type,raison,archive_le';
+  const rows   = taskHistory.map(e =>
+    [
+      `"${e.name.replace(/"/g, '""')}"`,
+      e.start,
+      e.end,
+      formatDuration(e.start, e.end),
+      e.type,
+      e.raison,
+      e.archive_le,
+    ].join(',')
+  );
+
+  const csv = [header, ...rows].join('\n');
+  const a   = document.createElement('a');
+  a.href     = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `historique_${toYMD(today)}.csv`;
+  a.click();
+});
+
+
+/* ── Modale ajout d'événement ── */
+function openEventModal(preDate = '') {
+  document.getElementById('ev-name').value = '';
+  const base = preDate ? new Date(preDate + 'T08:00') : new Date();
+  document.getElementById('ev-start').value = toLocal(base);
+  document.getElementById('ev-end').value   = toLocal(new Date(base.getTime() + 3_600_000));
+  document.getElementById('ev-type').value  = 'task';
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('ev-name').focus();
+}
+
+function closeEventModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.getElementById('btn-add-event').addEventListener('click', () => openEventModal());
+document.getElementById('btn-cancel').addEventListener('click', closeEventModal);
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeEventModal();
+});
+
+document.getElementById('btn-save').addEventListener('click', () => {
+  const name  = document.getElementById('ev-name').value.trim();
+  const start = document.getElementById('ev-start').value;
+  const end   = document.getElementById('ev-end').value;
+  const type  = document.getElementById('ev-type').value;
+
+  if (!name || !start || !end) {
+    alert('Merci de renseigner le nom, la date de début et de fin.');
+    return;
+  }
+  if (end <= start) {
+    alert('La date de fin doit être après la date de début.');
+    return;
+  }
+
+  events.push({ name, start, end, type, done: false, created: new Date().toISOString() });
+  saveEvents();
+  renderTasks();
+  renderCalendar();
+  closeEventModal();
+});
+
+
+/* ══════════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════════ */
+renderCalendar();
+renderTasks();
+
+</script>
+</body>
+</html>
