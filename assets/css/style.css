@@ -258,7 +258,7 @@ body::-webkit-scrollbar { display: none; }
 .side-col.right { right: 8px; }
 
 .fav-slot {
-  width: 44px; height: 44px; border-radius: 12px;
+  width: 75px; height: 75px; border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; position: relative;
   transition: background .2s, transform .15s, box-shadow .2s;
@@ -266,10 +266,10 @@ body::-webkit-scrollbar { display: none; }
   text-decoration: none; color: var(--text-base); flex-shrink: 0; overflow: visible;
 }
 .fav-slot:hover { background: var(--glow-a); transform: scale(1.12); box-shadow: 0 0 14px var(--glow-c); border-color: var(--border-e); }
-.fav-slot.empty { opacity: .3; font-size: 1rem; }
+.fav-slot.empty { opacity: .3; font-size: 1.4rem; }
 .fav-slot.empty:hover { opacity: .65; }
-.fav-slot img.fav-favicon { width: 24px; height: 24px; border-radius: 5px; object-fit: contain; }
-.fav-slot .fav-plus { font-size: 1rem; }
+.fav-slot img.fav-favicon { width: 40px; height: 40px; border-radius: 8px; object-fit: contain; }
+.fav-slot .fav-plus { font-size: 1.4rem; }
 
 .fav-label {
   position: absolute; top: 50%; transform: translateY(-50%);
