@@ -8,7 +8,12 @@ function storeSet(key, v) {
 const TYPE_ICON = { task: '✅', event: '📅', reminder: '🔔' };
 const today = new Date();
 
-function toYMD(d) { return d.toISOString().slice(0, 10); }
+// ✅ Extrait YYYY-MM-DD directement depuis la string locale (évite le décalage UTC)
+function toYMD(d) {
+  if (typeof d === 'string') return d.slice(0, 10);
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+}
 function toLocal(d) {
   const p = n => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
@@ -21,8 +26,18 @@ function formatDuration(start, end) {
   return [days && `${days}j`, hours && `${hours}h`, mins && `${mins}min`].filter(Boolean).join(' ');
 }
 function eventDays(ev) {
-  const days = [], s = new Date(ev.start), e = new Date(ev.end);
-  s.setHours(0,0,0,0); e.setHours(0,0,0,0);
+  // ✅ On parse les dates en heure locale via les composantes individuelles
+  const parseLocal = str => {
+    const [date, time='00:00'] = str.split('T');
+    const [y, mo, d] = date.split('-').map(Number);
+    const [h, mi] = time.split(':').map(Number);
+    return new Date(y, mo - 1, d, h, mi);
+  };
+  const days = [];
+  const s = parseLocal(ev.start);
+  const e = parseLocal(ev.end);
+  s.setHours(0, 0, 0, 0);
+  e.setHours(0, 0, 0, 0);
   for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) days.push(toYMD(new Date(d)));
   return days;
 }
