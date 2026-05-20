@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════════
+   LUCIDE ICONS — styles globaux
+   Toutes les icônes héritent de la couleur
+   CSS du contexte parent via currentColor.
+═══════════════════════════════════════════ */
+
+/* Base commune à toutes les icônes Lucide */
+[data-lucide] {
+  display: inline-block;
+  vertical-align: middle;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Icône inline dans du texte / boutons */
+.inline-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: .25rem;
+  color: inherit;
+}
+
+/* Icône dans la navbar moteurs de recherche */
+.nav-icon {
+  width: 15px;
+  height: 15px;
+  color: inherit;
+  vertical-align: middle;
+}
+
+/* Chevron FMHY — plus petit */
+.nav-icon-sm {
+  width: 11px;
+  height: 11px;
+  margin-left: .1rem;
+  color: inherit;
+  vertical-align: middle;
+}
+
+/* Icône moteur dans la barre de recherche */
+.engine-svg {
+  width: 20px;
+  height: 20px;
+  color: var(--c2);
+}
+
+/* Icône météo principale (grande) */
+.wx-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: var(--c2);
+  stroke-width: 1.5;
+}
+
+/* Animation rotation pour le loader météo */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spin-anim {
+  animation: spin 1.5s linear infinite;
+}
+
+/* Icône dans les liens FMHY */
+.fmhy-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--c2);
+  flex-shrink: 0;
+  margin-right: 0;
+}
+.fmhy-link:hover .fmhy-icon {
+  color: #fff;
+}
+
+/* Icône dans les tâches (TYPE_ICON injectés en JS) */
+.task-icon {
+  width: 13px;
+  height: 13px;
+  color: var(--c3);
+  vertical-align: middle;
+  margin-right: .3rem;
+}
+.task-item.overdue .task-icon {
+  color: #e07080;
+}
+
+/* Icône météo inline (humidité, vent, ressenti) */
+#weather-humidity .inline-icon,
+#weather-wind     .inline-icon,
+#weather-feels    .inline-icon {
+  color: var(--c3);
+  width: 13px;
+  height: 13px;
+}
+
+/* Icône map-pin ville */
+#weather-city-label .inline-icon {
+  color: var(--c2);
+  width: 13px;
+  height: 13px;
+}

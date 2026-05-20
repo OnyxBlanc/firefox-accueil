@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accueil</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
 
@@ -26,29 +27,34 @@
     <div id="engine-tabs">
       <button class="engine-tab active"
         data-engine="ddg"
-        data-icon="🦆"
+        data-icon="ddg"
         data-url="https://duckduckgo.com/?q="
         data-ph="Rechercher sur DuckDuckGo…">
         DuckDuckGo
       </button>
       <button class="engine-tab"
         data-engine="yt"
-        data-icon="▶️"
+        data-icon="youtube"
         data-url="https://www.youtube.com/results?search_query="
         data-ph="Rechercher sur YouTube…">
         YouTube
       </button>
       <button class="engine-tab"
         data-engine="gh"
-        data-icon="🐙"
+        data-icon="github"
         data-url="https://github.com/search?q="
         data-ph="Rechercher sur GitHub…">
         GitHub
       </button>
-      <button id="fmhy-btn">📚 FMHY ▾</button>
+      <button id="fmhy-btn"><i data-lucide="library-big" class="nav-icon"></i> FMHY <i data-lucide="chevron-down" class="nav-icon-sm"></i></button>
     </div>
     <form id="search-form">
-      <span id="engine-icon">🦆</span>
+      <span id="engine-icon">
+        <!-- SVG DuckDuckGo par défaut -->
+        <svg id="icon-ddg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="20" height="20"><circle cx="50" cy="50" r="50" fill="#de5833"/><ellipse cx="50" cy="38" rx="18" ry="22" fill="#fff"/><circle cx="43" cy="35" r="4" fill="#1a1a1a"/><circle cx="57" cy="35" r="4" fill="#1a1a1a"/><circle cx="44.5" cy="33.5" r="1.5" fill="#fff"/><circle cx="58.5" cy="33.5" r="1.5" fill="#fff"/><path d="M43 42 Q50 48 57 42" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="72" rx="22" ry="16" fill="#f5c518"/><path d="M35 68 Q50 80 65 68" fill="#de5833"/></svg>
+        <i data-lucide="youtube"  class="engine-svg" style="display:none"></i>
+        <i data-lucide="github"   class="engine-svg" style="display:none"></i>
+      </span>
       <input id="search-input" type="text" placeholder="Rechercher sur DuckDuckGo…" autocomplete="off" />
       <button id="search-btn" type="submit">Chercher</button>
     </form>
@@ -58,22 +64,22 @@
   <div id="weather-widget">
     <div id="weather-top">
       <div id="weather-left">
-        <div id="weather-icon">⏳</div>
+        <div id="weather-icon"><i data-lucide="loader-circle" class="wx-icon spin-anim"></i></div>
         <div id="weather-main">
           <div id="weather-temp">--°C</div>
           <div id="weather-desc">Chargement…</div>
-          <div id="weather-city-label">📍 Marseille, FR</div>
+          <div id="weather-city-label"><i data-lucide="map-pin" class="inline-icon"></i> Marseille, FR</div>
         </div>
       </div>
       <div id="weather-right">
-        <span id="weather-humidity">💧 --%</span>
-        <span id="weather-wind">💨 -- km/h</span>
-        <span id="weather-feels">🌡️ Ressenti --°C</span>
+        <span id="weather-humidity"><i data-lucide="droplets" class="inline-icon"></i> --%</span>
+        <span id="weather-wind"><i data-lucide="wind" class="inline-icon"></i> -- km/h</span>
+        <span id="weather-feels"><i data-lucide="thermometer" class="inline-icon"></i> Ressenti --°C</span>
       </div>
     </div>
     <div id="weather-search-row">
       <input id="weather-city-input" type="text" placeholder="Changer de ville… (ex : Paris, Toulouse)" />
-      <button id="weather-city-btn">🔍 Mettre à jour</button>
+      <button id="weather-city-btn"><i data-lucide="search" class="inline-icon"></i> Mettre à jour</button>
     </div>
     <div id="weather-city-status"></div>
     <div id="weather-error">Impossible de charger la météo</div>
@@ -101,10 +107,10 @@
 
     <div id="tasks-section">
       <div id="tasks-header">
-        <span id="tasks-title">📅 Événements &amp; Tâches</span>
+        <span id="tasks-title"><i data-lucide="calendar-days" class="inline-icon"></i> Événements &amp; Tâches</span>
         <div id="tasks-actions">
-          <button id="btn-history">🕘 Historique</button>
-          <button id="btn-export-csv">⬇️ CSV</button>
+          <button id="btn-history"><i data-lucide="clock" class="inline-icon"></i> Historique</button>
+          <button id="btn-export-csv"><i data-lucide="download" class="inline-icon"></i> CSV</button>
           <button id="btn-add-event">+ Ajouter</button>
         </div>
       </div>
@@ -123,40 +129,40 @@
   <div class="overlay" id="fmhy-overlay">
     <div class="modal-box" id="fmhy-modal">
       <div class="modal-header">
-        <h3>📚 FMHY — Free Media Heck Yeah</h3>
-        <button class="btn-close-modal" id="btn-fmhy-close">✕</button>
+        <h3><i data-lucide="library-big" class="inline-icon"></i> FMHY — Free Media Heck Yeah</h3>
+        <button class="btn-close-modal" id="btn-fmhy-close"><i data-lucide="x" class="inline-icon"></i></button>
       </div>
       <div id="fmhy-modal-body">
         <div class="fmhy-section-title">Wiki</div>
         <div class="fmhy-grid">
-          <a class="fmhy-link" href="https://fmhy.net/privacy"            target="_blank"><span>🛡️</span> Adblocking / Privacy</a>
-          <a class="fmhy-link" href="https://fmhy.net/ai"                 target="_blank"><span>🤖</span> Artificial Intelligence</a>
-          <a class="fmhy-link" href="https://fmhy.net/videopiracyguide"   target="_blank"><span>📺</span> Movies / TV / Anime</a>
-          <a class="fmhy-link" href="https://fmhy.net/audiopiracyguide"   target="_blank"><span>🎵</span> Music / Podcasts / Radio</a>
-          <a class="fmhy-link" href="https://fmhy.net/gamingpiracyguide"  target="_blank"><span>🎮</span> Gaming / Emulation</a>
-          <a class="fmhy-link" href="https://fmhy.net/readingpiracyguide" target="_blank"><span>📗</span> Books / Comics / Manga</a>
-          <a class="fmhy-link" href="https://fmhy.net/downloadpiracyguide" target="_blank"><span>💾</span> Downloading</a>
-          <a class="fmhy-link" href="https://fmhy.net/torrentpiracyguide" target="_blank"><span>🔄</span> Torrenting</a>
-          <a class="fmhy-link" href="https://fmhy.net/educational"         target="_blank"><span>🧠</span> Educational</a>
-          <a class="fmhy-link" href="https://fmhy.net/android-iosguide"    target="_blank"><span>📱</span> Android / iOS</a>
-          <a class="fmhy-link" href="https://fmhy.net/linuxguide"          target="_blank"><span>🐧</span> Linux / macOS</a>
-          <a class="fmhy-link" href="https://fmhy.net/non-english"         target="_blank"><span>🌍</span> Non-English</a>
-          <a class="fmhy-link" href="https://fmhy.net/misc"               target="_blank"><span>📁</span> Miscellaneous</a>
+          <a class="fmhy-link" href="https://fmhy.net/privacy"            target="_blank"><i data-lucide="shield" class="fmhy-icon"></i> Adblocking / Privacy</a>
+          <a class="fmhy-link" href="https://fmhy.net/ai"                 target="_blank"><i data-lucide="bot" class="fmhy-icon"></i> Artificial Intelligence</a>
+          <a class="fmhy-link" href="https://fmhy.net/videopiracyguide"   target="_blank"><i data-lucide="tv" class="fmhy-icon"></i> Movies / TV / Anime</a>
+          <a class="fmhy-link" href="https://fmhy.net/audiopiracyguide"   target="_blank"><i data-lucide="music" class="fmhy-icon"></i> Music / Podcasts / Radio</a>
+          <a class="fmhy-link" href="https://fmhy.net/gamingpiracyguide"  target="_blank"><i data-lucide="gamepad-2" class="fmhy-icon"></i> Gaming / Emulation</a>
+          <a class="fmhy-link" href="https://fmhy.net/readingpiracyguide" target="_blank"><i data-lucide="book-open" class="fmhy-icon"></i> Books / Comics / Manga</a>
+          <a class="fmhy-link" href="https://fmhy.net/downloadpiracyguide" target="_blank"><i data-lucide="hard-drive-download" class="fmhy-icon"></i> Downloading</a>
+          <a class="fmhy-link" href="https://fmhy.net/torrentpiracyguide" target="_blank"><i data-lucide="refresh-cw" class="fmhy-icon"></i> Torrenting</a>
+          <a class="fmhy-link" href="https://fmhy.net/educational"         target="_blank"><i data-lucide="brain" class="fmhy-icon"></i> Educational</a>
+          <a class="fmhy-link" href="https://fmhy.net/android-iosguide"    target="_blank"><i data-lucide="smartphone" class="fmhy-icon"></i> Android / iOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/linuxguide"          target="_blank"><i data-lucide="terminal" class="fmhy-icon"></i> Linux / macOS</a>
+          <a class="fmhy-link" href="https://fmhy.net/non-english"         target="_blank"><i data-lucide="globe" class="fmhy-icon"></i> Non-English</a>
+          <a class="fmhy-link" href="https://fmhy.net/misc"               target="_blank"><i data-lucide="folder-open" class="fmhy-icon"></i> Miscellaneous</a>
         </div>
         <div class="fmhy-divider"></div>
         <div class="fmhy-section-title">Tools</div>
         <div class="fmhy-grid">
-          <a class="fmhy-link" href="https://fmhy.net/system-tools"       target="_blank"><span>💻</span> System Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/file-tools"         target="_blank"><span>🗂️</span> File Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/internet-tools"     target="_blank"><span>🌐</span> Internet Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/social-media-tools" target="_blank"><span>💬</span> Social Media Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/text-tools"         target="_blank"><span>✏️</span> Text Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/gaming-tools"       target="_blank"><span>🕹️</span> Gaming Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/img-tools"          target="_blank"><span>📷</span> Image Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/video-tools"        target="_blank"><span>🎞️</span> Video Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/audio-tools"        target="_blank"><span>🔊</span> Audio Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/edu-tools"          target="_blank"><span>🍎</span> Educational Tools</a>
-          <a class="fmhy-link" href="https://fmhy.net/dev-tools"          target="_blank"><span>👨‍💻</span> Developer Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/system-tools"       target="_blank"><i data-lucide="monitor" class="fmhy-icon"></i> System Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/file-tools"         target="_blank"><i data-lucide="folder" class="fmhy-icon"></i> File Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/internet-tools"     target="_blank"><i data-lucide="globe" class="fmhy-icon"></i> Internet Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/social-media-tools" target="_blank"><i data-lucide="message-circle" class="fmhy-icon"></i> Social Media Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/text-tools"         target="_blank"><i data-lucide="pen-line" class="fmhy-icon"></i> Text Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/gaming-tools"       target="_blank"><i data-lucide="joystick" class="fmhy-icon"></i> Gaming Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/img-tools"          target="_blank"><i data-lucide="image" class="fmhy-icon"></i> Image Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/video-tools"        target="_blank"><i data-lucide="film" class="fmhy-icon"></i> Video Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/audio-tools"        target="_blank"><i data-lucide="volume-2" class="fmhy-icon"></i> Audio Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/edu-tools"          target="_blank"><i data-lucide="graduation-cap" class="fmhy-icon"></i> Educational Tools</a>
+          <a class="fmhy-link" href="https://fmhy.net/dev-tools"          target="_blank"><i data-lucide="code-2" class="fmhy-icon"></i> Developer Tools</a>
         </div>
       </div>
     </div>
@@ -165,7 +171,7 @@
   <!-- Modale Ajout d'événement -->
   <div class="overlay" id="modal-overlay">
     <div class="modal-box" style="max-width:400px">
-      <h3>✨ Nouvel événement</h3>
+      <h3><i data-lucide="sparkles" class="inline-icon"></i> Nouvel événement</h3>
       <div class="field"><label>NOM</label><input id="ev-name" type="text" placeholder="Ex : Cours réseaux, RDV médecin…" /></div>
       <div class="field"><label>DÉBUT</label><input id="ev-start" type="datetime-local" /></div>
       <div class="field"><label>FIN</label><input id="ev-end" type="datetime-local" /></div>
@@ -188,11 +194,11 @@
   <div class="overlay" id="history-overlay">
     <div class="modal-box" id="history-modal">
       <div class="modal-header">
-        <h3>🕘 Historique</h3>
+        <h3><i data-lucide="clock" class="inline-icon"></i> Historique</h3>
         <div id="history-modal-actions">
-          <button id="btn-history-export">⬇️ CSV</button>
-          <button id="btn-history-clear">🗑️ Vider</button>
-          <button class="btn-close-modal" id="btn-history-close">✕</button>
+          <button id="btn-history-export"><i data-lucide="download" class="inline-icon"></i> CSV</button>
+          <button id="btn-history-clear"><i data-lucide="trash-2" class="inline-icon"></i> Vider</button>
+          <button class="btn-close-modal" id="btn-history-close"><i data-lucide="x" class="inline-icon"></i></button>
         </div>
       </div>
       <div id="history-list"></div>
@@ -204,14 +210,14 @@
   <div class="overlay" id="fav-overlay">
     <div class="modal-box" id="fav-modal">
       <div class="modal-header">
-        <h3 id="fav-modal-title">★ Favori</h3>
-        <button class="btn-close-modal" id="btn-fav-close">✕</button>
+        <h3 id="fav-modal-title"><i data-lucide="star" class="inline-icon"></i> Favori</h3>
+        <button class="btn-close-modal" id="btn-fav-close"><i data-lucide="x" class="inline-icon"></i></button>
       </div>
       <div class="field"><label>NOM</label><input id="fav-name-input" type="text" placeholder="Nom du site…" /></div>
       <div class="field"><label>URL</label><input id="fav-url-input" type="url" placeholder="https://exemple.com" /></div>
       <p style="font-size:.7rem; color:#9a6070; margin-top:-.4rem; margin-bottom:.8rem">Le favicon du site sera affiché automatiquement.</p>
       <div class="modal-actions">
-        <button class="btn-danger"  id="btn-fav-delete" style="display:none">🗑️ Supprimer</button>
+        <button class="btn-danger"  id="btn-fav-delete" style="display:none"><i data-lucide="trash-2" class="inline-icon"></i> Supprimer</button>
         <button class="btn-cancel"  id="btn-fav-cancel">Annuler</button>
         <button class="btn-save"    id="btn-fav-save">Enregistrer</button>
       </div>
@@ -219,5 +225,9 @@
   </div>
 
   <script type="module" src="assets/js/app.js"></script>
+  <script>
+    // Init Lucide après le chargement du DOM
+    document.addEventListener('DOMContentLoaded', () => lucide.createIcons());
+  </script>
 </body>
 </html>
