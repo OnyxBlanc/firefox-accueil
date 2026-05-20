@@ -8,7 +8,6 @@ function storeSet(key, v) {
 const TYPE_ICON = { task: '✅', event: '📅', reminder: '🔔' };
 const today = new Date();
 
-// ✅ Extrait YYYY-MM-DD directement depuis la string locale (évite le décalage UTC)
 function toYMD(d) {
   if (typeof d === 'string') return d.slice(0, 10);
   const p = n => String(n).padStart(2, '0');
@@ -26,7 +25,6 @@ function formatDuration(start, end) {
   return [days && `${days}j`, hours && `${hours}h`, mins && `${mins}min`].filter(Boolean).join(' ');
 }
 function eventDays(ev) {
-  // ✅ On parse les dates en heure locale via les composantes individuelles
   const parseLocal = str => {
     const [date, time='00:00'] = str.split('T');
     const [y, mo, d] = date.split('-').map(Number);
@@ -48,7 +46,6 @@ export function initTasks() {
   let calYear  = today.getFullYear();
   let calMonth = today.getMonth();
 
-  // Migration anciens événements
   events = events.map(ev => {
     if (ev.date && !ev.start) {
       const s = ev.date + 'T00:00';
@@ -57,9 +54,9 @@ export function initTasks() {
     return ev;
   });
 
-  function saveEvents()      { storeSet('nx_events',  events); }
-  function saveHistory()     { storeSet('nx_history', taskHistory); }
-  function archive(ev, r)    { taskHistory.push({ ...ev, raison: r, archive_le: new Date().toISOString() }); saveHistory(); }
+  function saveEvents()   { storeSet('nx_events',  events); }
+  function saveHistory()  { storeSet('nx_history', taskHistory); }
+  function archive(ev, r) { taskHistory.push({ ...ev, raison: r, archive_le: new Date().toISOString() }); saveHistory(); }
 
   /* ── Calendrier ── */
   function renderCalendar() {
@@ -146,16 +143,6 @@ export function initTasks() {
       list.appendChild(item);
     });
   }
-
-  /* ── Export CSV ── */
-  document.getElementById('btn-export-csv').addEventListener('click', () => {
-    if (!events.length) { alert('Aucun événement à exporter.'); return; }
-    const rows = events.map(e => [`"${e.name.replace(/"/g,'""')}"`, e.start, e.end, formatDuration(e.start,e.end), e.type, e.done?'oui':'non'].join(','));
-    const csv  = ['nom,debut,fin,duree,type,fait', ...rows].join('\n');
-    const a    = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-    a.download = `evenements_${toYMD(today)}.csv`; a.click();
-  });
 
   /* ── Historique ── */
   function renderHistory() {
