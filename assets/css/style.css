@@ -499,9 +499,16 @@ body::-webkit-scrollbar { display: none; }
   box-shadow: 0 4px 28px var(--shadow-panel), 0 1px 0 var(--tint-a) inset;
 }
 
-#tasks-header { display: flex; align-items: center; justify-content: space-between; }
-#tasks-title  { font-size: .95rem; font-weight: 600; color: var(--text-base); }
-#tasks-actions { display: flex; gap: .4rem; }
+#tasks-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem; flex-wrap: nowrap;
+}
+#tasks-title {
+  font-size: .88rem; font-weight: 600; color: var(--text-base);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex-shrink: 1; min-width: 0;
+}
+#tasks-actions { display: flex; gap: .4rem; flex-shrink: 0; }
 
 #btn-add-event {
   background: linear-gradient(90deg, var(--c1), var(--c2));
